@@ -38,7 +38,7 @@
       overflow-x: hidden;
     }
 
-    /* BOTÃO DE CONTROLE DA SIDEBAR (EXPANDIR / RECOLHER) */
+    /* BOTÃO DE CONTROLE DA SIDEBAR */
     .menu-toggle-btn {
       position: fixed;
       top: 15px;
@@ -82,7 +82,7 @@
       display: block;
     }
 
-    /* MODAL DE AUTENTICAÇÃO */
+    /* MODAL DE ENTRADA / LOGIN */
     .auth-overlay {
       position: fixed;
       top: 0;
@@ -104,7 +104,7 @@
       border-radius: 16px;
       padding: 35px;
       width: 100%;
-      max-width: 480px;
+      max-width: 500px;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 180, 216, 0.25);
     }
 
@@ -120,13 +120,25 @@
       letter-spacing: 1px;
     }
 
-    .auth-header p {
+    .auth-header .auth-sub {
       color: var(--spider-blue);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 2px;
       font-weight: 700;
-      margin-top: 5px;
+      margin-top: 4px;
+      margin-bottom: 12px;
+    }
+
+    .auth-header .auth-manifesto {
+      color: #cbd5e1;
+      font-size: 0.9rem;
+      font-style: italic;
+      line-height: 1.5;
+      background: rgba(30, 41, 59, 0.6);
+      padding: 10px 14px;
+      border-radius: 8px;
+      border-left: 3px solid var(--spider-red);
     }
 
     .form-group {
@@ -365,7 +377,7 @@
     /* CARDS & GRIDS */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
       margin-bottom: 30px;
     }
@@ -415,6 +427,19 @@
       margin-bottom: 25px;
     }
 
+    .hero-card {
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      border-radius: 14px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card.red-border { border-top: 4px solid var(--spider-red); }
+    .hero-card.blue-border { border-top: 4px solid var(--spider-blue); }
+    .hero-card.gold-border { border-top: 4px solid var(--titan-gold); }
+
     .data-table-wrapper {
       width: 100%;
       overflow-x: auto;
@@ -463,11 +488,11 @@
 
       .stats-grid {
         grid-template-columns: 1fr !important;
-        gap: 12px !important;
+        gap: 14px !important;
       }
 
-      .content-box {
-        padding: 16px !important;
+      .content-box, .hero-card {
+        padding: 18px !important;
       }
     }
   </style>
@@ -482,12 +507,15 @@
   <!-- OVERLAY PARA FECHAR O MENU NO MOBILE -->
   <div id="sidebar-overlay" class="sidebar-overlay" onclick="fecharSidebar()"></div>
 
-  <!-- MODAL DE AUTENTICAÇÃO -->
+  <!-- MODAL DE AUTENTICAÇÃO COM TEXTO HISTÓRICO RESTAURADO -->
   <div id="auth-modal" class="auth-overlay">
     <div class="auth-card">
       <div class="auth-header">
         <h1>ALÉM DAS MURALHAS</h1>
-        <p>O Amigo da Vizinhança</p>
+        <div class="auth-sub">O Amigo da Vizinhança</div>
+        <p class="auth-manifesto">
+          "Venha ser o herói na vida de alguém. Estender a mão é o maior ato de rebeldia contra esse mundo cruel."
+        </p>
       </div>
 
       <form id="auth-form" onsubmit="realizarAutenticacao(event)">
@@ -681,7 +709,7 @@
       <!-- 4. PERFIL COM FOTO E BIO DE HERÓI -->
       <section id="aba-perfil" class="tab-section">
         <h2 class="section-title">Meu Perfil & Conta</h2>
-        <p class="section-desc">Atualize sua identidade, foto de perfil, herói favorito e bio de apresentação.</p>
+        <p class="section-desc">Atualize sua identidade, foto de perfil, herói favorito e dados pessoais.</p>
 
         <div class="content-box" style="max-width: 650px;">
           <form onsubmit="atualizarPerfil(event)">
@@ -705,12 +733,12 @@
             </div>
 
             <div class="form-group">
-              <label>Herói / Inspiração Favorita</label>
-              <input type="text" id="perfil-heroi" class="form-control" placeholder="Ex: Homem-Aranha, Batman, Eren Yeager...">
+              <label>Herói / Inspiração Favorita (Bio de Herói)</label>
+              <input type="text" id="perfil-heroi" class="form-control" placeholder="Ex: Homem-Aranha, Batman, Eren Yeager, All Might...">
             </div>
 
             <div class="form-group">
-              <label>Nova Senha (deixe vazio para não alterar)</label>
+              <label>Nova Senha (deixe vazio para manter a atual)</label>
               <input type="password" id="perfil-senha" class="form-control" placeholder="••••••••">
             </div>
 
@@ -743,43 +771,68 @@
         <div id="lista-mensagens-container" class="stats-grid"></div>
       </section>
 
-      <!-- 6. PERSONAGENS E INSPIRAÇÕES -->
+      <!-- 6. PERSONAGENS E INSPIRAÇÕES ESPECÍFICAS -->
       <section id="aba-personagens" class="tab-section">
         <h2 class="section-title">Personagens e Inspirações</h2>
-        <p class="section-desc">Figuras e arquétipos que nos ensinam sobre proteger quem não pode se defender sozinho.</p>
+        <p class="section-desc">As figuras do heroísmo e da cultura pop que guiam o compromisso moral de não abandonar ninguém.</p>
         
         <div class="stats-grid">
-          <div class="content-box">
-            <h3 style="color: var(--spider-red); font-family: var(--font-title); margin-bottom: 6px;">O Amigo da Vizinhança</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">O herói que cuida das ruas do seu próprio bairro, mostrando que responsabilidade social começa onde vivemos.</p>
+          
+          <div class="hero-card red-border">
+            <span class="badge" style="background: rgba(230, 57, 70, 0.2); color: var(--spider-red); margin-bottom: 10px;">Marvel Comics</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.25rem; margin-bottom: 8px;">Homem-Aranha (Peter Parker)</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">O legítimo 'Amigo da Vizinhança'. Ensina que grandes poderes trazem grandes responsabilidades, e que o verdadeiro herói é aquele que nunca abandona a sua comunidade local.</p>
           </div>
-          <div class="content-box">
-            <h3 style="color: var(--spider-blue); font-family: var(--font-title); margin-bottom: 6px;">A Determinação Inquebrável</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">A coragem de continuar lutando e apoiando os vulneráveis diante de qualquer adversidade.</p>
+
+          <div class="hero-card blue-border">
+            <span class="badge" style="background: rgba(0, 180, 216, 0.2); color: var(--spider-blue); margin-bottom: 10px;">Attack on Titan</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.25rem; margin-bottom: 8px;">Eren Yeager & Armin Arlert</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">A coragem indomável de enxergar além dos muros impostos pelo sofrimento e a sabedoria de que mudar o mundo exige entrega, empatia e luta ativa.</p>
           </div>
-          <div class="content-box">
-            <h3 style="color: var(--titan-gold); font-family: var(--font-title); margin-bottom: 6px;">O Guardião Protetor</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Usar o conhecimento e a força para construir pontes de esperança para crianças, idosos e pessoas atípicas.</p>
+
+          <div class="hero-card gold-border">
+            <span class="badge" style="background: rgba(244, 162, 97, 0.2); color: var(--titan-gold); margin-bottom: 10px;">DC Comics</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.25rem; margin-bottom: 8px;">Batman (Bruce Wayne)</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">A prova de que a dor pode ser convertida em proteção. Não são promessas ou identidades que definem quem você é, mas sim as ações concretas que você pratica pelos outros.</p>
           </div>
+
+          <div class="hero-card red-border">
+            <span class="badge" style="background: rgba(230, 57, 70, 0.2); color: var(--spider-red); margin-bottom: 10px;">My Hero Academia</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.25rem; margin-bottom: 8px;">All Might (Toshinori Yagi)</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">O símbolo da paz e do acolhimento. A postura inabalável de estender a mão sorrindo para dizer aos que mais sofrem: <em>'Está tudo bem agora, porque nós estamos aqui!'</em>.</p>
+          </div>
+
+          <div class="hero-card blue-border">
+            <span class="badge" style="background: rgba(0, 180, 216, 0.2); color: var(--spider-blue); margin-bottom: 10px;">Marvel Comics</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.25rem; margin-bottom: 8px;">Capitão América (Steve Rogers)</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">A perseverança moral que nunca recua diante das injustiças. A determinação de se manter de pé pelos que caíram e a convicção de fazer isso até o fim.</p>
+          </div>
+
+          <div class="hero-card gold-border">
+            <span class="badge" style="background: rgba(244, 162, 97, 0.2); color: var(--titan-gold); margin-bottom: 10px;">Valores Universais</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.25rem; margin-bottom: 8px;">O Guardião da Vizinhança</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">Cada doador, voluntário e cidadão que escolhe não fechar os olhos. O herói anônimo que leva alimento, agasalho e inclusão para pessoas atípicas, idosos e crianças.</p>
+          </div>
+
         </div>
       </section>
 
       <!-- 7. FRASES E CITAÇÕES AMPLIADAS -->
       <section id="aba-frases" class="tab-section">
         <h2 class="section-title">Frases e Citações</h2>
-        <p class="section-desc">Citações sobre heroísmo, solidariedade e valores humanos fundamentais.</p>
+        <p class="section-desc">Citações e valores que alimentam a determinação solidária e a coragem diária.</p>
         <div id="lista-frases-container" class="stats-grid"></div>
       </section>
 
       <!-- 8. MINHA HISTÓRIA -->
       <section id="aba-historia" class="tab-section">
         <h2 class="section-title">Minha História</h2>
-        <p class="section-desc">O propósito por trás do projeto comunitário Além das Muralhas.</p>
+        <p class="section-desc">O propósito e o compromisso ético do projeto Além das Muralhas.</p>
         
         <div class="content-box" style="line-height: 1.7; font-size: 0.95rem; color: #cbd5e1;">
-          <p style="margin-bottom: 15px;">O projeto <strong>Além das Muralhas - O Amigo da Vizinhança</strong> nasceu do desejo de unir tecnologia, responsabilidade social e acolhimento comunitário na Baixada Fluminense e no Rio de Janeiro.</p>
-          <p style="margin-bottom: 15px;">Inspirado na ideia de que cada um de nós possui a capacidade de proteger o seu próximo, a plataforma facilita a arrecadação de mantimentos, agasalhos e materiais de apoio para crianças, idosos, moradores de rua e pessoas com condições atípicas (TEA e PCD).</p>
-          <p>Nenhuma boa ação é pequena demais quando o objetivo é quebrar as barreiras da desigualdade.</p>
+          <p style="margin-bottom: 15px;">O projeto <strong>Além das Muralhas - O Amigo da Vizinhança</strong> nasceu da convicção de que nenhuma barreira social é instransponível quando a tecnologia é colocada a serviço da empatia e do acolhimento.</p>
+          <p style="margin-bottom: 15px;">Inspirada nos valores de altruísmo, proteção aos vulneráveis e determinação, a plataforma conecta pontos de coleta e doadores diretos a quem mais necessita: crianças, idosos, moradores de rua e pessoas com necessidades atípicas (TEA e PCD).</p>
+          <p>Estender a mão para quem precisa não é apenas solidariedade; é o maior ato de coragem e rebeldia contra a indiferença do mundo.</p>
         </div>
       </section>
 
@@ -790,9 +843,9 @@
 
         <div class="content-box" style="line-height: 1.7; font-size: 0.95rem; color: #cbd5e1;">
           <h3 style="color: var(--spider-blue); margin-bottom: 10px;">Princípios de Transparência e Segurança</h3>
-          <p style="margin-bottom: 12px;"><strong>Finalidade e Consentimento:</strong> Seus dados de cadastro (nome, e-mail e senha com criptografia bcrypt) são coletados unicamente para a autenticação e emissão segura dos seus protocolos de doação.</p>
-          <p style="margin-bottom: 12px;"><strong>Armazenamento Seguro:</strong> As informações são gravadas em banco de dados relacional em nuvem com criptografia SSL e proteção de credenciais.</p>
-          <p><strong>Seus Direitos (Art. 18):</strong> Você tem livre acesso para consultar, retificar na aba <em>Meu Perfil</em> ou requisitar a exclusão definitiva dos seus dados a qualquer momento.</p>
+          <p style="margin-bottom: 12px;"><strong>Finalidade e Consentimento:</strong> Seus dados cadastrais (nome, e-mail e senha protegida por hash criptográfico) destinam-se exclusivamente à autenticação e controle dos seus protocolos de doação.</p>
+          <p style="margin-bottom: 12px;"><strong>Armazenamento Seguro:</strong> Infraestrutura baseada em nuvem com conexões criptografadas SSL.</p>
+          <p><strong>Direito ao Esquecimento (Art. 18):</strong> O usuário tem total autonomia para retificar suas informações no menu <em>Meu Perfil</em> ou excluir permanentemente seus registros da plataforma a qualquer momento.</p>
         </div>
       </section>
 
@@ -997,7 +1050,7 @@
       window.location.reload();
     }
 
-    // Carregar Métricas
+    // Métricas
     async function carregarImpacto() {
       try {
         const res = await fetch('/api/impacto');
@@ -1098,7 +1151,7 @@
       }
     }
 
-    // Atualização de Perfil com Foto e Heroi
+    // Perfil
     async function atualizarPerfil(e) {
       e.preventDefault();
       const nome = document.getElementById('perfil-nome').value;
@@ -1128,14 +1181,14 @@
           usuarioLogado.heroi_favorito = data.heroi_favorito;
           localStorage.setItem('usuario_sessao', JSON.stringify(usuarioLogado));
           configurarInterfaceUsuario();
-          alert('Perfil e dados atualizados com sucesso!');
+          alert('Perfil e bio de herói atualizados com sucesso!');
         }
       } catch (err) {
         alert('Erro ao atualizar perfil: ' + err.message);
       }
     }
 
-    // Exclusão de Conta (LGPD Art. 18)
+    // Exclusão de Conta
     async function excluirMinhaConta() {
       if (!confirm('Deseja realmente exercer seu direito ao esquecimento e excluir definitivamente sua conta? Todos os seus dados serão apagados.')) return;
 
@@ -1188,36 +1241,31 @@
       }
     }
 
-    // Frases e Citações com Lista Expandida
+    // Frases e Citações com Lista Completa e Sem Repetições
     async function carregarFrases() {
       try {
-        const res = await fetch('/api/frases');
-        let frases = await res.json();
-        
-        // Frases extras e citações garantidas na visualização
         const listaCompleta = [
-          ...frases,
           { texto: "Com grandes poderes vêm grandes responsabilidades.", autor: "Peter Parker (Homem-Aranha)", categoria: "Heróis" },
-          { texto: "Não é sobre quem eu sou por dentro, mas o que eu faço que me define.", autor: "Bruce Wayne (Batman)", categoria: "Heróis" },
+          { texto: "Não é quem eu sou por dentro, mas o que eu faço é o que me define.", autor: "Bruce Wayne (Batman)", categoria: "Heróis" },
           { texto: "Se você não lutar, você não pode vencer!", autor: "Eren Yeager (Attack on Titan)", categoria: "Anime" },
           { texto: "Aqueles que não são capazes de sacrificar nada, não podem mudar nada.", autor: "Armin Arlert (Attack on Titan)", categoria: "Anime" },
+          { texto: "Está tudo bem agora... Sabe por quê? Porque nós estamos aqui!", autor: "All Might (My Hero Academia)", categoria: "Anime" },
+          { texto: "Eu posso fazer isso o dia todo. Nós nunca abandonamos quem precisa.", autor: "Steve Rogers (Capitão América)", categoria: "Heróis" },
           { texto: "Ame o seu próximo como a si mesmo.", autor: "Mateus 22:39", categoria: "Bíblica" },
           { texto: "Quem é generoso será abençoado, pois reparte o seu pão com o necessitado.", autor: "Provérbios 22:9", categoria: "Bíblica" },
-          { texto: "Eu posso fazer isso o dia todo. Nós nunca desistimos de ninguém.", autor: "Steve Rogers (Capitão América)", categoria: "Heróis" },
-          { texto: "Está tudo bem agora... Sabe por quê? Porque nós estamos aqui!", autor: "All Might (My Hero Academia)", categoria: "Anime" },
-          { texto: "O verdadeiro poder não reside em dominar os outros, mas em estender a mão aos que caíram.", autor: "Sabedoria Solidária", categoria: "Inspiração" }
+          { texto: "A generosidade para com o próximo é o verdadeiro reflexo de um coração nobre.", autor: "Provérbios 11:25", categoria: "Bíblica" },
+          { texto: "O verdadeiro poder não reside em dominar os outros, mas em estender a mão aos que caíram.", autor: "Sabedoria Solidária", categoria: "Inspiração" },
+          { texto: "O heroísmo não está na ausência de medo, mas na escolha de agir mesmo com o coração acelerado.", autor: "Determinação", categoria: "Inspiração" },
+          { texto: "Ninguém nunca se tornou pobre por doar.", autor: "Anne Frank", categoria: "Inspiração" }
         ];
-
-        // Filtra repetições por texto
-        const unicas = Array.from(new Map(listaCompleta.map(item => [item.texto, item])).values());
 
         const container = document.getElementById('lista-frases-container');
         container.innerHTML = '';
 
-        unicas.forEach(f => {
+        listaCompleta.forEach(f => {
           container.innerHTML += `
             <div class="content-box">
-              <span class="badge" style="margin-bottom: 10px;">${f.categoria || 'Inspiração'}</span>
+              <span class="badge" style="margin-bottom: 10px;">${f.categoria}</span>
               <p style="margin-bottom: 10px; font-weight: 600; color: #fff; font-size: 0.95rem; line-height: 1.4;">"${f.texto}"</p>
               <span style="font-size: 0.8rem; color: var(--titan-gold); font-weight: 700;">— ${f.autor}</span>
             </div>
@@ -1270,7 +1318,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        alert('Ponto de acolhimento cadastrado com sucesso no banco Aiven!');
+        alert('Ponto de acolhimento cadastrado com sucesso!');
         e.target.reset();
         carregarPontosColeta();
         carregarImpacto();
