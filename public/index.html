@@ -3,1289 +3,1067 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Além das Muralhas | O Amigo da Vizinhança</title>
-  
+  <title>Além das Muralhas - O Amigo da Vizinhança</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --neon-red: #FF0055;
-      --neon-glow: rgba(255, 0, 85, 0.4);
-      --cyan-neon: #00F0FF;
-      --cyan-glow: rgba(0, 240, 255, 0.3);
-      --dark-space: #06080F;
-      --card-cyber: rgba(13, 17, 27, 0.85);
-      --card-alt: rgba(22, 28, 45, 0.7);
-      --border-cyber: rgba(0, 240, 255, 0.18);
-      --text-main: #F8FAFC;
-      --text-muted: #94A3B8;
-      --gold: #FFB703;
-      --success: #00F5D4;
+      --bg-deep: #0b0f19;
+      --bg-card: #111827;
+      --bg-sidebar: #0f172a;
+      --spider-red: #e63946;
+      --spider-blue: #00b4d8;
+      --titan-gold: #f4a261;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #1e293b;
+      --font-title: 'Cinzel', serif;
+      --font-body: 'Montserrat', sans-serif;
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Inter', sans-serif;
-    }
-
-    h1, h2, h3, .font-tech {
-      font-family: 'Orbitron', 'Poppins', sans-serif;
-      letter-spacing: 0.8px;
+      box-sizing: border-box;
+      font-family: var(--font-body);
     }
 
     body {
-      background-color: var(--dark-space);
-      background-image: 
-        radial-gradient(circle at 15% 15%, rgba(255, 0, 85, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 85% 85%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
-        linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,0.015) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+      background-color: var(--bg-deep);
       color: var(--text-main);
       min-height: 100vh;
-      display: flex;
-      position: relative;
       overflow-x: hidden;
     }
 
-    /* Modal de Acesso Futurista */
-    #auth-screen {
+    /* ============================================================
+       MODAIS E TELAS DE ENTRADA (AUTH)
+       ============================================================ */
+    .auth-overlay {
       position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at center, #0F172A 0%, #030712 100%);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(11, 15, 25, 0.95);
+      backdrop-filter: blur(8px);
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 999;
+      z-index: 9999;
+      padding: 15px;
     }
 
     .auth-card {
-      background: var(--card-cyber);
-      border: 1px solid var(--neon-red);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
       border-radius: 16px;
-      padding: 2.5rem;
+      padding: 35px;
       width: 100%;
-      max-width: 460px;
-      box-shadow: 0 0 35px var(--neon-glow);
-      backdrop-filter: blur(16px);
-      position: relative;
+      max-width: 480px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 180, 216, 0.2);
     }
 
-    .auth-card h2 {
-      color: var(--neon-red);
+    .auth-header {
       text-align: center;
-      margin-bottom: 0.4rem;
-      font-size: 1.6rem;
-      text-shadow: 0 0 10px var(--neon-glow);
+      margin-bottom: 25px;
     }
 
-    .auth-card p {
-      color: var(--text-muted);
-      text-align: center;
-      font-size: 0.92rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.5;
+    .auth-header h1 {
+      font-family: var(--font-title);
+      font-size: 1.8rem;
+      color: var(--text-main);
+      letter-spacing: 1px;
     }
 
-    .input-group {
-      margin-bottom: 1.1rem;
-    }
-
-    .input-group label {
-      display: block;
-      margin-bottom: 0.35rem;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #CBD5E1;
+    .auth-header p {
+      color: var(--spider-blue);
+      font-size: 0.9rem;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 2px;
+      font-weight: 700;
+      margin-top: 5px;
     }
 
-    .input-group input, .input-group select, .input-group textarea {
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .form-control {
       width: 100%;
-      padding: 0.85rem 1rem;
+      background: #1e293b;
+      border: 1px solid #334155;
       border-radius: 8px;
-      border: 1px solid var(--border-cyber);
-      background: rgba(6, 9, 18, 0.9);
-      color: #FFF;
+      padding: 12px 14px;
+      color: #fff;
       font-size: 0.95rem;
-      transition: 0.2s border, 0.2s box-shadow;
-    }
-
-    .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
       outline: none;
-      border-color: var(--cyan-neon);
-      box-shadow: 0 0 12px var(--cyan-glow);
+      transition: 0.2s;
     }
 
-    .lgpd-checkbox {
+    .form-control:focus {
+      border-color: var(--spider-blue);
+      box-shadow: 0 0 10px rgba(0, 180, 216, 0.3);
+    }
+
+    .checkbox-group {
       display: flex;
       align-items: flex-start;
-      gap: 0.6rem;
+      gap: 10px;
       font-size: 0.8rem;
       color: var(--text-muted);
-      margin-bottom: 1.2rem;
+      margin-bottom: 20px;
       line-height: 1.4;
     }
 
-    .lgpd-checkbox input {
-      margin-top: 0.2rem;
-      accent-color: var(--neon-red);
+    .checkbox-group input {
+      margin-top: 3px;
     }
 
-    .btn {
+    .btn-primary {
       width: 100%;
-      padding: 0.9rem;
+      background: linear-gradient(135deg, var(--spider-red), #b91c1c);
+      color: white;
       border: none;
+      padding: 14px;
       border-radius: 8px;
-      background: linear-gradient(135deg, var(--neon-red) 0%, #A80038 100%);
-      color: #FFF;
-      font-size: 0.95rem;
       font-weight: 700;
-      letter-spacing: 0.8px;
+      font-size: 0.95rem;
+      cursor: pointer;
       text-transform: uppercase;
-      cursor: pointer;
-      box-shadow: 0 0 15px var(--neon-glow);
-      transition: 0.2s transform, 0.2s box-shadow;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+      transition: 0.2s;
     }
 
-    .btn:hover {
+    .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 0 25px var(--neon-glow);
+      box-shadow: 0 6px 20px rgba(230, 57, 70, 0.6);
     }
 
-    .btn-delete {
-      background: #450a0a;
-      border: 1px solid #dc2626;
-      padding: 0.45rem 0.85rem;
-      font-size: 0.8rem;
-      border-radius: 6px;
-      color: #fca5a5;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .btn-delete:hover {
-      background: #7f1d1d;
-    }
-
-    /* Layout da Aplicação */
-    #app-layout {
-      display: none;
-      width: 100%;
+    /* ============================================================
+       ESTRUTURA PRINCIPAL (LAYOUT)
+       ============================================================ */
+    .app-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
       min-height: 100vh;
+      width: 100%;
     }
 
-    aside {
-      width: 310px;
-      background: rgba(10, 14, 26, 0.95);
-      border-right: 1px solid var(--border-cyber);
-      backdrop-filter: blur(12px);
+    /* SIDEBAR */
+    .sidebar {
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      padding: 2rem 1.2rem;
+      justify-content: space-between;
+      padding: 25px 20px;
       height: 100vh;
       position: sticky;
       top: 0;
-      z-index: 10;
+      overflow-y: auto;
     }
 
-    .logo-area {
-      font-size: 1.2rem;
-      font-weight: 900;
-      margin-bottom: 2rem;
-      color: #FFFFFF;
-      text-transform: uppercase;
+    .brand-title {
+      font-family: var(--font-title);
+      font-size: 1.4rem;
+      color: var(--text-main);
       letter-spacing: 1px;
-      line-height: 1.3;
     }
 
-    .logo-area span {
-      color: var(--cyan-neon);
-      display: block;
+    .brand-subtitle {
+      color: var(--spider-blue);
       font-size: 0.75rem;
-      letter-spacing: 2px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
       font-weight: 700;
-      margin-top: 0.2rem;
-      text-shadow: 0 0 8px var(--cyan-glow);
+      margin-bottom: 25px;
     }
 
-    .nav-links {
-      list-style: none;
+    .nav-menu {
       display: flex;
       flex-direction: column;
-      gap: 0.45rem;
+      gap: 6px;
     }
 
-    .nav-links button {
-      width: 100%;
-      text-align: left;
+    .nav-btn {
       background: transparent;
       border: 1px solid transparent;
-      color: #94A3B8;
-      padding: 0.8rem 1rem;
+      color: var(--text-muted);
+      padding: 12px 16px;
       border-radius: 8px;
-      font-size: 0.92rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: 0.25s;
-    }
-
-    .nav-links button:hover, .nav-links button.active {
-      background: rgba(255, 0, 85, 0.12);
-      border-color: var(--neon-red);
-      color: #FFF;
+      text-align: left;
       font-weight: 600;
-      box-shadow: 0 0 15px rgba(255, 0, 85, 0.2);
-    }
-
-    .admin-tab {
-      display: none;
-      border-top: 1px solid var(--border-cyber);
-      padding-top: 0.8rem;
-      margin-top: 0.8rem;
-    }
-
-    .admin-tab button {
-      background: rgba(255, 183, 3, 0.08);
-      border-color: rgba(255, 183, 3, 0.3);
-      color: var(--gold);
-    }
-
-    .user-profile-widget {
-      margin-top: auto;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border-cyber);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.2s;
       display: flex;
       align-items: center;
-      gap: 0.8rem;
+      gap: 10px;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      background: rgba(230, 57, 70, 0.1);
+      border-color: var(--spider-red);
+      color: #fff;
+    }
+
+    .admin-nav-btn {
+      margin-top: 15px;
+      border-color: rgba(244, 162, 97, 0.4);
+      color: var(--titan-gold);
+    }
+
+    .admin-nav-btn:hover {
+      background: rgba(244, 162, 97, 0.15);
+      border-color: var(--titan-gold);
+      color: #fff;
+    }
+
+    .user-card {
+      margin-top: 20px;
+      padding: 12px;
+      background: #1e293b;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .user-avatar {
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      border: 2px solid var(--cyan-neon);
+      border: 2px solid var(--spider-blue);
       object-fit: cover;
-      background-color: var(--card-alt);
-      box-shadow: 0 0 10px var(--cyan-glow);
+      background: #0f172a;
     }
 
-    main {
-      flex: 1;
-      padding: 3rem 4rem;
+    .user-info h4 {
+      font-size: 0.85rem;
+      color: #fff;
+    }
+
+    .user-info span {
+      font-size: 0.75rem;
+      color: var(--titan-gold);
+      font-weight: 700;
+      display: block;
+    }
+
+    .logout-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+      margin-top: 3px;
+    }
+
+    /* MAIN CONTENT */
+    .main-container {
+      padding: 35px 40px;
       overflow-y: auto;
-    }
-
-    .screen {
-      display: none;
-      max-width: 980px;
+      max-width: 1300px;
+      width: 100%;
       margin: 0 auto;
     }
 
-    .screen.active {
-      display: block;
+    .tab-section {
+      display: none;
       animation: fadeIn 0.3s ease;
     }
 
+    .tab-section.active {
+      display: block;
+    }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .card {
-      background: var(--card-cyber);
-      backdrop-filter: blur(12px);
-      border-radius: 14px;
-      padding: 2rem;
-      border: 1px solid var(--border-cyber);
-      margin-bottom: 1.5rem;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    .section-title {
+      font-family: var(--font-title);
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
+    .section-desc {
+      color: var(--text-muted);
+      margin-bottom: 25px;
+      font-size: 0.95rem;
+    }
+
+    /* CARDS & GRIDS */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.2rem;
-      margin-bottom: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
     }
 
     .stat-card {
-      background: var(--card-alt);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border-cyber);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
       border-radius: 12px;
-      padding: 1.5rem;
-      text-align: center;
+      padding: 24px;
       position: relative;
+      overflow: hidden;
     }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--spider-red);
+    }
+
+    .stat-card.blue::before { background: var(--spider-blue); }
+    .stat-card.gold::before { background: var(--titan-gold); }
 
     .stat-card h3 {
       font-size: 2.2rem;
-      color: var(--cyan-neon);
-      text-shadow: 0 0 12px var(--cyan-glow);
-      margin-bottom: 0.3rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+      color: #fff;
     }
 
     .stat-card p {
-      font-size: 0.85rem;
       color: var(--text-muted);
+      font-size: 0.85rem;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      font-weight: 700;
+      letter-spacing: 1px;
     }
 
-    .donors-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-      gap: 1rem;
-      margin-top: 1.2rem;
-    }
-
-    .donor-card {
-      background: var(--card-alt);
-      border: 1px solid var(--border-cyber);
-      border-radius: 12px;
-      padding: 1.2rem;
-      text-align: center;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-
-    .donor-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--gold);
-      box-shadow: 0 0 15px rgba(255, 183, 3, 0.2);
-    }
-
-    .donor-avatar {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      border: 2px solid var(--gold);
-      object-fit: cover;
-      margin: 0 auto 0.6rem;
-      display: block;
-      background: var(--dark-space);
-    }
-
-    .profile-insta-header {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-      background: linear-gradient(135deg, rgba(22, 28, 45, 0.9) 0%, rgba(13, 17, 27, 0.9) 100%);
-      padding: 2rem;
+    .content-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
       border-radius: 14px;
-      border: 1px solid var(--border-cyber);
-      margin-bottom: 1.8rem;
+      padding: 25px;
+      margin-bottom: 25px;
     }
 
-    .profile-insta-avatar {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      border: 3px solid var(--neon-red);
-      object-fit: cover;
-      box-shadow: 0 0 25px var(--neon-glow);
-    }
-
-    .badge-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 1.2rem;
-      margin-top: 1.5rem;
-    }
-
-    .badge-card {
-      background: var(--card-alt);
-      border: 1px solid var(--border-cyber);
-      border-radius: 12px;
-      padding: 1.3rem;
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      opacity: 0.35;
-      transition: 0.3s;
-    }
-
-    .badge-card.unlocked {
-      opacity: 1;
-      border-color: var(--gold);
-      box-shadow: 0 0 20px rgba(255, 183, 3, 0.2);
-    }
-
-    .badge-img-wrapper {
-      width: 62px;
-      height: 62px;
-      border-radius: 12px;
-      background: rgba(6, 9, 18, 0.9);
-      border: 2px solid var(--border-cyber);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0.5rem;
-      flex-shrink: 0;
-    }
-
-    .badge-img-wrapper svg {
+    .data-table-wrapper {
       width: 100%;
-      height: 100%;
-    }
-
-    .quote-box {
-      border-left: 4px solid var(--neon-red);
-      background: var(--card-alt);
-      padding: 1.2rem 1.4rem;
-      margin-bottom: 1.2rem;
-      border-radius: 0 10px 10px 0;
-    }
-
-    .ponto-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--card-alt);
-      border: 1px solid var(--border-cyber);
-      padding: 1rem 1.2rem;
-      border-radius: 8px;
-      margin-bottom: 0.8rem;
-    }
-
-    .table-container {
       overflow-x: auto;
-      margin-top: 1rem;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.9rem;
+      text-align: left;
     }
 
     th, td {
-      padding: 0.85rem;
-      text-align: left;
-      border-bottom: 1px solid var(--border-cyber);
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.9rem;
     }
 
     th {
-      color: var(--cyan-neon);
+      background: #1e293b;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
       font-weight: 700;
+      background: rgba(0, 180, 216, 0.2);
+      color: var(--spider-blue);
+    }
+
+    /* ============================================================
+       RESPONSIVIDADE COMPLETA PARA SMARTPHONES E TABLETS
+       ============================================================ */
+    @media (max-width: 900px) {
+      .app-layout {
+        display: flex !important;
+        flex-direction: column !important;
+        min-height: auto !important;
+      }
+
+      .sidebar {
+        position: relative !important;
+        height: auto !important;
+        width: 100% !important;
+        border-right: none !important;
+        border-bottom: 1px solid var(--border-color) !important;
+        padding: 20px 15px !important;
+      }
+
+      .brand-title {
+        font-size: 1.3rem !important;
+        text-align: center;
+      }
+
+      .brand-subtitle {
+        text-align: center;
+        margin-bottom: 15px !important;
+      }
+
+      .nav-menu {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+      }
+
+      .nav-btn {
+        padding: 10px !important;
+        font-size: 0.8rem !important;
+        text-align: center !important;
+        justify-content: center !important;
+      }
+
+      .admin-nav-btn {
+        grid-column: span 2 !important;
+        margin-top: 5px !important;
+      }
+
+      .user-card {
+        margin-top: 15px !important;
+        justify-content: center;
+      }
+
+      .main-container {
+        padding: 20px 15px !important;
+        width: 100% !important;
+      }
+
+      .section-title {
+        font-size: 1.4rem !important;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+
+      .content-box {
+        padding: 16px !important;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Tela 1: Login / Cadastro com Conformidade LGPD -->
-  <div id="auth-screen">
+  <!-- MODAL DE AUTENTICAÇÃO / CADASTRO -->
+  <div id="auth-modal" class="auth-overlay">
     <div class="auth-card">
-      <h2>Além das Muralhas</h2>
-      <p>
-        Venha ser o herói na vida de alguém.<br>
-        Estender a mão é o nosso maior ato de rebeldia contra esse mundo cruel.
-      </p>
-      
-      <form onsubmit="autenticar(event)">
-        <div class="input-group">
-          <label>Nome Completo ou Apelido</label>
-          <input type="text" id="auth-nome" placeholder="Seu nome" required>
+      <div class="auth-header">
+        <h1>ALÉM DAS MURALHAS</h1>
+        <p>O Amigo da Vizinhança</p>
+      </div>
+
+      <form id="auth-form" onsubmit="realizarAutenticacao(event)">
+        <div class="form-group">
+          <label>Nome Completo</label>
+          <input type="text" id="auth-nome" class="form-control" placeholder="Seu nome" required>
         </div>
-        <div class="input-group">
+
+        <div class="form-group">
           <label>E-mail</label>
-          <input type="email" id="auth-email" placeholder="seuemail@exemplo.com" required>
-        </div>
-        <div class="input-group">
-          <label>Senha</label>
-          <input type="password" id="auth-senha" placeholder="••••••••" required>
+          <input type="email" id="auth-email" class="form-control" placeholder="seuemail@exemplo.com" required>
         </div>
 
-        <div class="lgpd-checkbox">
+        <div class="form-group">
+          <label>Senha de Acesso</label>
+          <input type="password" id="auth-senha" class="form-control" placeholder="••••••••" required>
+        </div>
+
+        <div class="checkbox-group">
           <input type="checkbox" id="auth-lgpd" checked required>
-          <label for="auth-lgpd">Concordo com o tratamento dos meus dados para fins de gestão de doações voluntárias em conformidade com a <strong>LGPD (Lei 13.709/2018)</strong>.</label>
+          <label for="auth-lgpd">Concordo com os Termos de Privacidade e Proteção de Dados (LGPD - Lei nº 13.709/2018).</label>
         </div>
 
-        <button type="submit" class="btn">Entrar / Criar Conta</button>
+        <button type="submit" class="btn-primary">Entrar / Cadastrar Herói</button>
       </form>
     </div>
   </div>
 
-  <!-- Layout Principal -->
-  <div id="app-layout">
-    <aside>
-      <div class="logo-area">
-        Além das Muralhas
-        <span>O Amigo da Vizinhança</span>
-      </div>
-      <ul class="nav-links">
-        <li><button class="nav-btn active" onclick="navegar('tela-comunidade', this)">Painel Comunitário</button></li>
-        <li><button class="nav-btn" onclick="navegar('tela-doacao', this)">Cadastrar Doação</button></li>
-        <li><button class="nav-btn" onclick="navegar('tela-meu-historico', this)">Minhas Doações & Selos</button></li>
-        <li><button class="nav-btn" onclick="navegar('tela-perfil', this)">Meu Perfil & Conta</button></li>
-        <li><button class="nav-btn" onclick="navegar('tela-mensagens', this)">Mensagens Solidárias</button></li>
-        <li><button class="nav-btn" onclick="navegar('tela-personagens', this)">Personagens e Inspirações</button></li>
-        <li><button class="nav-btn" onclick="navegar('tela-motivacao', this)">Frases e Citações</button></li>
-        <li><button class="nav-btn" onclick="navegar('tela-historia', this)">Minha História</button></li>
-        <li><button class="nav-btn" onclick="navegar('tela-lgpd', this)">Privacidade & LGPD</button></li>
-        
-        <!-- Aba Super Admin -->
-        <li id="menu-admin" class="admin-tab">
-          <button class="nav-btn" onclick="navegar('tela-admin', this)">Painel Super Admin</button>
-        </li>
-      </ul>
+  <!-- APLICAÇÃO PRINCIPAL -->
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div>
+        <h2 class="brand-title">ALÉM DAS MURALHAS</h2>
+        <div class="brand-subtitle">O Amigo da Vizinhança</div>
 
-      <div class="user-profile-widget">
-        <img id="side-avatar" class="user-avatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=hero" alt="Avatar">
-        <div style="overflow: hidden;">
-          <strong id="lbl-username" style="color: var(--cyan-neon); font-size: 0.95rem; display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"></strong>
-          <div id="lbl-badge-admin" style="display:none; color: var(--gold); font-size: 0.72rem; font-weight: bold; margin-top: 0.1rem;">SUPER ADMIN</div>
-          <a href="#" onclick="deslogar()" style="color: var(--text-muted); font-size: 0.75rem; text-decoration: underline;">Desconectar</a>
+        <nav class="nav-menu">
+          <button class="nav-btn active" onclick="trocarAba('comunitario', this)">🏠 Painel Comunitário</button>
+          <button class="nav-btn" onclick="trocarAba('doar', this)">🎁 Cadastrar Doação</button>
+          <button class="nav-btn" onclick="trocarAba('minhas-doacoes', this)">📜 Minhas Doações</button>
+          <button class="nav-btn" onclick="trocarAba('perfil', this)">👤 Meu Perfil & LGPD</button>
+          <button class="nav-btn" onclick="trocarAba('mensagens', this)">💬 Mensagens Solidárias</button>
+          <button class="nav-btn" onclick="trocarAba('frases', this)">⚔️ Frases & Citações</button>
+          <button id="admin-tab-btn" class="nav-btn admin-nav-btn" style="display: none;" onclick="trocarAba('admin', this)">🛡️ Painel Super Admin</button>
+        </nav>
+      </div>
+
+      <div class="user-card">
+        <img id="user-display-img" src="https://api.dicebear.com/7.x/bottts/svg?seed=hero" alt="Avatar" class="user-avatar">
+        <div class="user-info">
+          <h4 id="user-display-nome">Carregando...</h4>
+          <span id="user-display-cargo">DOADOR VOLUNTÁRIO</span>
+          <button class="logout-btn" onclick="desconectarUsuario()">Desconectar</button>
         </div>
       </div>
     </aside>
 
-    <main>
-      <!-- Tela Comunitária -->
-      <section id="tela-comunidade" class="screen active">
-        <h2 style="margin-bottom: 0.5rem;">Impacto Comunitário</h2>
-        <p style="color: var(--text-muted); margin-bottom: 2rem;">Acompanhe como a união da nossa vizinhança está superando barreiras e gerando esperança.</p>
+    <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
+    <main class="main-container">
+      
+      <!-- 1. PAINEL COMUNITÁRIO -->
+      <section id="aba-comunitario" class="tab-section active">
+        <h2 class="section-title">Painel de Impacto Solidário</h2>
+        <p class="section-desc">Acompanhe as doações arrecadadas e os pontos de coleta em Mesquita, Nova Iguaçu e RJ.</p>
 
         <div class="stats-grid">
           <div class="stat-card">
             <h3 id="stat-doadores">0</h3>
-            <p>Pessoas que já doaram</p>
+            <p>Heróis Doadores</p>
           </div>
-          <div class="stat-card">
+          <div class="stat-card blue">
             <h3 id="stat-doacoes">0</h3>
-            <p>Doações registradas</p>
+            <p>Doações Realizadas</p>
           </div>
-          <div class="stat-card">
+          <div class="stat-card gold">
             <h3 id="stat-pontos">0</h3>
-            <p>Pontos de coleta ativos</p>
+            <p>Pontos de Acolhimento</p>
           </div>
         </div>
 
-        <div class="card" style="border-left: 4px solid var(--gold);">
-          <h3>Participe desta rede de apoio mútuo</h3>
-          <p style="color: var(--text-muted); margin-top: 0.5rem; line-height: 1.6;">
-            Cada item doado faz a diferença no cotidiano de quem mais necessita. Estenda a mão e faça parte deste movimento voluntário em prol do próximo.
-          </p>
-          <button class="btn" style="width: auto; margin-top: 1.2rem; padding: 0.7rem 1.5rem;" onclick="document.querySelectorAll('.nav-btn')[1].click()">Realizar uma Doação</button>
-        </div>
-
-        <div class="card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-            <h3>Amigos da Vizinhança em Ação</h3>
-            <span style="font-size: 0.8rem; color: var(--gold); font-weight: bold;">Mural dos Heróis</span>
-          </div>
-          <p style="color: var(--text-muted); font-size: 0.9rem;">Pessoas que já romperam as muralhas da indiferença e fizeram sua contribuição:</p>
-          <div class="donors-grid" id="container-mural-doadores"></div>
-        </div>
-      </section>
-
-      <!-- Tela de Doações com Filtro Reativo -->
-      <section id="tela-doacao" class="screen">
-        <div class="card">
-          <h2>Cadastrar Nova Doação</h2>
-          <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">
-            Selecione o grupo que você quer ajudar e os pontos de coleta compatíveis aparecerão automaticamente.
-          </p>
-
-          <form onsubmit="enviarDoacao(event)">
-            <div class="input-group">
-              <label>Público prioritário que você quer apoiar:</label>
-              <select id="doa-publico" onchange="filtrarPontosPorPublico()" required>
-                <option value="Criancas">Projetos de Acolhimento a Crianças</option>
-                <option value="Idosos">Lares e Abrigos de Idosos</option>
-                <option value="Moradores de Rua">Pessoas em Situação de Rua</option>
-              </select>
-            </div>
-
-            <div class="input-group">
-              <label>Escolha o Ponto de Coleta correspondente:</label>
-              <select id="doa-ponto" required></select>
-            </div>
-
-            <div class="input-group">
-              <label>Categoria do Item</label>
-              <select id="doa-categoria" required>
-                <option value="">Selecione...</option>
-                <option value="Roupas">Roupas e Agasalhos</option>
-                <option value="Alimentos">Alimentos não perecíveis / Cestas básicas</option>
-                <option value="Brinquedos">Brinquedos e Livros</option>
-                <option value="Higiene">Itens de Higiene Pessoal</option>
-                <option value="Outros">Outros</option>
-              </select>
-            </div>
-
-            <div class="input-group">
-              <label>Descrição Detalhada dos Itens:</label>
-              <textarea id="doa-desc" rows="3" placeholder="Ex.: 2 agasalhos em excelente estado de conservação..." required></textarea>
-            </div>
-
-            <button type="submit" class="btn">Confirmar Doação</button>
-          </form>
-        </div>
-
-        <div id="painel-sucesso" class="card" style="display: none; border-color: var(--cyan-neon);">
-          <h3 style="color: var(--cyan-neon); margin-bottom: 0.5rem;">Doação Registrada com Sucesso!</h3>
-          <p id="txt-agradecimento" style="line-height: 1.6; margin-bottom: 1rem;"></p>
-          <div id="txt-ponto-info" style="background: rgba(6, 9, 18, 0.9); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-cyber);"></div>
-        </div>
-      </section>
-
-      <!-- Tela: Minhas Doações & Selos -->
-      <section id="tela-meu-historico" class="screen">
-        <h2>Minha Jornada Solidária</h2>
-        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Acompanhe o impacto dos seus atos de solidariedade e veja as insígnias que marcam seu caminho.</p>
-
-        <div class="card" style="border-left: 4px solid var(--gold);">
-          <h3>Suas Doações Realizadas: <span id="lbl-minhas-qtd" style="color: var(--gold); font-size: 1.8rem;">0</span></h3>
-          <p id="lbl-status-proximo-selo" style="color: var(--text-muted); font-size: 0.88rem; margin-top: 0.3rem;"></p>
-          <div class="badge-container" id="container-selos"></div>
-        </div>
-
-        <div class="card">
-          <h3>Histórico das Minhas Doações</h3>
-          <div class="table-container">
+        <div class="content-box">
+          <h3 style="margin-bottom: 15px; font-family: var(--font-title); font-size: 1.2rem;">Pontos de Coleta Disponíveis</h3>
+          <div class="data-table-wrapper">
             <table>
               <thead>
                 <tr>
-                  <th>Protocolo</th>
-                  <th>Categoria</th>
-                  <th>Destino</th>
-                  <th>Ponto de Coleta</th>
-                  <th>Status</th>
+                  <th>Local / Instituição</th>
+                  <th>Endereço</th>
+                  <th>Público Atendido</th>
+                  <th>Horário & Contato</th>
                 </tr>
               </thead>
-              <tbody id="lista-minhas-doacoes"></tbody>
+              <tbody id="tabela-pontos-publico">
+                <tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Buscando pontos de coleta...</td></tr>
+              </tbody>
             </table>
           </div>
         </div>
       </section>
 
-      <!-- Tela: Meu Perfil & Gestão de Dados (LGPD) -->
-      <section id="tela-perfil" class="screen">
-        <h2>Meu Perfil de Herói</h2>
-        <div class="profile-insta-header">
-          <img id="card-insta-avatar" class="profile-insta-avatar" src="" alt="Foto de Perfil">
-          <div style="flex: 1;">
-            <h3 id="card-insta-nome">Arthur Couto</h3>
-            <span id="card-insta-email" style="font-size: 0.88rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">@usuario</span>
-            <span id="card-insta-tag" style="display: inline-block; background: rgba(0, 240, 255, 0.15); color: var(--cyan-neon); border: 1px solid var(--cyan-neon); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase;">Inspiração: Homem-Aranha</span>
-            <div id="card-insta-bio" style="font-size: 0.92rem; color: #E2E8F0; line-height: 1.55; font-style: italic; border-left: 3px solid var(--gold); padding-left: 0.8rem; margin-top: 0.6rem;"></div>
-          </div>
-        </div>
+      <!-- 2. CADASTRAR DOAÇÃO -->
+      <section id="aba-doar" class="tab-section">
+        <h2 class="section-title">Registrar Nova Ação Solidária</h2>
+        <p class="section-desc">Escolha o item a ser doado e o ponto de coleta mais próximo de você.</p>
 
-        <div class="card">
-          <h3>Editar Informações & Direitos do Titular (LGPD)</h3>
-          <form onsubmit="salvarPerfil(event)">
-            <div class="input-group">
-              <label>Foto de Perfil:</label>
-              <input type="file" id="perf-foto-file" accept="image/*" onchange="processarUploadFoto(event)">
-            </div>
-
-            <div class="input-group">
-              <label>Herói / Inspiração Favorita:</label>
-              <select id="perf-heroi" onchange="atualizarHeroBioPreview(this.value)" required>
-                <option value="Homem-Aranha">Homem-Aranha (Marvel)</option>
-                <option value="Armin Arlert">Armin Arlert (Attack on Titan)</option>
-                <option value="Eren Yeager">Eren Yeager (Attack on Titan)</option>
-                <option value="Batman">Batman (DC Comics)</option>
-                <option value="Capitão América">Capitão América (Marvel)</option>
-                <option value="Tanjiro Kamado">Tanjiro Kamado (Demon Slayer)</option>
-                <option value="Naruto Uzumaki">Naruto Uzumaki (Anime)</option>
-                <option value="All Might">All Might (My Hero Academia)</option>
-                <option value="Superman">Superman (DC Comics)</option>
-                <option value="Gandalf">Gandalf (O Senhor dos Anéis / O Hobbit)</option>
-                <option value="Samwise Gamgee">Samwise Gamgee (O Senhor dos Anéis)</option>
+        <div class="content-box" style="max-width: 650px;">
+          <form onsubmit="registrarDoacao(event)">
+            <div class="form-group">
+              <label>Categoria da Doação</label>
+              <select id="doacao-categoria" class="form-control" required>
+                <option value="Alimentos Não Perecíveis">Alimentos Não Perecíveis / Cestas</option>
+                <option value="Roupas e Agasalhos">Roupas e Agasalhos</option>
+                <option value="Brinquedos e Livros">Brinquedos e Livros Infantis</option>
+                <option value="Itens de Higiene Pessoal">Itens de Higiene Pessoal</option>
+                <option value="Marmitas Prontas">Marmitas Prontas / Lanches</option>
               </select>
             </div>
 
-            <div class="input-group">
-              <label>Nome Completo:</label>
-              <input type="text" id="perf-nome" required>
+            <div class="form-group">
+              <label>Público-Alvo</label>
+              <select id="doacao-publico" class="form-control" required>
+                <option value="Criancas">Crianças Carentes</option>
+                <option value="Idosos">Idosos em Abrigos</option>
+                <option value="Moradores de Rua">Pessoas em Situação de Rua</option>
+                <option value="Todos">Famílias em Vulnerabilidade Geral</option>
+              </select>
             </div>
 
-            <div class="input-group">
-              <label>E-mail Cadastrado:</label>
-              <input type="email" id="perf-email" required>
+            <div class="form-group">
+              <label>Ponto de Coleta Selecionado</label>
+              <select id="doacao-ponto-select" class="form-control" required></select>
             </div>
 
-            <div class="input-group">
-              <label>Nova Senha:</label>
-              <input type="password" id="perf-senha" placeholder="Deixe em branco se não quiser alterar">
+            <div class="form-group">
+              <label>Descrição dos Itens</label>
+              <textarea id="doacao-desc" class="form-control" rows="3" placeholder="Ex: 2 pacotes de arroz, 1 agasalho tamanho M..." required></textarea>
             </div>
 
-            <button type="submit" class="btn">Salvar Alterações</button>
-          </form>
-
-          <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-cyber);">
-            <h4 style="color: #f87171; margin-bottom: 0.5rem;">Zona de Privacidade & Exclusão (Art. 18 LGPD)</h4>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
-              Você tem o direito de revogar seu consentimento e apagar todos os seus registros pessoais desta aplicação.
-            </p>
-            <button type="button" class="btn-delete" onclick="excluirMinhaConta()">Solicitar Exclusão da Conta e Dados</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Tela: Privacidade & LGPD -->
-      <section id="tela-lgpd" class="screen">
-        <div class="card" style="border-left: 5px solid var(--cyan-neon);">
-          <h2 style="color: var(--cyan-neon); margin-bottom: 1rem;">Proteção de Dados & Conformidade com a LGPD</h2>
-          <div style="font-size: 0.95rem; line-height: 1.8; color: #CBD5E1; display: flex; flex-direction: column; gap: 1rem;">
-            <p>
-              A iniciativa <strong>Além das Muralhas | O Amigo da Vizinhança</strong> preza pela segurança, confidencialidade e privacidade de todos os seus membros voluntários, em rigorosa conformidade com a <strong>Lei Geral de Proteção de Dados (Lei nº 13.709/2018 - LGPD)</strong>.
-            </p>
-            <h4 style="color: #FFF;">1. Criptografia & Segurança da Informação</h4>
-            <p>
-              Todas as senhas são criptografadas com o algoritmo <strong>bcrypt com salt rounds reforçados</strong>. As comunicações em produção utilizam tráfego criptografado por protocolo <strong>HTTPS/SSL (TLS 1.3)</strong> de ponta a ponta.
-            </p>
-            <h4 style="color: #FFF;">2. Finalidade do Tratamento</h4>
-            <p>
-              Os dados coletados (Nome, E-mail e Informações de Doações) destinam-se exclusivamente à operacionalização logística das entregas voluntárias e à exibição das conquistas comunitárias, sendo estritamente vedada a cessão, compartilhamento comercial ou venda para terceiros.
-            </p>
-            <h4 style="color: #FFF;">3. Direitos do Titular</h4>
-            <p>
-              Você tem livre acesso para retificar seus dados ou solicitar a eliminação definitiva de todos os seus registros a qualquer momento pelo menu de gerenciamento de conta.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Tela de Personagens Geek -->
-      <section id="tela-personagens" class="screen">
-        <h2>Personagens Geek e o Espírito de Solidariedade</h2>
-        <div class="stats-grid" style="margin-top: 1.5rem;">
-          <div class="stat-card" style="text-align: left;">
-            <h4 style="color: var(--neon-red); margin-bottom: 0.3rem;">Homem-Aranha</h4>
-            <p style="font-size: 0.85rem; color: #CBD5E1; text-transform: none;">O verdadeiro amigo da vizinhança que ensina que o bem deve ser feito em qualquer escala.</p>
-          </div>
-          <div class="stat-card" style="text-align: left;">
-            <h4 style="color: var(--cyan-neon); margin-bottom: 0.3rem;">Armin Arlert</h4>
-            <p style="font-size: 0.85rem; color: #CBD5E1; text-transform: none;">Sabedoria e sacrifício para romper as muralhas do descaso com empatia e diálogo.</p>
-          </div>
-          <div class="stat-card" style="text-align: left;">
-            <h4 style="color: var(--gold); margin-bottom: 0.3rem;">All Might</h4>
-            <p style="font-size: 0.85rem; color: #CBD5E1; text-transform: none;">O símbolo de esperança que resgata e ampara os mais fracos sempre com um sorriso.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Tela de Mensagens Solidárias -->
-      <section id="tela-mensagens" class="screen">
-        <div class="card">
-          <h2>Enviar Mensagem de Apoio</h2>
-          <form onsubmit="postarMensagem(event)">
-            <div class="input-group">
-              <textarea id="msg-input" rows="3" placeholder="Escreva palavras de conforto e incentivo para quem receberá o apoio..." required></textarea>
-            </div>
-            <button type="submit" class="btn">Enviar Mensagem</button>
+            <button type="submit" class="btn-primary">Confirmar Doação & Gerar Protocolo</button>
           </form>
         </div>
-        <div class="card">
-          <h3>Mural de Mensagens Solidárias</h3>
-          <div id="container-mensagens" style="margin-top: 1.2rem;"></div>
+      </section>
+
+      <!-- 3. MINHAS DOAÇÕES -->
+      <section id="aba-minhas-doacoes" class="tab-section">
+        <h2 class="section-title">Minhas Doações & Histórico</h2>
+        <p class="section-desc">Veja os protocolos das suas doações registradas na plataforma.</p>
+
+        <div class="content-box">
+          <div class="data-table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Protocolo</th>
+                  <th>Categoria</th>
+                  <th>Ponto de Entrega</th>
+                  <th>Status</th>
+                  <th>Data</th>
+                </tr>
+              </thead>
+              <tbody id="tabela-minhas-doacoes">
+                <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Nenhuma doação encontrada.</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
-      <!-- Tela de Motivação & Frases -->
-      <section id="tela-motivacao" class="screen">
-        <h2 style="margin-bottom: 1.5rem;">Citações, Heroísmo e Sabedoria</h2>
-        <div id="container-frases"></div>
-      </section>
+      <!-- 4. PERFIL & LGPD -->
+      <section id="aba-perfil" class="tab-section">
+        <h2 class="section-title">Meu Perfil & Direitos LGPD</h2>
+        <p class="section-desc">Em conformidade com o Art. 18 da Lei Geral de Proteção de Dados, gerencie suas informações.</p>
 
-      <!-- Tela Minha História -->
-      <section id="tela-historia" class="screen">
-        <div class="card" style="background: linear-gradient(145deg, rgba(22, 28, 45, 0.95) 0%, rgba(13, 17, 27, 0.95) 100%); border-left: 5px solid var(--neon-red);">
-          <h2 style="color: var(--neon-red); margin-bottom: 1.5rem;">Minha História: Todos precisam de um herói — De onde veio essa ideia?</h2>
+        <div class="content-box" style="max-width: 650px;">
+          <form onsubmit="atualizarPerfil(event)">
+            <div class="form-group">
+              <label>Nome Completo</label>
+              <input type="text" id="perfil-nome" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label>E-mail Cadastrado</label>
+              <input type="email" id="perfil-email" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label>Nova Senha (deixe em branco se não desejar alterar)</label>
+              <input type="password" id="perfil-senha" class="form-control" placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="btn-primary" style="margin-bottom: 20px;">Salvar Alterações</button>
+          </form>
+
+          <hr style="border-color: var(--border-color); margin: 20px 0;">
           
-          <div style="font-size: 1.05rem; line-height: 1.85; color: #E5E7EB; display: flex; flex-direction: column; gap: 1.2rem;">
-            <p>
-              O mundo lá fora muitas vezes pode parecer implacável e cercado por muralhas gigantescas — muralhas de indiferença, frio e abandono que isolam aqueles que mais necessitam de amparo e dignidade.
-            </p>
-            <p>
-              Desde cedo, compreendi que um verdadeiro herói não é aquele que usa máscara ou possui superpoderes, mas sim aquele que se recusa a ignorar o sofrimento ao seu redor. Assim como nos ensina o Homem-Aranha: <em>quando você tem a capacidade de fazer o bem e não faz nada, as consequências também são suas</em>. Com a saúde, a força e os recursos que temos, assumimos uma responsabilidade inegociável de agir.
-            </p>
-            <p>
-              E como em <em>Attack on Titan</em>, se não nos levantarmos para lutar por quem não pode lutar por si mesmo, nenhuma realidade vai mudar. Precisamos de coragem para romper essas muralhas diariamente por meio da empatia, do cuidado e da solidariedade concreta.
-            </p>
-            <p>
-              A essência deste projeto nasceu de um propósito genuíno: <strong>ser um herói na vida de alguém</strong>.
-            </p>
-            <p>
-              Me chamo <strong>Arthur Couto</strong>. Não busco glória nem reconhecimento; quero ser apenas o amigo da vizinhança que estende a mão para que ninguém enfrente suas batalhas sozinho.
-            </p>
-            <p style="font-weight: 700; color: var(--gold); font-size: 1.15rem; margin-top: 0.5rem;">
-              Eu escolhi ser quem acolhe, cuida e transforma. E você, o que quer ser?
-            </p>
-          </div>
-
-          <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border-cyber); font-weight: 600; color: var(--cyan-neon);">
-            Arthur Couto — Idealizador da Iniciativa Além das Muralhas
-          </div>
+          <h4 style="color: var(--spider-red); margin-bottom: 8px;">Direito ao Esquecimento (Art. 18 LGPD)</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Ao clicar no botão abaixo, seus dados pessoais e conta serão permanentemente excluídos do banco de dados na nuvem.</p>
+          <button class="btn-primary" style="background: #334155;" onclick="excluirMinhaConta()">Solicitar Exclusão Definitiva de Dados</button>
         </div>
       </section>
 
-      <!-- Tela Super Admin Exclusiva -->
-      <section id="tela-admin" class="screen">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-          <h2>Painel de Controle Super Admin</h2>
-          <span style="color: var(--gold); font-weight: bold; font-size: 0.9rem;">Arthur Couto | Acesso Exclusivo</span>
-        </div>
+      <!-- 5. MENSAGENS SOLIDÁRIAS -->
+      <section id="aba-mensagens" class="tab-section">
+        <h2 class="section-title">Mural de Mensagens Solidárias</h2>
+        <p class="section-desc">Deixe palavras de ânimo e empatia para a comunidade.</p>
 
-        <div class="card">
-          <h3>Cadastrar Novo Ponto de Coleta</h3>
-          <form onsubmit="cadastrarPontoAdmin(event)" style="margin-top: 1rem;">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-              <div class="input-group">
-                <label>Nome do Local</label>
-                <input type="text" id="adm-ponto-nome" placeholder="Ex.: Lar São Vicente de Paulo..." required>
-              </div>
-              <div class="input-group">
-                <label>Endereço Completo</label>
-                <input type="text" id="adm-ponto-end" placeholder="Rua, Número..." required>
-              </div>
+        <div class="content-box" style="max-width: 650px; margin-bottom: 30px;">
+          <form onsubmit="enviarMensagem(event)">
+            <div class="form-group">
+              <label>Sua Mensagem</label>
+              <textarea id="mensagem-texto" class="form-control" rows="3" placeholder="Escreva uma palavra de força e esperança..." required></textarea>
             </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-              <div class="input-group">
-                <label>Grupo Atendido por este Local:</label>
-                <select id="adm-ponto-publico" required>
-                  <option value="Criancas">Crianças (Projetos de Acolhimento)</option>
-                  <option value="Idosos">Idosos (Lares e Abrigos)</option>
-                  <option value="Moradores de Rua">Moradores de Rua</option>
-                  <option value="Todos">Todos os Grupos (Ponto Geral)</option>
-                </select>
-              </div>
-              <div class="input-group">
-                <label>Contato / WhatsApp</label>
-                <input type="text" id="adm-ponto-contato" placeholder="(21) 9...." required>
-              </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
-              <div class="input-group">
-                <label>Bairro</label>
-                <input type="text" id="adm-ponto-bairro" required>
-              </div>
-              <div class="input-group">
-                <label>Cidade</label>
-                <input type="text" id="adm-ponto-cidade" required>
-              </div>
-              <div class="input-group">
-                <label>Horário</label>
-                <input type="text" id="adm-ponto-horario" placeholder="Seg. a Sex.: 08h às 17h" required>
-              </div>
-            </div>
-
-            <button type="submit" class="btn" style="background: linear-gradient(135deg, #00F0FF 0%, #0077B6 100%); color:#000;">Salvar Ponto de Coleta</button>
+            <button type="submit" class="btn-primary">Publicar no Mural</button>
           </form>
         </div>
 
-        <div class="card">
-          <h3>Pontos de Coleta Ativos</h3>
-          <div id="lista-adm-pontos" style="margin-top: 1rem;"></div>
+        <div id="lista-mensagens-container" class="stats-grid"></div>
+      </section>
+
+      <!-- 6. FRASES & CITAÇÕES -->
+      <section id="aba-frases" class="tab-section">
+        <h2 class="section-title">Frases & Inspirações</h2>
+        <p class="section-desc">Valores universais de heróis, anime e sabedoria que motivam nossa missão.</p>
+        <div id="lista-frases-container" class="stats-grid"></div>
+      </section>
+
+      <!-- 7. PAINEL SUPER ADMIN -->
+      <section id="aba-admin" class="tab-section">
+        <h2 class="section-title" style="color: var(--titan-gold);">Painel de Super Admin</h2>
+        <p class="section-desc">Gerenciamento administrativo exclusivo para gestão de pontos de coleta e doações.</p>
+
+        <div class="content-box" style="max-width: 650px; margin-bottom: 30px;">
+          <h3 style="margin-bottom: 15px; font-size: 1.1rem; color: #fff;">Cadastrar Novo Ponto de Coleta</h3>
+          <form onsubmit="cadastrarPontoAdmin(event)">
+            <div class="form-group">
+              <label>Nome do Local</label>
+              <input type="text" id="adm-ponto-nome" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Endereço Completo</label>
+              <input type="text" id="adm-ponto-end" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Bairro</label>
+              <input type="text" id="adm-ponto-bairro" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Cidade</label>
+              <input type="text" id="adm-ponto-cidade" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Horário de Funcionamento</label>
+              <input type="text" id="adm-ponto-horario" class="form-control" placeholder="Ex: Seg a Sex das 08h às 17h" required>
+            </div>
+            <div class="form-group">
+              <label>Contato / Telefone</label>
+              <input type="text" id="adm-ponto-contato" class="form-control" required>
+            </div>
+            <button type="submit" class="btn-primary">Salvar Ponto no Banco Aiven</button>
+          </form>
         </div>
 
-        <div class="card">
-          <h3>Histórico Geral de Doações da Plataforma</h3>
-          <div class="table-container">
+        <div class="content-box">
+          <h3 style="margin-bottom: 15px; font-size: 1.1rem; color: #fff;">Relatório Geral de Doações no Banco</h3>
+          <div class="data-table-wrapper">
             <table>
               <thead>
                 <tr>
                   <th>Protocolo</th>
                   <th>Doador</th>
-                  <th>E-mail</th>
-                  <th>Categoria</th>
-                  <th>Destino</th>
-                  <th>Ponto de Coleta</th>
+                  <th>Item / Categoria</th>
+                  <th>Ponto de Entrega</th>
+                  <th>Data</th>
                 </tr>
               </thead>
-              <tbody id="lista-adm-doacoes"></tbody>
+              <tbody id="tabela-admin-doacoes">
+                <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Carregando histórico geral...</td></tr>
+              </tbody>
             </table>
           </div>
         </div>
       </section>
+
     </main>
   </div>
 
+  <!-- JAVASCRIPT DA APLICAÇÃO -->
   <script>
     let usuarioLogado = null;
-    let base64FotoTemp = null;
-    let todosPontosColeta = [];
 
-    const HERO_BIOS = {
-      "Homem-Aranha": { tag: "O Amigo da Vizinhança", bio: "Com grandes poderes vêm grandes responsabilidades. Eu sempre me levanto para proteger os que precisam." },
-      "Armin Arlert": { tag: "Estrategista da Esperança", bio: "Aqueles que não são capazes de sacrificar nada, não podem mudar nada. Rompendo as muralhas da indiferença." },
-      "Eren Yeager": { tag: "Determinação Inabalável", bio: "Se você não lutar, você não pode vencer! Lutarei até o fim pela dignidade dos vulneráveis." },
-      "Batman": { tag: "O Cavaleiro das Trevas", bio: "Não é quem eu sou por dentro, mas o que eu faço é o que me define. Transformando dor em escudo solidário." },
-      "Capitão América": { tag: "O Primeiro Vingador", bio: "Eu posso fazer isso o dia todo. Nunca abandonamos quem não consegue se defender sozinho." },
-      "Tanjiro Kamado": { tag: "Coração Compassivo", bio: "Mesmo nas noites mais escuras, levarei calor e bondade aos desamparados." },
-      "Naruto Uzumaki": { tag: "Determinação Ninja", bio: "Eu nunca volto atrás na minha palavra! O sofrimento me ensinou a nunca deixar ninguém para trás." },
-      "All Might": { tag: "Símbolo da Paz", bio: "Está tudo bem agora... sabe por quê? Porque nós estamos aqui! Levando esperança com um sorriso." },
-      "Superman": { tag: "O Homem do Amanhã", bio: "Há um bem infinito em cada ser humano. Estender a mão aos mais humildes é o maior poder que existe." },
-      "Gandalf": { tag: "Guia da Luz", bio: "São as pequenas ações diárias de pessoas comuns que mantêm a escuridão afastada." },
-      "Samwise Gamgee": { tag: "Lealdade Inquebrável", bio: "Há algo de bom neste mundo, e vale a pena lutar por isso até o último instante." }
-    };
+    // Inicialização da Aplicação
+    document.addEventListener('DOMContentLoaded', () => {
+      const sessaoSalva = localStorage.getItem('usuario_sessao');
+      if (sessaoSalva) {
+        usuarioLogado = JSON.parse(sessaoSalva);
+        configurarInterfaceUsuario();
+      }
+      carregarImpacto();
+      carregarPontosColeta();
+      carregarMensagens();
+      carregarFrases();
+    });
 
-    const SELOS_CONFIG = [
-      { qtd: 1, nome: "O Início da Jornada", desc: "Seu primeiro salto de fé como amigo da vizinhança.", svg: `<svg viewBox="0 0 24 24" fill="#FF0055"><circle cx="12" cy="12" r="9" stroke="#FF0055" stroke-width="2" fill="none"/><path d="M12 7v5l3 3"/></svg>` },
-      { qtd: 5, nome: "A Ascensão do Herói", desc: "Sua dedicação constante já impacta vidas e espalha luz.", svg: `<svg viewBox="0 0 24 24" fill="#00F0FF"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>` },
-      { qtd: 10, nome: "Capitão da Tropa de Exploração", desc: "Dedicou seu coração para romper as muralhas da indiferença.", svg: `<svg viewBox="0 0 24 24" fill="#00F5D4"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm-1 14h-2V9h2v7zm4 0h-2V7h2v9z"/></svg>` },
-      { qtd: 15, nome: "O Vingador", desc: "Um dos maiores defensores e protetores da nossa comunidade.", svg: `<svg viewBox="0 0 24 24" fill="#E63946"><path d="M12 2L2 22h4l2-4h8l2 4h4L12 2zm0 6l2.5 5h-5L12 8z"/></svg>` },
-      { qtd: 20, nome: "Símbolo da Paz", desc: "Sua presença inspira segurança e conforto a quem mais precisa.", svg: `<svg viewBox="0 0 24 24" fill="#FFB703"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>` },
-      { qtd: 25, nome: "Lenda Além das Muralhas", desc: "O patamar supremo de generosidade e transformação humana.", svg: `<svg viewBox="0 0 24 24" fill="#FFD166"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-1h14v1z"/></svg>` }
-    ];
+    function trocarAba(nomeAba, botao) {
+      document.querySelectorAll('.tab-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      
+      const abaAlvo = document.getElementById(`aba-${nomeAba}`);
+      if (abaAlvo) abaAlvo.classList.add('active');
+      if (botao) botao.classList.add('active');
 
-    async function autenticar(e) {
+      if (nomeAba === 'minhas-doacoes') carregarMinhasDoacoes();
+      if (nomeAba === 'admin') carregarAdminDashboard();
+    }
+
+    // Autenticação e Login
+    async function realizarAutenticacao(e) {
       e.preventDefault();
       const nome = document.getElementById('auth-nome').value;
       const email = document.getElementById('auth-email').value;
       const senha = document.getElementById('auth-senha').value;
-      const consentimento_lgpd = document.getElementById('auth-lgpd').checked;
+      const lgpd = document.getElementById('auth-lgpd').checked;
 
       try {
         const res = await fetch('/api/auth', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ nome, email, senha, consentimento_lgpd })
+          body: JSON.stringify({ nome, email, senha, consentimento_lgpd: lgpd ? 1 : 0 })
         });
+
         const data = await res.json();
-        if (data.error) return alert(data.error);
+        if (data.error) {
+          alert(data.error);
+          return;
+        }
 
-        setUsuarioLogado(data);
-        document.getElementById('auth-screen').style.display = 'none';
-        document.getElementById('app-layout').style.display = 'flex';
-
-        carregarImpacto();
-        carregarMuralDoadores();
-        carregarPontosColeta();
-        carregarMensagens();
-        carregarFrases();
-        carregarMinhasDoacoes();
+        usuarioLogado = data;
+        localStorage.setItem('usuario_sessao', JSON.stringify(data));
+        configurarInterfaceUsuario();
       } catch (err) {
-        alert('Erro ao conectar: ' + err.message);
+        alert('Erro ao conectar ao servidor: ' + err.message);
       }
     }
 
-    function setUsuarioLogado(user) {
-      usuarioLogado = user;
-      document.getElementById('lbl-username').innerText = user.nome;
+    function configurarInterfaceUsuario() {
+      if (!usuarioLogado) return;
+      document.getElementById('auth-modal').style.display = 'none';
+      document.getElementById('user-display-nome').innerText = usuarioLogado.nome;
+      document.getElementById('user-display-cargo').innerText = usuarioLogado.is_admin ? 'SUPER ADMIN' : 'DOADOR VOLUNTÁRIO';
+      document.getElementById('perfil-nome').value = usuarioLogado.nome;
+      document.getElementById('perfil-email').value = usuarioLogado.email;
 
-      const avatarSrc = user.foto_perfil || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(user.email)}`;
-      base64FotoTemp = user.foto_perfil || null;
-
-      document.getElementById('side-avatar').src = avatarSrc;
-      document.getElementById('card-insta-avatar').src = avatarSrc;
-      document.getElementById('card-insta-nome').innerText = user.nome;
-      document.getElementById('card-insta-email').innerText = `@${user.email.split('@')[0]}`;
-
-      const heroi = user.heroi_favorito || 'Homem-Aranha';
-      document.getElementById('perf-heroi').value = heroi;
-      atualizarHeroBioPreview(heroi);
-
-      document.getElementById('perf-nome').value = user.nome;
-      document.getElementById('perf-email').value = user.email;
-      document.getElementById('perf-senha').value = '';
-
-      const ehArthurAdmin = (user.email.toLowerCase() === 'arthurcoutooliveira2006@gmail.com' && user.is_admin === 1);
-      document.getElementById('menu-admin').style.display = ehArthurAdmin ? 'block' : 'none';
-      document.getElementById('lbl-badge-admin').style.display = ehArthurAdmin ? 'block' : 'none';
-    }
-
-    function atualizarHeroBioPreview(heroiNome) {
-      const heroiData = HERO_BIOS[heroiNome] || HERO_BIOS["Homem-Aranha"];
-      document.getElementById('card-insta-tag').innerText = `${heroiNome} | ${heroiData.tag}`;
-      document.getElementById('card-insta-bio').innerText = `"${heroiData.bio}"`;
-    }
-
-    function processarUploadFoto(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      if (file.size > 8 * 1024 * 1024) {
-        alert('A imagem é muito grande! Escolha um arquivo com até 8MB.');
-        event.target.value = '';
-        return;
+      if (usuarioLogado.is_admin) {
+        document.getElementById('admin-tab-btn').style.display = 'flex';
       }
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        base64FotoTemp = e.target.result;
-        document.getElementById('card-insta-avatar').src = base64FotoTemp;
-        document.getElementById('side-avatar').src = base64FotoTemp;
-      };
-      reader.readAsDataURL(file);
     }
 
-    async function salvarPerfil(e) {
+    function desconectarUsuario() {
+      localStorage.removeItem('usuario_sessao');
+      window.location.reload();
+    }
+
+    // Carregar Métricas de Impacto
+    async function carregarImpacto() {
+      try {
+        const res = await fetch('/api/impacto');
+        const data = await res.json();
+        document.getElementById('stat-doadores').innerText = data.total_doadores || 0;
+        document.getElementById('stat-doacoes').innerText = data.total_doacoes || 0;
+        document.getElementById('stat-pontos').innerText = data.total_pontos || 0;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Carregar Pontos de Coleta
+    async function carregarPontosColeta() {
+      try {
+        const res = await fetch('/api/pontos');
+        const pontos = await res.json();
+
+        const tbody = document.getElementById('tabela-pontos-publico');
+        const selectPonto = document.getElementById('doacao-ponto-select');
+        tbody.innerHTML = '';
+        selectPonto.innerHTML = '';
+
+        pontos.forEach(p => {
+          tbody.innerHTML += `
+            <tr>
+              <td><strong>${p.nome_local}</strong></td>
+              <td>${p.endereco} - ${p.bairro}, ${p.cidade}</td>
+              <td><span class="badge">${p.publico_atendido}</span></td>
+              <td>${p.horario} | ${p.contato}</td>
+            </tr>
+          `;
+          selectPonto.innerHTML += `<option value="${p.id_ponto}">${p.nome_local} (${p.bairro})</option>`;
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Registrar Doação
+    async function registrarDoacao(e) {
       e.preventDefault();
+      if (!usuarioLogado) return;
+
       const payload = {
         id_usuario: usuarioLogado.id_usuario,
-        nome: document.getElementById('perf-nome').value,
-        email: document.getElementById('perf-email').value,
-        senha: document.getElementById('perf-senha').value,
-        foto_perfil: base64FotoTemp,
-        heroi_favorito: document.getElementById('perf-heroi').value
+        categoria: document.getElementById('doacao-categoria').value,
+        publico_alvo: document.getElementById('doacao-publico').value,
+        id_ponto: document.getElementById('doacao-ponto-select').value,
+        descricao: document.getElementById('doacao-desc').value
       };
+
+      try {
+        const res = await fetch('/api/doacoes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        alert(`🎉 DOAÇÃO CONFIRMADA!\n\nProtocolo: ${data.protocolo}\nLocal de Entrega: ${data.ponto ? data.ponto.nome_local : 'Ponto Coleta'}\n\n"${data.frase.texto}" - ${data.frase.autor}`);
+        e.target.reset();
+        carregarImpacto();
+        trocarAba('minhas-doacoes', document.querySelectorAll('.nav-btn')[2]);
+      } catch (err) {
+        alert('Erro ao registrar doação: ' + err.message);
+      }
+    }
+
+    // Carregar Minhas Doações
+    async function carregarMinhasDoacoes() {
+      if (!usuarioLogado) return;
+      try {
+        const res = await fetch(`/api/doacoes/minhas/${usuarioLogado.id_usuario}`);
+        const doacoes = await res.json();
+        const tbody = document.getElementById('tabela-minhas-doacoes');
+        tbody.innerHTML = '';
+
+        if (doacoes.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Nenhuma doação registrada ainda.</td></tr>';
+          return;
+        }
+
+        doacoes.forEach(d => {
+          tbody.innerHTML += `
+            <tr>
+              <td><strong>${d.codigo_protocolo}</strong></td>
+              <td>${d.categoria}</td>
+              <td>${d.ponto_nome || 'Ponto Geral'}</td>
+              <td><span class="badge">${d.status_doacao}</span></td>
+              <td>${new Date(d.data_doacao).toLocaleDateString('pt-BR')}</td>
+            </tr>
+          `;
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Atualização de Perfil (LGPD)
+    async function atualizarPerfil(e) {
+      e.preventDefault();
+      const nome = document.getElementById('perfil-nome').value;
+      const email = document.getElementById('perfil-email').value;
+      const senha = document.getElementById('perfil-senha').value;
 
       try {
         const res = await fetch('/api/usuario/perfil', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({ id_usuario: usuarioLogado.id_usuario, nome, email, senha })
         });
         const data = await res.json();
-        if (data.error) return alert(data.error);
 
-        alert('Perfil atualizado com sucesso!');
-        setUsuarioLogado({ ...usuarioLogado, ...data });
-        carregarMuralDoadores();
+        if (data.success) {
+          usuarioLogado.nome = data.nome;
+          usuarioLogado.email = data.email;
+          localStorage.setItem('usuario_sessao', JSON.stringify(usuarioLogado));
+          configurarInterfaceUsuario();
+          alert('Dados atualizados com sucesso!');
+        }
       } catch (err) {
-        alert('Erro ao salvar: ' + err.message);
+        alert('Erro ao atualizar perfil: ' + err.message);
       }
     }
 
+    // Exclusão de Conta (LGPD Art. 18)
     async function excluirMinhaConta() {
-      if (!confirm('ATENÇÃO: Em conformidade com a LGPD, esta ação apagará permanentemente sua conta, doações e registros. Deseja prosseguir?')) return;
-      
+      if (!confirm('Tem certeza de que deseja exercer seu direito ao esquecimento e excluir todos os seus dados? Esta ação é irreversível.')) return;
+
       try {
         await fetch(`/api/usuario/excluir/${usuarioLogado.id_usuario}`, { method: 'DELETE' });
-        alert('Sua conta e dados foram excluídos com sucesso.');
-        deslogar();
+        alert('Seus dados foram excluídos permanentemente.');
+        desconectarUsuario();
       } catch (err) {
-        alert('Erro ao excluir: ' + err.message);
+        alert('Erro ao excluir conta: ' + err.message);
       }
     }
 
-    function deslogar() {
-      usuarioLogado = null;
-      document.getElementById('app-layout').style.display = 'none';
-      document.getElementById('auth-screen').style.display = 'flex';
-    }
-
-    function navegar(idTela, botao) {
-      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-      document.getElementById(idTela).classList.add('active');
-      botao.classList.add('active');
-
-      if (idTela === 'tela-admin') carregarAdminDashboard();
-      if (idTela === 'tela-comunidade') { carregarImpacto(); carregarMuralDoadores(); }
-      if (idTela === 'tela-meu-historico') carregarMinhasDoacoes();
-      if (idTela === 'tela-doacao') filtrarPontosPorPublico();
-    }
-
-    async function carregarImpacto() {
-      const res = await fetch('/api/impacto');
-      const data = await res.json();
-      document.getElementById('stat-doadores').innerText = data.total_doadores || 0;
-      document.getElementById('stat-doacoes').innerText = data.total_doacoes || 0;
-      document.getElementById('stat-pontos').innerText = data.total_pontos || 0;
-    }
-
-    async function carregarMuralDoadores() {
+    // Mensagens Solidárias
+    async function carregarMensagens() {
       try {
-        const res = await fetch('/api/doadores/publico');
-        const doadores = await res.json();
-        const container = document.getElementById('container-mural-doadores');
+        const res = await fetch('/api/mensagens');
+        const mensagens = await res.json();
+        const container = document.getElementById('lista-mensagens-container');
+        container.innerHTML = '';
 
-        if (!doadores || doadores.length === 0) {
-          container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 1.5rem;">Ainda não há doadores registrados. Seja você o primeiro herói a doar!</div>`;
-          return;
-        }
-
-        container.innerHTML = doadores.map(d => {
-          const avatar = d.foto_perfil || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(d.nome)}`;
-          return `
-            <div class="donor-card">
-              <img src="${avatar}" alt="${d.nome}" class="donor-avatar">
-              <h4 title="${d.nome}">${d.nome}</h4>
-              <span class="hero-tag" style="font-size: 0.75rem; color: var(--cyan-neon); display:block; margin-bottom: 0.3rem;">${d.heroi_favorito || 'Homem-Aranha'}</span>
-              <span style="display:inline-block; background:rgba(255, 183, 3, 0.15); color:var(--gold); border:1px solid var(--gold); font-size:0.75rem; font-weight:700; padding:0.15rem 0.5rem; border-radius:12px;">${d.total_doacoes} doação(ões)</span>
+        mensagens.forEach(m => {
+          container.innerHTML += `
+            <div class="content-box">
+              <p style="font-style: italic; margin-bottom: 10px; color: #fff;">"${m.mensagem}"</p>
+              <span style="font-size: 0.8rem; color: var(--spider-blue); font-weight: 700;">— ${m.nome}</span>
             </div>
           `;
-        }).join('');
+        });
       } catch (err) {
-        console.error('Erro ao carregar mural:', err);
+        console.error(err);
       }
     }
 
-    async function carregarPontosColeta() {
-      const res = await fetch('/api/pontos');
-      todosPontosColeta = await res.json();
-      filtrarPontosPorPublico();
-    }
-
-    function filtrarPontosPorPublico() {
-      const publicoSelecionado = document.getElementById('doa-publico').value;
-      const selectPonto = document.getElementById('doa-ponto');
-
-      const pontosFiltrados = todosPontosColeta.filter(p => {
-        const publicoPonto = p.publico_atendido || 'Todos';
-        return publicoPonto === 'Todos' || publicoPonto === publicoSelecionado;
-      });
-
-      selectPonto.innerHTML = pontosFiltrados.length === 0
-        ? `<option value="">Nenhum ponto cadastrado para este grupo ainda</option>`
-        : pontosFiltrados.map(p => `<option value="${p.id_ponto}">${p.nome_local} (${p.bairro} - ${p.cidade})</option>`).join('');
-    }
-
-    async function carregarMinhasDoacoes() {
+    async function enviarMensagem(e) {
+      e.preventDefault();
       if (!usuarioLogado) return;
-      const res = await fetch(`/api/doacoes/minhas/${usuarioLogado.id_usuario}`);
-      const doacoes = await res.json();
+      const texto = document.getElementById('mensagem-texto').value;
 
-      const total = doacoes.length;
-      document.getElementById('lbl-minhas-qtd').innerText = total;
-
-      let proxSelo = SELOS_CONFIG.find(s => s.qtd > total);
-      document.getElementById('lbl-status-proximo-selo').innerText = proxSelo 
-        ? `Mais ${proxSelo.qtd - total} ato(s) solidário(s) para conquistar a insígnia "${proxSelo.nome}".`
-        : `Parabéns! Você alcançou o patamar supremo de todas as insígnias lendárias!`;
-
-      document.getElementById('container-selos').innerHTML = SELOS_CONFIG.map(selo => {
-        const desbloqueado = total >= selo.qtd;
-        return `
-          <div class="badge-card ${desbloqueado ? 'unlocked' : ''}">
-            <div class="badge-img-wrapper">${selo.svg}</div>
-            <div style="flex:1;">
-              <h4 style="font-size:1rem; color:var(--gold); margin-bottom:0.2rem;">${selo.nome}</h4>
-              <p style="font-size:0.82rem; color:#D1D5DB; line-height:1.4;">${selo.desc}</p>
-              <span style="font-size:0.75rem; font-weight:600; color:${desbloqueado ? 'var(--success)' : 'var(--cyan-neon)'}; margin-top:0.3rem; display:block;">
-                ${desbloqueado ? '✓ Insígnia Conquistada' : `Conquista com ${selo.qtd} doações`}
-              </span>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      document.getElementById('lista-minhas-doacoes').innerHTML = doacoes.length === 0 
-        ? `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Você ainda não cadastrou nenhuma doação. Dê o seu primeiro salto de fé!</td></tr>`
-        : doacoes.map(d => `
-          <tr>
-            <td><strong>${d.codigo_protocolo}</strong></td>
-            <td>${d.categoria}</td>
-            <td>${d.publico_alvo}</td>
-            <td>${d.ponto_nome ? `${d.ponto_nome} (${d.ponto_bairro})` : 'Ponto removido'}</td>
-            <td><span style="background: rgba(0, 245, 212, 0.15); color: var(--success); padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600; font-size: 0.8rem;">${d.status_doacao}</span></td>
-          </tr>
-        `).join('');
+      try {
+        await fetch('/api/mensagens', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id_usuario: usuarioLogado.id_usuario, mensagem: texto })
+        });
+        e.target.reset();
+        carregarMensagens();
+        alert('Mensagem enviada com sucesso!');
+      } catch (err) {
+        alert('Erro ao enviar mensagem: ' + err.message);
+      }
     }
 
-    async function enviarDoacao(e) {
-      e.preventDefault();
-      const pontoId = document.getElementById('doa-ponto').value;
-      if (!pontoId) return alert('Por favor, selecione um ponto de coleta disponível.');
-
-      const payload = {
-        id_usuario: usuarioLogado.id_usuario,
-        id_ponto: pontoId,
-        categoria: document.getElementById('doa-categoria').value,
-        publico_alvo: document.getElementById('doa-publico').value,
-        descricao: document.getElementById('doa-desc').value
-      };
-
-      const res = await fetch('/api/doacoes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-
-      document.getElementById('painel-sucesso').style.display = 'block';
-      document.getElementById('txt-agradecimento').innerHTML = `
-        Olá, <strong>${usuarioLogado.nome}</strong>! Sua doação foi registrada sob o protocolo seguro: <strong style="color: var(--cyan-neon);">${data.protocolo}</strong>.<br><br>
-        <em>"${data.frase.texto}"</em> — <strong>${data.frase.autor}</strong>
-      `;
-      document.getElementById('txt-ponto-info').innerHTML = `
-        <strong>Ponto de Entrega:</strong> ${data.ponto.nome_local}<br>
-        <strong>Endereço:</strong> ${data.ponto.endereco}, ${data.ponto.bairro} - ${data.ponto.cidade}<br>
-        <strong>Horário:</strong> ${data.ponto.horario}<br>
-        <strong>Contato:</strong> ${data.ponto.contato}
-      `;
-      document.getElementById('doa-desc').value = '';
-      carregarImpacto();
-      carregarMuralDoadores();
-      carregarMinhasDoacoes();
-    }
-
-    async function carregarMensagens() {
-      const res = await fetch('/api/mensagens');
-      const mensagens = await res.json();
-      document.getElementById('container-mensagens').innerHTML = mensagens.map(m => {
-        const foto = m.foto_perfil || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(m.nome)}`;
-        const heroiTag = m.heroi_favorito ? `<span style="font-size: 0.72rem; color: var(--cyan-neon); font-weight: bold; display: block;">Inspiração: ${m.heroi_favorito}</span>` : '';
-        return `
-          <div class="quote-box" style="display: flex; gap: 1rem; align-items: flex-start;">
-            <img src="${foto}" style="width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--neon-red); object-fit: cover;">
-            <div>
-              <p>"${m.mensagem}"</p>
-              <span>— Enviado por ${m.nome}</span>
-              ${heroiTag}
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    async function postarMensagem(e) {
-      e.preventDefault();
-      const mensagem = document.getElementById('msg-input').value;
-      await fetch('/api/mensagens', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id_usuario: usuarioLogado.id_usuario, mensagem })
-      });
-      document.getElementById('msg-input').value = '';
-      carregarMensagens();
-    }
-
+    // Frases Motivacionais
     async function carregarFrases() {
-      const res = await fetch('/api/frases');
-      const frases = await res.json();
-      document.getElementById('container-frases').innerHTML = frases.map(f => `
-        <div class="quote-box">
-          <p>"${f.texto}"</p>
-          <span>— ${f.autor}</span>
-        </div>
-      `).join('');
+      try {
+        const res = await fetch('/api/frases');
+        const frases = await res.json();
+        const container = document.getElementById('lista-frases-container');
+        container.innerHTML = '';
+
+        frases.forEach(f => {
+          container.innerHTML += `
+            <div class="content-box">
+              <p style="margin-bottom: 8px; font-weight: 600; color: #fff;">"${f.texto}"</p>
+              <span style="font-size: 0.8rem; color: var(--titan-gold); font-weight: 700;">${f.autor}</span>
+            </div>
+          `;
+        });
+      } catch (err) {
+        console.error(err);
+      }
     }
 
-    /* Super Admin */
+    // Painel Admin
     async function carregarAdminDashboard() {
-      const resPontos = await fetch('/api/pontos');
-      const pontos = await resPontos.json();
-      todosPontosColeta = pontos;
+      try {
+        const res = await fetch('/api/admin/doacoes');
+        const doacoes = await res.json();
+        const tbody = document.getElementById('tabela-admin-doacoes');
+        tbody.innerHTML = '';
 
-      document.getElementById('lista-adm-pontos').innerHTML = pontos.map(p => `
-        <div class="ponto-item">
-          <div>
-            <strong>${p.nome_local}</strong> 
-            <span style="display: inline-block; background: rgba(255, 183, 3, 0.15); color: var(--gold); border: 1px solid var(--gold); font-size: 0.72rem; padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: bold; margin-left: 0.4rem;">
-              ${p.publico_atendido || 'Todos'}
-            </span><br>
-            <small style="color: var(--text-muted);">${p.endereco}, ${p.bairro} - ${p.cidade} | ${p.contato}</small>
-          </div>
-          <button class="btn-delete" onclick="removerPontoAdmin(${p.id_ponto})">Remover</button>
-        </div>
-      `).join('');
-
-      const resDoacoes = await fetch('/api/admin/doacoes');
-      const doacoes = await resDoacoes.json();
-      document.getElementById('lista-adm-doacoes').innerHTML = doacoes.map(d => `
-        <tr>
-          <td><strong>${d.codigo_protocolo}</strong></td>
-          <td>${d.doador_nome}</td>
-          <td>${d.doador_email}</td>
-          <td>${d.categoria}</td>
-          <td>${d.publico_alvo}</td>
-          <td>${d.ponto_nome || 'N/A'}</td>
-        </tr>
-      `).join('');
+        doacoes.forEach(d => {
+          tbody.innerHTML += `
+            <tr>
+              <td><strong>${d.codigo_protocolo}</strong></td>
+              <td>${d.doador_nome} (${d.doador_email})</td>
+              <td>${d.categoria}</td>
+              <td>${d.ponto_nome || 'Não especificado'}</td>
+              <td>${new Date(d.data_doacao).toLocaleDateString('pt-BR')}</td>
+            </tr>
+          `;
+        });
+      } catch (err) {
+        console.error(err);
+      }
     }
 
     async function cadastrarPontoAdmin(e) {
@@ -1293,30 +1071,25 @@
       const payload = {
         nome_local: document.getElementById('adm-ponto-nome').value,
         endereco: document.getElementById('adm-ponto-end').value,
-        publico_atendido: document.getElementById('adm-ponto-publico').value,
         bairro: document.getElementById('adm-ponto-bairro').value,
         cidade: document.getElementById('adm-ponto-cidade').value,
         horario: document.getElementById('adm-ponto-horario').value,
         contato: document.getElementById('adm-ponto-contato').value
       };
 
-      await fetch('/api/admin/pontos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      alert('Ponto de coleta cadastrado com sucesso!');
-      carregarAdminDashboard();
-      carregarPontosColeta();
-      e.target.reset();
-    }
-
-    async function removerPontoAdmin(id) {
-      if (!confirm('Deseja realmente remover este ponto de coleta?')) return;
-      await fetch(`/api/admin/pontos/${id}`, { method: 'DELETE' });
-      carregarAdminDashboard();
-      carregarPontosColeta();
+      try {
+        await fetch('/api/admin/pontos', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        alert('Ponto de coleta cadastrado com sucesso!');
+        e.target.reset();
+        carregarPontosColeta();
+        carregarImpacto();
+      } catch (err) {
+        alert('Erro ao cadastrar ponto: ' + err.message);
+      }
     }
   </script>
 </body>
