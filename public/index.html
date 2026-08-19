@@ -21,6 +21,7 @@
       --border-color: #1e293b;
       --font-title: 'Cinzel', serif;
       --font-body: 'Montserrat', sans-serif;
+      --sidebar-width: 290px;
     }
 
     * {
@@ -37,16 +38,58 @@
       overflow-x: hidden;
     }
 
-    /* ============================================================
-       MODAIS E TELAS DE ENTRADA (AUTH)
-       ============================================================ */
+    /* BOTÃO DE CONTROLE DA SIDEBAR (EXPANDIR / RECOLHER) */
+    .menu-toggle-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1001;
+      background: var(--bg-card);
+      border: 1px solid var(--spider-blue);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      transition: all 0.25s ease;
+    }
+
+    .menu-toggle-btn:hover {
+      background: var(--spider-blue);
+      color: #0b0f19;
+    }
+
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 998;
+      display: none;
+    }
+
+    .sidebar-overlay.active {
+      display: block;
+    }
+
+    /* MODAL DE AUTENTICAÇÃO */
     .auth-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(11, 15, 25, 0.95);
+      background: rgba(11, 15, 25, 0.96);
       backdrop-filter: blur(8px);
       display: flex;
       justify-content: center;
@@ -62,7 +105,7 @@
       padding: 35px;
       width: 100%;
       max-width: 480px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 180, 216, 0.2);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 180, 216, 0.25);
     }
 
     .auth-header {
@@ -79,7 +122,7 @@
 
     .auth-header p {
       color: var(--spider-blue);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 2px;
       font-weight: 700;
@@ -150,14 +193,12 @@
       box-shadow: 0 6px 20px rgba(230, 57, 70, 0.6);
     }
 
-    /* ============================================================
-       ESTRUTURA PRINCIPAL (LAYOUT)
-       ============================================================ */
+    /* ESTRUTURA PRINCIPAL */
     .app-layout {
-      display: grid;
-      grid-template-columns: 280px 1fr;
+      display: flex;
       min-height: 100vh;
       width: 100%;
+      transition: all 0.3s ease;
     }
 
     /* SIDEBAR */
@@ -167,16 +208,25 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 25px 20px;
+      padding: 75px 20px 25px 20px;
       height: 100vh;
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      transform: translateX(0);
+      transition: transform 0.3s ease;
+      z-index: 999;
       overflow-y: auto;
+    }
+
+    .sidebar.collapsed {
+      transform: translateX(-100%);
     }
 
     .brand-title {
       font-family: var(--font-title);
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       color: var(--text-main);
       letter-spacing: 1px;
     }
@@ -207,13 +257,12 @@
       font-size: 0.9rem;
       cursor: pointer;
       transition: 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      display: block;
+      width: 100%;
     }
 
     .nav-btn:hover, .nav-btn.active {
-      background: rgba(230, 57, 70, 0.1);
+      background: rgba(230, 57, 70, 0.12);
       border-color: var(--spider-red);
       color: #fff;
     }
@@ -241,8 +290,8 @@
     }
 
     .user-avatar {
-      width: 44px;
-      height: 44px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       border: 2px solid var(--spider-blue);
       object-fit: cover;
@@ -255,7 +304,7 @@
     }
 
     .user-info span {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--titan-gold);
       font-weight: 700;
       display: block;
@@ -272,18 +321,23 @@
       margin-top: 3px;
     }
 
-    /* MAIN CONTENT */
+    /* MAIN CONTAINER */
     .main-container {
-      padding: 35px 40px;
-      overflow-y: auto;
-      max-width: 1300px;
+      flex: 1;
+      padding: 35px 40px 35px calc(var(--sidebar-width) + 40px);
+      transition: padding-left 0.3s ease;
+      max-width: 100%;
       width: 100%;
-      margin: 0 auto;
+    }
+
+    .main-container.expanded {
+      padding-left: 40px;
     }
 
     .tab-section {
       display: none;
       animation: fadeIn 0.3s ease;
+      padding-top: 40px;
     }
 
     .tab-section.active {
@@ -300,9 +354,6 @@
       font-size: 1.8rem;
       margin-bottom: 8px;
       color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 12px;
     }
 
     .section-desc {
@@ -399,65 +450,15 @@
       color: var(--spider-blue);
     }
 
-    /* ============================================================
-       RESPONSIVIDADE COMPLETA PARA SMARTPHONES E TABLETS
-       ============================================================ */
+    /* RESPONSIVIDADE MOBILE */
     @media (max-width: 900px) {
-      .app-layout {
-        display: flex !important;
-        flex-direction: column !important;
-        min-height: auto !important;
+      .main-container {
+        padding: 70px 15px 25px 15px !important;
       }
 
       .sidebar {
-        position: relative !important;
-        height: auto !important;
-        width: 100% !important;
-        border-right: none !important;
-        border-bottom: 1px solid var(--border-color) !important;
-        padding: 20px 15px !important;
-      }
-
-      .brand-title {
-        font-size: 1.3rem !important;
-        text-align: center;
-      }
-
-      .brand-subtitle {
-        text-align: center;
-        margin-bottom: 15px !important;
-      }
-
-      .nav-menu {
-        display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 8px !important;
-      }
-
-      .nav-btn {
-        padding: 10px !important;
-        font-size: 0.8rem !important;
-        text-align: center !important;
-        justify-content: center !important;
-      }
-
-      .admin-nav-btn {
-        grid-column: span 2 !important;
-        margin-top: 5px !important;
-      }
-
-      .user-card {
-        margin-top: 15px !important;
-        justify-content: center;
-      }
-
-      .main-container {
-        padding: 20px 15px !important;
-        width: 100% !important;
-      }
-
-      .section-title {
-        font-size: 1.4rem !important;
+        width: 85% !important;
+        max-width: 320px !important;
       }
 
       .stats-grid {
@@ -473,7 +474,15 @@
 </head>
 <body>
 
-  <!-- MODAL DE AUTENTICAÇÃO / CADASTRO -->
+  <!-- BOTÃO DE EXPANDIR/RECOLHER -->
+  <button class="menu-toggle-btn" onclick="toggleSidebar()">
+    <span id="menu-icon">Menu</span>
+  </button>
+
+  <!-- OVERLAY PARA FECHAR O MENU NO MOBILE -->
+  <div id="sidebar-overlay" class="sidebar-overlay" onclick="fecharSidebar()"></div>
+
+  <!-- MODAL DE AUTENTICAÇÃO -->
   <div id="auth-modal" class="auth-overlay">
     <div class="auth-card">
       <div class="auth-header">
@@ -509,20 +518,24 @@
 
   <!-- APLICAÇÃO PRINCIPAL -->
   <div class="app-layout">
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
+    
+    <!-- SIDEBAR SEM EMOJIS -->
+    <aside id="sidebar-menu" class="sidebar">
       <div>
         <h2 class="brand-title">ALÉM DAS MURALHAS</h2>
         <div class="brand-subtitle">O Amigo da Vizinhança</div>
 
         <nav class="nav-menu">
-          <button class="nav-btn active" onclick="trocarAba('comunitario', this)">🏠 Painel Comunitário</button>
-          <button class="nav-btn" onclick="trocarAba('doar', this)">🎁 Cadastrar Doação</button>
-          <button class="nav-btn" onclick="trocarAba('minhas-doacoes', this)">📜 Minhas Doações</button>
-          <button class="nav-btn" onclick="trocarAba('perfil', this)">👤 Meu Perfil & LGPD</button>
-          <button class="nav-btn" onclick="trocarAba('mensagens', this)">💬 Mensagens Solidárias</button>
-          <button class="nav-btn" onclick="trocarAba('frases', this)">⚔️ Frases & Citações</button>
-          <button id="admin-tab-btn" class="nav-btn admin-nav-btn" style="display: none;" onclick="trocarAba('admin', this)">🛡️ Painel Super Admin</button>
+          <button class="nav-btn active" onclick="trocarAba('comunitario', this)">Painel Comunitário</button>
+          <button class="nav-btn" onclick="trocarAba('doar', this)">Cadastrar Doação</button>
+          <button class="nav-btn" onclick="trocarAba('minhas-doacoes', this)">Minhas Doações & Selos</button>
+          <button class="nav-btn" onclick="trocarAba('perfil', this)">Meu Perfil & Conta</button>
+          <button class="nav-btn" onclick="trocarAba('mensagens', this)">Mensagens Solidárias</button>
+          <button class="nav-btn" onclick="trocarAba('personagens', this)">Personagens e Inspirações</button>
+          <button class="nav-btn" onclick="trocarAba('frases', this)">Frases e Citações</button>
+          <button class="nav-btn" onclick="trocarAba('historia', this)">Minha História</button>
+          <button class="nav-btn" onclick="trocarAba('lgpd', this)">Privacidade & LGPD</button>
+          <button id="admin-tab-btn" class="nav-btn admin-nav-btn" style="display: none;" onclick="trocarAba('admin', this)">Painel Super Admin</button>
         </nav>
       </div>
 
@@ -537,12 +550,12 @@
     </aside>
 
     <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
-    <main class="main-container">
+    <main id="main-content-area" class="main-container">
       
       <!-- 1. PAINEL COMUNITÁRIO -->
       <section id="aba-comunitario" class="tab-section active">
-        <h2 class="section-title">Painel de Impacto Solidário</h2>
-        <p class="section-desc">Acompanhe as doações arrecadadas e os pontos de coleta em Mesquita, Nova Iguaçu e RJ.</p>
+        <h2 class="section-title">Painel Comunitário</h2>
+        <p class="section-desc">Acompanhe as ações solidárias e pontos de acolhimento em Mesquita, Baixada Fluminense e RJ.</p>
 
         <div class="stats-grid">
           <div class="stat-card">
@@ -560,7 +573,7 @@
         </div>
 
         <div class="content-box">
-          <h3 style="margin-bottom: 15px; font-family: var(--font-title); font-size: 1.2rem;">Pontos de Coleta Disponíveis</h3>
+          <h3 style="margin-bottom: 15px; font-family: var(--font-title); font-size: 1.2rem;">Pontos de Coleta e Acolhimento</h3>
           <div class="data-table-wrapper">
             <table>
               <thead>
@@ -579,81 +592,108 @@
         </div>
       </section>
 
-      <!-- 2. CADASTRAR DOAÇÃO -->
+      <!-- 2. CADASTRAR DOAÇÃO COM PÚBLICO ATÍPICO -->
       <section id="aba-doar" class="tab-section">
-        <h2 class="section-title">Registrar Nova Ação Solidária</h2>
-        <p class="section-desc">Escolha o item a ser doado e o ponto de coleta mais próximo de você.</p>
+        <h2 class="section-title">Cadastrar Doação</h2>
+        <p class="section-desc">Registre seu apoio voluntário selecionando o público de destino e a categoria.</p>
 
         <div class="content-box" style="max-width: 650px;">
           <form onsubmit="registrarDoacao(event)">
             <div class="form-group">
               <label>Categoria da Doação</label>
               <select id="doacao-categoria" class="form-control" required>
-                <option value="Alimentos Não Perecíveis">Alimentos Não Perecíveis / Cestas</option>
-                <option value="Roupas e Agasalhos">Roupas e Agasalhos</option>
-                <option value="Brinquedos e Livros">Brinquedos e Livros Infantis</option>
-                <option value="Itens de Higiene Pessoal">Itens de Higiene Pessoal</option>
-                <option value="Marmitas Prontas">Marmitas Prontas / Lanches</option>
+                <option value="Alimentos Não Perecíveis">Alimentos Não Perecíveis / Cestas Básicas</option>
+                <option value="Roupas e Agasalhos">Roupas, Calçados e Agasalhos</option>
+                <option value="Brinquedos e Livros">Brinquedos, Jogos e Livros Infantis</option>
+                <option value="Itens de Higiene e Fraldas">Itens de Higiene Pessoal & Fraldas</option>
+                <option value="Materiais Sensoriais / Apoio">Materiais Sensoriais / Apoio Inclusivo</option>
+                <option value="Marmitas Prontas">Marmitas Prontas / Lanches Solidários</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label>Público-Alvo</label>
+              <label>Público-Alvo da Ação</label>
               <select id="doacao-publico" class="form-control" required>
-                <option value="Criancas">Crianças Carentes</option>
-                <option value="Idosos">Idosos em Abrigos</option>
-                <option value="Moradores de Rua">Pessoas em Situação de Rua</option>
-                <option value="Todos">Famílias em Vulnerabilidade Geral</option>
+                <option value="Pessoas Atípicas (TEA / PCD / Inclusão)">Pessoas Atípicas (TEA / PCD / Inclusão)</option>
+                <option value="Crianças e Jovens">Crianças e Jovens em Vulnerabilidade</option>
+                <option value="Idosos em Abrigos">Idosos em Abrigos e Asilos</option>
+                <option value="Pessoas em Situação de Rua">Pessoas em Situação de Rua</option>
+                <option value="Famílias em Geral">Famílias em Geral (Comunidade)</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label>Ponto de Coleta Selecionado</label>
+              <label>Ponto de Coleta</label>
               <select id="doacao-ponto-select" class="form-control" required></select>
             </div>
 
             <div class="form-group">
-              <label>Descrição dos Itens</label>
-              <textarea id="doacao-desc" class="form-control" rows="3" placeholder="Ex: 2 pacotes de arroz, 1 agasalho tamanho M..." required></textarea>
+              <label>Descrição Detalhada dos Itens</label>
+              <textarea id="doacao-desc" class="form-control" rows="3" placeholder="Ex: 2 kits sensoriais, 3 pacotes de fraldas, alimentos não perecíveis..." required></textarea>
             </div>
 
-            <button type="submit" class="btn-primary">Confirmar Doação & Gerar Protocolo</button>
+            <button type="submit" class="btn-primary">Confirmar Doação & Emitir Protocolo</button>
           </form>
         </div>
       </section>
 
-      <!-- 3. MINHAS DOAÇÕES -->
+      <!-- 3. MINHAS DOAÇÕES & SELOS -->
       <section id="aba-minhas-doacoes" class="tab-section">
-        <h2 class="section-title">Minhas Doações & Histórico</h2>
-        <p class="section-desc">Veja os protocolos das suas doações registradas na plataforma.</p>
+        <h2 class="section-title">Minhas Doações & Selos</h2>
+        <p class="section-desc">Seu histórico completo de contribuições e selos de impacto conquistados.</p>
+
+        <div class="content-box" style="margin-bottom: 25px;">
+          <h3 style="margin-bottom: 15px; font-family: var(--font-title); font-size: 1.1rem;">Meus Selos de Conquista</h3>
+          <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <div style="background: #1e293b; padding: 12px 18px; border-radius: 10px; border: 1px solid var(--spider-blue);">
+              <strong style="color: var(--spider-blue); display: block;">Protetor da Vizinhança</strong>
+              <small style="color: var(--text-muted);">Cadastro confirmado na comunidade</small>
+            </div>
+            <div style="background: #1e293b; padding: 12px 18px; border-radius: 10px; border: 1px solid var(--titan-gold);">
+              <strong style="color: var(--titan-gold); display: block;">Coração de Ouro</strong>
+              <small style="color: var(--text-muted);">Apoio a instituições locais</small>
+            </div>
+          </div>
+        </div>
 
         <div class="content-box">
+          <h3 style="margin-bottom: 15px; font-family: var(--font-title); font-size: 1.1rem;">Histórico de Protocolos</h3>
           <div class="data-table-wrapper">
             <table>
               <thead>
                 <tr>
                   <th>Protocolo</th>
                   <th>Categoria</th>
+                  <th>Público-Alvo</th>
                   <th>Ponto de Entrega</th>
                   <th>Status</th>
                   <th>Data</th>
                 </tr>
               </thead>
               <tbody id="tabela-minhas-doacoes">
-                <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Nenhuma doação encontrada.</td></tr>
+                <tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Nenhuma doação registrada ainda.</td></tr>
               </tbody>
             </table>
           </div>
         </div>
       </section>
 
-      <!-- 4. PERFIL & LGPD -->
+      <!-- 4. PERFIL COM FOTO E BIO DE HERÓI -->
       <section id="aba-perfil" class="tab-section">
-        <h2 class="section-title">Meu Perfil & Direitos LGPD</h2>
-        <p class="section-desc">Em conformidade com o Art. 18 da Lei Geral de Proteção de Dados, gerencie suas informações.</p>
+        <h2 class="section-title">Meu Perfil & Conta</h2>
+        <p class="section-desc">Atualize sua identidade, foto de perfil, herói favorito e bio de apresentação.</p>
 
         <div class="content-box" style="max-width: 650px;">
           <form onsubmit="atualizarPerfil(event)">
+            
+            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
+              <img id="perfil-preview-img" src="https://api.dicebear.com/7.x/bottts/svg?seed=hero" alt="Foto Perfil" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--spider-blue); object-fit: cover;">
+              <div style="flex: 1;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 6px;">Foto de Perfil</label>
+                <input type="file" id="perfil-foto-input" class="form-control" accept="image/*" onchange="previewFotoPerfil(event)">
+              </div>
+            </div>
+
             <div class="form-group">
               <label>Nome Completo</label>
               <input type="text" id="perfil-nome" class="form-control" required>
@@ -665,56 +705,107 @@
             </div>
 
             <div class="form-group">
-              <label>Nova Senha (deixe em branco se não desejar alterar)</label>
+              <label>Herói / Inspiração Favorita</label>
+              <input type="text" id="perfil-heroi" class="form-control" placeholder="Ex: Homem-Aranha, Batman, Eren Yeager...">
+            </div>
+
+            <div class="form-group">
+              <label>Nova Senha (deixe vazio para não alterar)</label>
               <input type="password" id="perfil-senha" class="form-control" placeholder="••••••••">
             </div>
 
-            <button type="submit" class="btn-primary" style="margin-bottom: 20px;">Salvar Alterações</button>
+            <button type="submit" class="btn-primary" style="margin-bottom: 20px;">Salvar Alterações do Perfil</button>
           </form>
 
           <hr style="border-color: var(--border-color); margin: 20px 0;">
           
           <h4 style="color: var(--spider-red); margin-bottom: 8px;">Direito ao Esquecimento (Art. 18 LGPD)</h4>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Ao clicar no botão abaixo, seus dados pessoais e conta serão permanentemente excluídos do banco de dados na nuvem.</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Em conformidade com a LGPD, você pode excluir permanentemente seu cadastro e dados vinculados do banco de dados na nuvem.</p>
           <button class="btn-primary" style="background: #334155;" onclick="excluirMinhaConta()">Solicitar Exclusão Definitiva de Dados</button>
         </div>
       </section>
 
       <!-- 5. MENSAGENS SOLIDÁRIAS -->
       <section id="aba-mensagens" class="tab-section">
-        <h2 class="section-title">Mural de Mensagens Solidárias</h2>
-        <p class="section-desc">Deixe palavras de ânimo e empatia para a comunidade.</p>
+        <h2 class="section-title">Mensagens Solidárias</h2>
+        <p class="section-desc">Mural comunitário para palavras de encorajamento, empatia e união.</p>
 
         <div class="content-box" style="max-width: 650px; margin-bottom: 30px;">
           <form onsubmit="enviarMensagem(event)">
             <div class="form-group">
-              <label>Sua Mensagem</label>
-              <textarea id="mensagem-texto" class="form-control" rows="3" placeholder="Escreva uma palavra de força e esperança..." required></textarea>
+              <label>Sua Mensagem para a Comunidade</label>
+              <textarea id="mensagem-texto" class="form-control" rows="3" placeholder="Deixe uma palavra de apoio para quem está enfrentando dias difíceis..." required></textarea>
             </div>
-            <button type="submit" class="btn-primary">Publicar no Mural</button>
+            <button type="submit" class="btn-primary">Publicar Mensagem</button>
           </form>
         </div>
 
         <div id="lista-mensagens-container" class="stats-grid"></div>
       </section>
 
-      <!-- 6. FRASES & CITAÇÕES -->
+      <!-- 6. PERSONAGENS E INSPIRAÇÕES -->
+      <section id="aba-personagens" class="tab-section">
+        <h2 class="section-title">Personagens e Inspirações</h2>
+        <p class="section-desc">Figuras e arquétipos que nos ensinam sobre proteger quem não pode se defender sozinho.</p>
+        
+        <div class="stats-grid">
+          <div class="content-box">
+            <h3 style="color: var(--spider-red); font-family: var(--font-title); margin-bottom: 6px;">O Amigo da Vizinhança</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">O herói que cuida das ruas do seu próprio bairro, mostrando que responsabilidade social começa onde vivemos.</p>
+          </div>
+          <div class="content-box">
+            <h3 style="color: var(--spider-blue); font-family: var(--font-title); margin-bottom: 6px;">A Determinação Inquebrável</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">A coragem de continuar lutando e apoiando os vulneráveis diante de qualquer adversidade.</p>
+          </div>
+          <div class="content-box">
+            <h3 style="color: var(--titan-gold); font-family: var(--font-title); margin-bottom: 6px;">O Guardião Protetor</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Usar o conhecimento e a força para construir pontes de esperança para crianças, idosos e pessoas atípicas.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. FRASES E CITAÇÕES AMPLIADAS -->
       <section id="aba-frases" class="tab-section">
-        <h2 class="section-title">Frases & Inspirações</h2>
-        <p class="section-desc">Valores universais de heróis, anime e sabedoria que motivam nossa missão.</p>
+        <h2 class="section-title">Frases e Citações</h2>
+        <p class="section-desc">Citações sobre heroísmo, solidariedade e valores humanos fundamentais.</p>
         <div id="lista-frases-container" class="stats-grid"></div>
       </section>
 
-      <!-- 7. PAINEL SUPER ADMIN -->
+      <!-- 8. MINHA HISTÓRIA -->
+      <section id="aba-historia" class="tab-section">
+        <h2 class="section-title">Minha História</h2>
+        <p class="section-desc">O propósito por trás do projeto comunitário Além das Muralhas.</p>
+        
+        <div class="content-box" style="line-height: 1.7; font-size: 0.95rem; color: #cbd5e1;">
+          <p style="margin-bottom: 15px;">O projeto <strong>Além das Muralhas - O Amigo da Vizinhança</strong> nasceu do desejo de unir tecnologia, responsabilidade social e acolhimento comunitário na Baixada Fluminense e no Rio de Janeiro.</p>
+          <p style="margin-bottom: 15px;">Inspirado na ideia de que cada um de nós possui a capacidade de proteger o seu próximo, a plataforma facilita a arrecadação de mantimentos, agasalhos e materiais de apoio para crianças, idosos, moradores de rua e pessoas com condições atípicas (TEA e PCD).</p>
+          <p>Nenhuma boa ação é pequena demais quando o objetivo é quebrar as barreiras da desigualdade.</p>
+        </div>
+      </section>
+
+      <!-- 9. PRIVACIDADE & LGPD -->
+      <section id="aba-lgpd" class="tab-section">
+        <h2 class="section-title">Privacidade & LGPD</h2>
+        <p class="section-desc">Compromisso com a Lei nº 13.709/2018 (Lei Geral de Proteção de Dados Pessoais).</p>
+
+        <div class="content-box" style="line-height: 1.7; font-size: 0.95rem; color: #cbd5e1;">
+          <h3 style="color: var(--spider-blue); margin-bottom: 10px;">Princípios de Transparência e Segurança</h3>
+          <p style="margin-bottom: 12px;"><strong>Finalidade e Consentimento:</strong> Seus dados de cadastro (nome, e-mail e senha com criptografia bcrypt) são coletados unicamente para a autenticação e emissão segura dos seus protocolos de doação.</p>
+          <p style="margin-bottom: 12px;"><strong>Armazenamento Seguro:</strong> As informações são gravadas em banco de dados relacional em nuvem com criptografia SSL e proteção de credenciais.</p>
+          <p><strong>Seus Direitos (Art. 18):</strong> Você tem livre acesso para consultar, retificar na aba <em>Meu Perfil</em> ou requisitar a exclusão definitiva dos seus dados a qualquer momento.</p>
+        </div>
+      </section>
+
+      <!-- 10. PAINEL SUPER ADMIN -->
       <section id="aba-admin" class="tab-section">
-        <h2 class="section-title" style="color: var(--titan-gold);">Painel de Super Admin</h2>
-        <p class="section-desc">Gerenciamento administrativo exclusivo para gestão de pontos de coleta e doações.</p>
+        <h2 class="section-title" style="color: var(--titan-gold);">Painel Super Admin</h2>
+        <p class="section-desc">Gestão administrativa de pontos de acolhimento e auditoria de doações no banco de dados.</p>
 
         <div class="content-box" style="max-width: 650px; margin-bottom: 30px;">
           <h3 style="margin-bottom: 15px; font-size: 1.1rem; color: #fff;">Cadastrar Novo Ponto de Coleta</h3>
           <form onsubmit="cadastrarPontoAdmin(event)">
             <div class="form-group">
-              <label>Nome do Local</label>
+              <label>Nome do Local / Instituição</label>
               <input type="text" id="adm-ponto-nome" class="form-control" required>
             </div>
             <div class="form-group">
@@ -730,7 +821,17 @@
               <input type="text" id="adm-ponto-cidade" class="form-control" required>
             </div>
             <div class="form-group">
-              <label>Horário de Funcionamento</label>
+              <label>Público Atendido</label>
+              <select id="adm-ponto-publico" class="form-control" required>
+                <option value="Todos">Todos os Públicos</option>
+                <option value="Pessoas Atípicas (TEA / PCD)">Pessoas Atípicas (TEA / PCD)</option>
+                <option value="Criancas">Crianças</option>
+                <option value="Idosos">Idosos</option>
+                <option value="Moradores de Rua">Moradores de Rua</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Horário de Atendimento</label>
               <input type="text" id="adm-ponto-horario" class="form-control" placeholder="Ex: Seg a Sex das 08h às 17h" required>
             </div>
             <div class="form-group">
@@ -765,17 +866,50 @@
     </main>
   </div>
 
-  <!-- JAVASCRIPT DA APLICAÇÃO -->
+  <!-- SCRIPTS -->
   <script>
     let usuarioLogado = null;
+    let fotoPerfilBase64 = null;
 
-    // Inicialização da Aplicação
+    // Alternar Barra Lateral
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar-menu');
+      const mainArea = document.getElementById('main-content-area');
+      const overlay = document.getElementById('sidebar-overlay');
+      const icon = document.getElementById('menu-icon');
+
+      sidebar.classList.toggle('collapsed');
+      mainArea.classList.toggle('expanded');
+      
+      const isCollapsed = sidebar.classList.contains('collapsed');
+      overlay.classList.toggle('active', !isCollapsed && window.innerWidth <= 900);
+      icon.innerText = isCollapsed ? 'Menu' : 'Fechar';
+    }
+
+    function fecharSidebar() {
+      const sidebar = document.getElementById('sidebar-menu');
+      const mainArea = document.getElementById('main-content-area');
+      const overlay = document.getElementById('sidebar-overlay');
+      const icon = document.getElementById('menu-icon');
+
+      sidebar.classList.add('collapsed');
+      mainArea.classList.add('expanded');
+      overlay.classList.remove('active');
+      icon.innerText = 'Menu';
+    }
+
+    // Inicialização
     document.addEventListener('DOMContentLoaded', () => {
       const sessaoSalva = localStorage.getItem('usuario_sessao');
       if (sessaoSalva) {
         usuarioLogado = JSON.parse(sessaoSalva);
         configurarInterfaceUsuario();
       }
+
+      if (window.innerWidth <= 900) {
+        fecharSidebar();
+      }
+
       carregarImpacto();
       carregarPontosColeta();
       carregarMensagens();
@@ -790,11 +924,15 @@
       if (abaAlvo) abaAlvo.classList.add('active');
       if (botao) botao.classList.add('active');
 
+      if (window.innerWidth <= 900) {
+        fecharSidebar();
+      }
+
       if (nomeAba === 'minhas-doacoes') carregarMinhasDoacoes();
       if (nomeAba === 'admin') carregarAdminDashboard();
     }
 
-    // Autenticação e Login
+    // Autenticação
     async function realizarAutenticacao(e) {
       e.preventDefault();
       const nome = document.getElementById('auth-nome').value;
@@ -823,16 +961,34 @@
       }
     }
 
+    function previewFotoPerfil(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          fotoPerfilBase64 = e.target.result;
+          document.getElementById('perfil-preview-img').src = fotoPerfilBase64;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
     function configurarInterfaceUsuario() {
       if (!usuarioLogado) return;
       document.getElementById('auth-modal').style.display = 'none';
       document.getElementById('user-display-nome').innerText = usuarioLogado.nome;
       document.getElementById('user-display-cargo').innerText = usuarioLogado.is_admin ? 'SUPER ADMIN' : 'DOADOR VOLUNTÁRIO';
+      
+      const avatarSrc = usuarioLogado.foto_perfil || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(usuarioLogado.nome)}`;
+      document.getElementById('user-display-img').src = avatarSrc;
+      document.getElementById('perfil-preview-img').src = avatarSrc;
+
       document.getElementById('perfil-nome').value = usuarioLogado.nome;
       document.getElementById('perfil-email').value = usuarioLogado.email;
+      document.getElementById('perfil-heroi').value = usuarioLogado.heroi_favorito || '';
 
       if (usuarioLogado.is_admin) {
-        document.getElementById('admin-tab-btn').style.display = 'flex';
+        document.getElementById('admin-tab-btn').style.display = 'block';
       }
     }
 
@@ -841,7 +997,7 @@
       window.location.reload();
     }
 
-    // Carregar Métricas de Impacto
+    // Carregar Métricas
     async function carregarImpacto() {
       try {
         const res = await fetch('/api/impacto');
@@ -854,7 +1010,7 @@
       }
     }
 
-    // Carregar Pontos de Coleta
+    // Pontos de Coleta
     async function carregarPontosColeta() {
       try {
         const res = await fetch('/api/pontos');
@@ -870,7 +1026,7 @@
             <tr>
               <td><strong>${p.nome_local}</strong></td>
               <td>${p.endereco} - ${p.bairro}, ${p.cidade}</td>
-              <td><span class="badge">${p.publico_atendido}</span></td>
+              <td><span class="badge">${p.publico_atendido || 'Todos'}</span></td>
               <td>${p.horario} | ${p.contato}</td>
             </tr>
           `;
@@ -902,7 +1058,7 @@
         });
         const data = await res.json();
 
-        alert(`🎉 DOAÇÃO CONFIRMADA!\n\nProtocolo: ${data.protocolo}\nLocal de Entrega: ${data.ponto ? data.ponto.nome_local : 'Ponto Coleta'}\n\n"${data.frase.texto}" - ${data.frase.autor}`);
+        alert(`DOAÇÃO CONFIRMADA!\n\nProtocolo: ${data.protocolo}\nLocal de Entrega: ${data.ponto ? data.ponto.nome_local : 'Ponto Selecionado'}\n\n"${data.frase.texto}" - ${data.frase.autor}`);
         e.target.reset();
         carregarImpacto();
         trocarAba('minhas-doacoes', document.querySelectorAll('.nav-btn')[2]);
@@ -911,7 +1067,7 @@
       }
     }
 
-    // Carregar Minhas Doações
+    // Minhas Doações
     async function carregarMinhasDoacoes() {
       if (!usuarioLogado) return;
       try {
@@ -921,7 +1077,7 @@
         tbody.innerHTML = '';
 
         if (doacoes.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Nenhuma doação registrada ainda.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Nenhuma doação registrada ainda.</td></tr>';
           return;
         }
 
@@ -930,6 +1086,7 @@
             <tr>
               <td><strong>${d.codigo_protocolo}</strong></td>
               <td>${d.categoria}</td>
+              <td>${d.publico_alvo}</td>
               <td>${d.ponto_nome || 'Ponto Geral'}</td>
               <td><span class="badge">${d.status_doacao}</span></td>
               <td>${new Date(d.data_doacao).toLocaleDateString('pt-BR')}</td>
@@ -941,27 +1098,37 @@
       }
     }
 
-    // Atualização de Perfil (LGPD)
+    // Atualização de Perfil com Foto e Heroi
     async function atualizarPerfil(e) {
       e.preventDefault();
       const nome = document.getElementById('perfil-nome').value;
       const email = document.getElementById('perfil-email').value;
+      const heroi_favorito = document.getElementById('perfil-heroi').value;
       const senha = document.getElementById('perfil-senha').value;
 
       try {
         const res = await fetch('/api/usuario/perfil', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id_usuario: usuarioLogado.id_usuario, nome, email, senha })
+          body: JSON.stringify({ 
+            id_usuario: usuarioLogado.id_usuario, 
+            nome, 
+            email, 
+            senha, 
+            foto_perfil: fotoPerfilBase64 || usuarioLogado.foto_perfil,
+            heroi_favorito 
+          })
         });
         const data = await res.json();
 
         if (data.success) {
           usuarioLogado.nome = data.nome;
           usuarioLogado.email = data.email;
+          usuarioLogado.foto_perfil = data.foto_perfil;
+          usuarioLogado.heroi_favorito = data.heroi_favorito;
           localStorage.setItem('usuario_sessao', JSON.stringify(usuarioLogado));
           configurarInterfaceUsuario();
-          alert('Dados atualizados com sucesso!');
+          alert('Perfil e dados atualizados com sucesso!');
         }
       } catch (err) {
         alert('Erro ao atualizar perfil: ' + err.message);
@@ -970,11 +1137,11 @@
 
     // Exclusão de Conta (LGPD Art. 18)
     async function excluirMinhaConta() {
-      if (!confirm('Tem certeza de que deseja exercer seu direito ao esquecimento e excluir todos os seus dados? Esta ação é irreversível.')) return;
+      if (!confirm('Deseja realmente exercer seu direito ao esquecimento e excluir definitivamente sua conta? Todos os seus dados serão apagados.')) return;
 
       try {
         await fetch(`/api/usuario/excluir/${usuarioLogado.id_usuario}`, { method: 'DELETE' });
-        alert('Seus dados foram excluídos permanentemente.');
+        alert('Seus dados foram excluídos com sucesso.');
         desconectarUsuario();
       } catch (err) {
         alert('Erro ao excluir conta: ' + err.message);
@@ -993,7 +1160,7 @@
           container.innerHTML += `
             <div class="content-box">
               <p style="font-style: italic; margin-bottom: 10px; color: #fff;">"${m.mensagem}"</p>
-              <span style="font-size: 0.8rem; color: var(--spider-blue); font-weight: 700;">— ${m.nome}</span>
+              <span style="font-size: 0.8rem; color: var(--spider-blue); font-weight: 700;">— ${m.nome} (${m.heroi_favorito || 'Protetor Solidário'})</span>
             </div>
           `;
         });
@@ -1015,25 +1182,44 @@
         });
         e.target.reset();
         carregarMensagens();
-        alert('Mensagem enviada com sucesso!');
+        alert('Mensagem solidária publicada no mural!');
       } catch (err) {
         alert('Erro ao enviar mensagem: ' + err.message);
       }
     }
 
-    // Frases Motivacionais
+    // Frases e Citações com Lista Expandida
     async function carregarFrases() {
       try {
         const res = await fetch('/api/frases');
-        const frases = await res.json();
+        let frases = await res.json();
+        
+        // Frases extras e citações garantidas na visualização
+        const listaCompleta = [
+          ...frases,
+          { texto: "Com grandes poderes vêm grandes responsabilidades.", autor: "Peter Parker (Homem-Aranha)", categoria: "Heróis" },
+          { texto: "Não é sobre quem eu sou por dentro, mas o que eu faço que me define.", autor: "Bruce Wayne (Batman)", categoria: "Heróis" },
+          { texto: "Se você não lutar, você não pode vencer!", autor: "Eren Yeager (Attack on Titan)", categoria: "Anime" },
+          { texto: "Aqueles que não são capazes de sacrificar nada, não podem mudar nada.", autor: "Armin Arlert (Attack on Titan)", categoria: "Anime" },
+          { texto: "Ame o seu próximo como a si mesmo.", autor: "Mateus 22:39", categoria: "Bíblica" },
+          { texto: "Quem é generoso será abençoado, pois reparte o seu pão com o necessitado.", autor: "Provérbios 22:9", categoria: "Bíblica" },
+          { texto: "Eu posso fazer isso o dia todo. Nós nunca desistimos de ninguém.", autor: "Steve Rogers (Capitão América)", categoria: "Heróis" },
+          { texto: "Está tudo bem agora... Sabe por quê? Porque nós estamos aqui!", autor: "All Might (My Hero Academia)", categoria: "Anime" },
+          { texto: "O verdadeiro poder não reside em dominar os outros, mas em estender a mão aos que caíram.", autor: "Sabedoria Solidária", categoria: "Inspiração" }
+        ];
+
+        // Filtra repetições por texto
+        const unicas = Array.from(new Map(listaCompleta.map(item => [item.texto, item])).values());
+
         const container = document.getElementById('lista-frases-container');
         container.innerHTML = '';
 
-        frases.forEach(f => {
+        unicas.forEach(f => {
           container.innerHTML += `
             <div class="content-box">
-              <p style="margin-bottom: 8px; font-weight: 600; color: #fff;">"${f.texto}"</p>
-              <span style="font-size: 0.8rem; color: var(--titan-gold); font-weight: 700;">${f.autor}</span>
+              <span class="badge" style="margin-bottom: 10px;">${f.categoria || 'Inspiração'}</span>
+              <p style="margin-bottom: 10px; font-weight: 600; color: #fff; font-size: 0.95rem; line-height: 1.4;">"${f.texto}"</p>
+              <span style="font-size: 0.8rem; color: var(--titan-gold); font-weight: 700;">— ${f.autor}</span>
             </div>
           `;
         });
@@ -1073,6 +1259,7 @@
         endereco: document.getElementById('adm-ponto-end').value,
         bairro: document.getElementById('adm-ponto-bairro').value,
         cidade: document.getElementById('adm-ponto-cidade').value,
+        publico_atendido: document.getElementById('adm-ponto-publico').value,
         horario: document.getElementById('adm-ponto-horario').value,
         contato: document.getElementById('adm-ponto-contato').value
       };
@@ -1083,7 +1270,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        alert('Ponto de coleta cadastrado com sucesso!');
+        alert('Ponto de acolhimento cadastrado com sucesso no banco Aiven!');
         e.target.reset();
         carregarPontosColeta();
         carregarImpacto();
