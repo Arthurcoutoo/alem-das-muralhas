@@ -1,0 +1,5 @@
+<?php
+
+echo "Olá! Meu PHP está funcionando!";
+
+?>
