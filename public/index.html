@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Além das Muralhas - O Amigo da Vizinhança</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,18 +10,23 @@
   
   <style>
     :root {
-      --bg-deep: #0b0f19;
-      --bg-card: #111827;
-      --bg-sidebar: #0f172a;
-      --spider-red: #e63946;
-      --spider-blue: #00b4d8;
-      --titan-gold: #f4a261;
+      --bg-deep: #070a12;
+      --bg-card: #0f172a;
+      --bg-card-hover: #1e293b;
+      --bg-sidebar: #0b1120;
+      --spider-red: #ef4444;
+      --spider-red-glow: rgba(239, 68, 68, 0.4);
+      --spider-blue: #06b6d4;
+      --spider-blue-glow: rgba(6, 182, 212, 0.35);
+      --titan-gold: #f59e0b;
+      --titan-gold-glow: rgba(245, 158, 11, 0.35);
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --border-color: #1e293b;
       --font-title: 'Cinzel', serif;
       --font-body: 'Montserrat', sans-serif;
       --sidebar-width: 290px;
+      --radius: 12px;
     }
 
     * {
@@ -29,26 +34,31 @@
       padding: 0;
       box-sizing: border-box;
       font-family: var(--font-body);
+      -webkit-tap-highlight-color: transparent;
     }
 
-    body {
+    html, body {
       background-color: var(--bg-deep);
       color: var(--text-main);
       min-height: 100vh;
       overflow-x: hidden;
+      scroll-behavior: smooth;
     }
 
-    /* BOTÃO DE CONTROLE DA SIDEBAR */
+    /* ============================================================
+       BOTÃO TOGGLE DINÂMICO (SETA ➔ / FECHAR ✕)
+       ============================================================ */
     .menu-toggle-btn {
       position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 1001;
-      background: var(--bg-card);
+      top: 14px;
+      left: 14px;
+      z-index: 1005;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(10px);
       border: 1px solid var(--spider-blue);
       color: #fff;
       padding: 10px 16px;
-      border-radius: 8px;
+      border-radius: 30px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -57,13 +67,26 @@
       font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-      transition: all 0.25s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 12px var(--spider-blue-glow);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .menu-toggle-btn:hover {
       background: var(--spider-blue);
-      color: #0b0f19;
+      color: #070a12;
+      box-shadow: 0 0 20px var(--spider-blue);
+      transform: translateY(-2px);
+    }
+
+    .menu-toggle-btn:active {
+      transform: scale(0.95);
+    }
+
+    .menu-toggle-btn .icon-indicator {
+      font-size: 1.1rem;
+      line-height: 1;
+      transition: transform 0.3s ease;
+      display: inline-block;
     }
 
     .sidebar-overlay {
@@ -72,57 +95,68 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(4px);
+      background: rgba(3, 7, 18, 0.75);
+      backdrop-filter: blur(6px);
       z-index: 998;
       display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
     .sidebar-overlay.active {
       display: block;
+      opacity: 1;
     }
 
-    /* MODAL DE ENTRADA / LOGIN */
+    /* ============================================================
+       MODAL DE AUTENTICAÇÃO / LOGIN
+       ============================================================ */
     .auth-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(11, 15, 25, 0.96);
-      backdrop-filter: blur(8px);
+      background: rgba(7, 10, 18, 0.96);
+      backdrop-filter: blur(12px);
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 9999;
-      padding: 15px;
+      padding: 16px;
     }
 
     .auth-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 35px;
+      border-radius: 18px;
+      padding: 32px 24px;
       width: 100%;
-      max-width: 500px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 180, 216, 0.25);
+      max-width: 480px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(6, 182, 212, 0.15);
+      animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.92) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
     }
 
     .auth-header {
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 22px;
     }
 
     .auth-header h1 {
       font-family: var(--font-title);
-      font-size: 1.8rem;
+      font-size: 1.65rem;
       color: var(--text-main);
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
     }
 
     .auth-header .auth-sub {
       color: var(--spider-blue);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 2px;
       font-weight: 700;
@@ -132,22 +166,23 @@
 
     .auth-header .auth-manifesto {
       color: #cbd5e1;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-style: italic;
       line-height: 1.5;
       background: rgba(30, 41, 59, 0.6);
-      padding: 10px 14px;
-      border-radius: 8px;
+      padding: 12px 14px;
+      border-radius: 10px;
       border-left: 3px solid var(--spider-red);
+      text-align: left;
     }
 
     .form-group {
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     .form-group label {
       display: block;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
       color: var(--text-muted);
       margin-bottom: 6px;
@@ -155,26 +190,27 @@
 
     .form-control {
       width: 100%;
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 8px;
+      background: #131d31;
+      border: 1px solid #27354f;
+      border-radius: 10px;
       padding: 12px 14px;
       color: #fff;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       outline: none;
-      transition: 0.2s;
+      transition: all 0.25s ease;
     }
 
     .form-control:focus {
       border-color: var(--spider-blue);
-      box-shadow: 0 0 10px rgba(0, 180, 216, 0.3);
+      box-shadow: 0 0 14px var(--spider-blue-glow);
+      background: #18233c;
     }
 
     .checkbox-group {
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
       margin-bottom: 20px;
       line-height: 1.4;
@@ -182,35 +218,49 @@
 
     .checkbox-group input {
       margin-top: 3px;
+      accent-color: var(--spider-blue);
+      width: 16px;
+      height: 16px;
     }
 
+    /* BOTÕES COM MICROINTERAÇÕES */
     .btn-primary {
       width: 100%;
       background: linear-gradient(135deg, var(--spider-red), #b91c1c);
       color: white;
       border: none;
       padding: 14px;
-      border-radius: 8px;
+      border-radius: 10px;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       cursor: pointer;
       text-transform: uppercase;
       letter-spacing: 1px;
-      box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
-      transition: 0.2s;
+      box-shadow: 0 4px 18px var(--spider-red-glow);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(230, 57, 70, 0.6);
+      box-shadow: 0 6px 24px rgba(239, 68, 68, 0.6);
+      filter: brightness(1.1);
     }
 
-    /* ESTRUTURA PRINCIPAL */
+    .btn-primary:active {
+      transform: scale(0.97);
+    }
+
+    /* ============================================================
+       ESTRUTURA PRINCIPAL (LAYOUT RESPONSIVO)
+       ============================================================ */
     .app-layout {
       display: flex;
       min-height: 100vh;
       width: 100%;
-      transition: all 0.3s ease;
     }
 
     /* SIDEBAR */
@@ -220,73 +270,112 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 75px 20px 25px 20px;
+      padding: 70px 18px 25px 18px;
       height: 100vh;
       position: fixed;
       top: 0;
       left: 0;
       width: var(--sidebar-width);
       transform: translateX(0);
-      transition: transform 0.3s ease;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 999;
       overflow-y: auto;
+      box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
     }
 
     .sidebar.collapsed {
       transform: translateX(-100%);
     }
 
+    .sidebar-close-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar-close-btn {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: var(--spider-red);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-close-btn:hover {
+      background: var(--spider-red);
+      color: #fff;
+      transform: rotate(90deg);
+    }
+
     .brand-title {
       font-family: var(--font-title);
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       color: var(--text-main);
       letter-spacing: 1px;
     }
 
     .brand-subtitle {
       color: var(--spider-blue);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       font-weight: 700;
-      margin-bottom: 25px;
+      margin-top: 2px;
     }
 
     .nav-menu {
       display: flex;
       flex-direction: column;
       gap: 6px;
+      margin-top: 15px;
     }
 
     .nav-btn {
       background: transparent;
       border: 1px solid transparent;
       color: var(--text-muted);
-      padding: 12px 16px;
-      border-radius: 8px;
+      padding: 12px 14px;
+      border-radius: 10px;
       text-align: left;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       cursor: pointer;
-      transition: 0.2s;
-      display: block;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       width: 100%;
     }
 
-    .nav-btn:hover, .nav-btn.active {
-      background: rgba(230, 57, 70, 0.12);
-      border-color: var(--spider-red);
+    .nav-btn:hover {
+      background: rgba(239, 68, 68, 0.1);
       color: #fff;
+      transform: translateX(4px);
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(90deg, rgba(239, 68, 68, 0.2), transparent);
+      border-left: 3px solid var(--spider-red);
+      color: #fff;
+      font-weight: 700;
     }
 
     .admin-nav-btn {
-      margin-top: 15px;
-      border-color: rgba(244, 162, 97, 0.4);
+      margin-top: 12px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
       color: var(--titan-gold);
     }
 
     .admin-nav-btn:hover {
-      background: rgba(244, 162, 97, 0.15);
+      background: rgba(245, 158, 11, 0.15);
       border-color: var(--titan-gold);
       color: #fff;
     }
@@ -294,29 +383,34 @@
     .user-card {
       margin-top: 20px;
       padding: 12px;
-      background: #1e293b;
-      border-radius: 10px;
+      background: #131d31;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
     .user-avatar {
-      width: 46px;
-      height: 46px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       border: 2px solid var(--spider-blue);
       object-fit: cover;
-      background: #0f172a;
+      background: #0b1120;
     }
 
     .user-info h4 {
       font-size: 0.85rem;
       color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 160px;
     }
 
     .user-info span {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--titan-gold);
       font-weight: 700;
       display: block;
@@ -331,25 +425,30 @@
       text-decoration: underline;
       padding: 0;
       margin-top: 3px;
+      transition: color 0.2s;
+    }
+
+    .logout-btn:hover {
+      color: var(--spider-red);
     }
 
     /* MAIN CONTAINER */
     .main-container {
       flex: 1;
-      padding: 35px 40px 35px calc(var(--sidebar-width) + 40px);
-      transition: padding-left 0.3s ease;
+      padding: 35px 35px 35px calc(var(--sidebar-width) + 35px);
+      transition: padding-left 0.35s ease;
       max-width: 100%;
       width: 100%;
     }
 
     .main-container.expanded {
-      padding-left: 40px;
+      padding-left: 35px;
     }
 
     .tab-section {
       display: none;
       animation: fadeIn 0.3s ease;
-      padding-top: 40px;
+      padding-top: 35px;
     }
 
     .tab-section.active {
@@ -357,38 +456,45 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     .section-title {
       font-family: var(--font-title);
-      font-size: 1.8rem;
-      margin-bottom: 8px;
+      font-size: 1.7rem;
+      margin-bottom: 6px;
       color: #fff;
     }
 
     .section-desc {
       color: var(--text-muted);
-      margin-bottom: 25px;
-      font-size: 0.95rem;
+      margin-bottom: 22px;
+      font-size: 0.92rem;
+      line-height: 1.5;
     }
 
-    /* CARDS & GRIDS */
+    /* STATS & CARDS */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-bottom: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 25px;
     }
 
     .stat-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 24px;
+      border-radius: 14px;
+      padding: 22px;
       position: relative;
       overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      border-color: #334155;
     }
 
     .stat-card::before {
@@ -405,7 +511,7 @@
     .stat-card.gold::before { background: var(--titan-gold); }
 
     .stat-card h3 {
-      font-size: 2.2rem;
+      font-size: 2.1rem;
       font-weight: 800;
       margin-bottom: 4px;
       color: #fff;
@@ -413,7 +519,7 @@
 
     .stat-card p {
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
       font-weight: 700;
       letter-spacing: 1px;
@@ -423,17 +529,24 @@
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 14px;
-      padding: 25px;
-      margin-bottom: 25px;
+      padding: 22px;
+      margin-bottom: 22px;
     }
 
     .hero-card {
       border: 1px solid var(--border-color);
       background: var(--bg-card);
       border-radius: 14px;
-      padding: 22px;
+      padding: 20px;
       position: relative;
       overflow: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .hero-card:hover {
+      transform: translateY(-3px);
+      background: var(--bg-card-hover);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     }
 
     .hero-card.red-border { border-top: 4px solid var(--spider-red); }
@@ -443,25 +556,28 @@
     .data-table-wrapper {
       width: 100%;
       overflow-x: auto;
+      border-radius: 10px;
+      -webkit-overflow-scrolling: touch;
     }
 
     table {
       width: 100%;
+      min-width: 580px;
       border-collapse: collapse;
       text-align: left;
     }
 
     th, td {
-      padding: 14px 16px;
+      padding: 12px 14px;
       border-bottom: 1px solid var(--border-color);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
     th {
-      background: #1e293b;
+      background: #131d31;
       color: var(--text-muted);
       text-transform: uppercase;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       letter-spacing: 1px;
     }
 
@@ -469,45 +585,72 @@
       display: inline-block;
       padding: 4px 10px;
       border-radius: 20px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      background: rgba(0, 180, 216, 0.2);
+      background: rgba(6, 182, 212, 0.15);
       color: var(--spider-blue);
     }
 
-    /* RESPONSIVIDADE MOBILE */
+    /* ============================================================
+       OTIMIZAÇÕES RESPONSIVAS MULTI-DISPOSITIVOS
+       ============================================================ */
     @media (max-width: 900px) {
       .main-container {
-        padding: 70px 15px 25px 15px !important;
+        padding: 68px 14px 25px 14px !important;
       }
 
       .sidebar {
-        width: 85% !important;
+        width: 86% !important;
         max-width: 320px !important;
+        padding-top: 25px !important;
+      }
+
+      .section-title {
+        font-size: 1.35rem !important;
       }
 
       .stats-grid {
         grid-template-columns: 1fr !important;
-        gap: 14px !important;
+        gap: 12px !important;
       }
 
       .content-box, .hero-card {
-        padding: 18px !important;
+        padding: 16px !important;
+      }
+
+      .auth-card {
+        padding: 24px 18px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .section-title {
+        font-size: 1.25rem !important;
+      }
+      
+      .brand-title {
+        font-size: 1.15rem !important;
+      }
+      
+      .menu-toggle-btn {
+        padding: 8px 14px;
+        font-size: 0.8rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- BOTÃO DE EXPANDIR/RECOLHER -->
-  <button class="menu-toggle-btn" onclick="toggleSidebar()">
-    <span id="menu-icon">Menu</span>
+  <!-- BOTÃO FLUTUANTE DINÂMICO (SETA ➔ / X) -->
+  <button id="main-toggle-btn" class="menu-toggle-btn" onclick="toggleSidebar()">
+    <span id="menu-icon" class="icon-indicator">➔</span>
+    <span id="menu-text">Menu</span>
   </button>
 
-  <!-- OVERLAY PARA FECHAR O MENU NO MOBILE -->
+  <!-- OVERLAY ESCURO PARA FECHAR O MENU -->
   <div id="sidebar-overlay" class="sidebar-overlay" onclick="fecharSidebar()"></div>
 
-  <!-- MODAL DE AUTENTICAÇÃO COM TEXTO HISTÓRICO RESTAURADO -->
+  <!-- MODAL DE ENTRADA / CADASTRO COM MANIFESTO -->
   <div id="auth-modal" class="auth-overlay">
     <div class="auth-card">
       <div class="auth-header">
@@ -544,26 +687,61 @@
     </div>
   </div>
 
-  <!-- APLICAÇÃO PRINCIPAL -->
+  <!-- LAYOUT PRINCIPAL -->
   <div class="app-layout">
     
-    <!-- SIDEBAR SEM EMOJIS -->
+    <!-- SIDEBAR RETRÁTIL -->
     <aside id="sidebar-menu" class="sidebar">
       <div>
-        <h2 class="brand-title">ALÉM DAS MURALHAS</h2>
-        <div class="brand-subtitle">O Amigo da Vizinhança</div>
+        <div class="sidebar-close-header">
+          <div>
+            <h2 class="brand-title">ALÉM DAS MURALHAS</h2>
+            <div class="brand-subtitle">O Amigo da Vizinhança</div>
+          </div>
+          <button class="sidebar-close-btn" onclick="fecharSidebar()" title="Fechar Menu">✕</button>
+        </div>
 
         <nav class="nav-menu">
-          <button class="nav-btn active" onclick="trocarAba('comunitario', this)">Painel Comunitário</button>
-          <button class="nav-btn" onclick="trocarAba('doar', this)">Cadastrar Doação</button>
-          <button class="nav-btn" onclick="trocarAba('minhas-doacoes', this)">Minhas Doações & Selos</button>
-          <button class="nav-btn" onclick="trocarAba('perfil', this)">Meu Perfil & Conta</button>
-          <button class="nav-btn" onclick="trocarAba('mensagens', this)">Mensagens Solidárias</button>
-          <button class="nav-btn" onclick="trocarAba('personagens', this)">Personagens e Inspirações</button>
-          <button class="nav-btn" onclick="trocarAba('frases', this)">Frases e Citações</button>
-          <button class="nav-btn" onclick="trocarAba('historia', this)">Minha História</button>
-          <button class="nav-btn" onclick="trocarAba('lgpd', this)">Privacidade & LGPD</button>
-          <button id="admin-tab-btn" class="nav-btn admin-nav-btn" style="display: none;" onclick="trocarAba('admin', this)">Painel Super Admin</button>
+          <button class="nav-btn active" onclick="trocarAba('comunitario', this)">
+            <span>Painel Comunitário</span>
+            <small style="opacity: 0.5;">➔</small>
+          </button>
+          <button class="nav-btn" onclick="trocarAba('doar', this)">
+            <span>Cadastrar Doação</span>
+            <small style="opacity: 0.5;">➔</small>
+          </button>
+          <button class="nav-btn" onclick="trocarAba('minhas-doacoes', this)">
+            <span>Minhas Doações & Selos</span>
+            <small style="opacity: 0.5;">➔</small>
+          </button>
+          <button class="nav-btn" onclick="trocarAba('perfil', this)">
+            <span>Meu Perfil & Conta</span>
+            <small style="opacity: 0.5;">➔</small>
+          </button>
+          <button class="nav-btn" onclick="trocarAba('mensagens', this)">
+            <span>Mensagens Solidárias</span>
+            <small style="opacity: 0.5;">➔</small>
+          </button>
+          <button class="nav-btn" onclick="trocarAba('personagens', this)">
+            <span>Personagens e Inspirações</span>
+            <small style="opacity: 0.5;">➔</small>
+          </button>
+          <button class="nav-btn" onclick="trocarAba('frases', this)">
+            <span>Frases e Citações</span>
+            <small style="opacity: 0.5;">➔</small>
+          </button>
+          <button class="nav-btn" onclick="trocarAba('historia', this)">
+            <span>Minha História</span>
+            <small style="opacity: 0.5;">➔</small>
+          </button>
+          <button class="nav-btn" onclick="trocarAba('lgpd', this)">
+            <span>Privacidade & LGPD</span>
+            <small style="opacity: 0.5;">➔</small>
+          </button>
+          <button id="admin-tab-btn" class="nav-btn admin-nav-btn" style="display: none;" onclick="trocarAba('admin', this)">
+            <span>Painel Super Admin</span>
+            <small style="opacity: 0.7;">🛡️</small>
+          </button>
         </nav>
       </div>
 
@@ -577,7 +755,7 @@
       </div>
     </aside>
 
-    <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
+    <!-- CONTEÚDO PRINCIPAL -->
     <main id="main-content-area" class="main-container">
       
       <!-- 1. PAINEL COMUNITÁRIO -->
@@ -601,7 +779,7 @@
         </div>
 
         <div class="content-box">
-          <h3 style="margin-bottom: 15px; font-family: var(--font-title); font-size: 1.2rem;">Pontos de Coleta e Acolhimento</h3>
+          <h3 style="margin-bottom: 15px; font-family: var(--font-title); font-size: 1.15rem;">Pontos de Coleta e Acolhimento</h3>
           <div class="data-table-wrapper">
             <table>
               <thead>
@@ -613,14 +791,14 @@
                 </tr>
               </thead>
               <tbody id="tabela-pontos-publico">
-                <tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Buscando pontos de coleta...</td></tr>
+                <tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Buscando pontos de acolhimento...</td></tr>
               </tbody>
             </table>
           </div>
         </div>
       </section>
 
-      <!-- 2. CADASTRAR DOAÇÃO COM PÚBLICO ATÍPICO -->
+      <!-- 2. CADASTRAR DOAÇÃO (COM INCLUSÃO DE PESSOAS ATÍPICAS) -->
       <section id="aba-doar" class="tab-section">
         <h2 class="section-title">Cadastrar Doação</h2>
         <p class="section-desc">Registre seu apoio voluntário selecionando o público de destino e a categoria.</p>
@@ -672,13 +850,13 @@
 
         <div class="content-box" style="margin-bottom: 25px;">
           <h3 style="margin-bottom: 15px; font-family: var(--font-title); font-size: 1.1rem;">Meus Selos de Conquista</h3>
-          <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-            <div style="background: #1e293b; padding: 12px 18px; border-radius: 10px; border: 1px solid var(--spider-blue);">
-              <strong style="color: var(--spider-blue); display: block;">Protetor da Vizinhança</strong>
-              <small style="color: var(--text-muted);">Cadastro confirmado na comunidade</small>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+            <div style="background: #131d31; padding: 14px; border-radius: 12px; border: 1px solid var(--spider-blue);">
+              <strong style="color: var(--spider-blue); display: block; font-size: 0.95rem;">Protetor da Vizinhança</strong>
+              <small style="color: var(--text-muted);">Cadastro confirmado e ativo</small>
             </div>
-            <div style="background: #1e293b; padding: 12px 18px; border-radius: 10px; border: 1px solid var(--titan-gold);">
-              <strong style="color: var(--titan-gold); display: block;">Coração de Ouro</strong>
+            <div style="background: #131d31; padding: 14px; border-radius: 12px; border: 1px solid var(--titan-gold);">
+              <strong style="color: var(--titan-gold); display: block; font-size: 0.95rem;">Coração Solidário</strong>
               <small style="color: var(--text-muted);">Apoio a instituições locais</small>
             </div>
           </div>
@@ -714,10 +892,10 @@
         <div class="content-box" style="max-width: 650px;">
           <form onsubmit="atualizarPerfil(event)">
             
-            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
-              <img id="perfil-preview-img" src="https://api.dicebear.com/7.x/bottts/svg?seed=hero" alt="Foto Perfil" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--spider-blue); object-fit: cover;">
-              <div style="flex: 1;">
-                <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 6px;">Foto de Perfil</label>
+            <div style="display: flex; align-items: center; gap: 18px; margin-bottom: 20px; flex-wrap: wrap;">
+              <img id="perfil-preview-img" src="https://api.dicebear.com/7.x/bottts/svg?seed=hero" alt="Foto Perfil" style="width: 76px; height: 76px; border-radius: 50%; border: 3px solid var(--spider-blue); object-fit: cover;">
+              <div style="flex: 1; min-width: 200px;">
+                <label style="display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); margin-bottom: 6px;">Foto de Perfil</label>
                 <input type="file" id="perfil-foto-input" class="form-control" accept="image/*" onchange="previewFotoPerfil(event)">
               </div>
             </div>
@@ -748,8 +926,8 @@
           <hr style="border-color: var(--border-color); margin: 20px 0;">
           
           <h4 style="color: var(--spider-red); margin-bottom: 8px;">Direito ao Esquecimento (Art. 18 LGPD)</h4>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Em conformidade com a LGPD, você pode excluir permanentemente seu cadastro e dados vinculados do banco de dados na nuvem.</p>
-          <button class="btn-primary" style="background: #334155;" onclick="excluirMinhaConta()">Solicitar Exclusão Definitiva de Dados</button>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px;">Em conformidade com a LGPD, você pode excluir permanentemente seu cadastro e dados vinculados do banco de dados na nuvem.</p>
+          <button class="btn-primary" style="background: #1e293b; border: 1px solid #334155;" onclick="excluirMinhaConta()">Solicitar Exclusão Definitiva de Dados</button>
         </div>
       </section>
 
@@ -758,7 +936,7 @@
         <h2 class="section-title">Mensagens Solidárias</h2>
         <p class="section-desc">Mural comunitário para palavras de encorajamento, empatia e união.</p>
 
-        <div class="content-box" style="max-width: 650px; margin-bottom: 30px;">
+        <div class="content-box" style="max-width: 650px; margin-bottom: 25px;">
           <form onsubmit="enviarMensagem(event)">
             <div class="form-group">
               <label>Sua Mensagem para a Comunidade</label>
@@ -779,39 +957,39 @@
         <div class="stats-grid">
           
           <div class="hero-card red-border">
-            <span class="badge" style="background: rgba(230, 57, 70, 0.2); color: var(--spider-red); margin-bottom: 10px;">Marvel Comics</span>
-            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.25rem; margin-bottom: 8px;">Homem-Aranha (Peter Parker)</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">O legítimo 'Amigo da Vizinhança'. Ensina que grandes poderes trazem grandes responsabilidades, e que o verdadeiro herói é aquele que nunca abandona a sua comunidade local.</p>
+            <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--spider-red); margin-bottom: 10px;">Marvel Comics</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Homem-Aranha (Peter Parker)</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">O legítimo 'Amigo da Vizinhança'. Ensina que grandes poderes trazem grandes responsabilidades, e que o verdadeiro herói é aquele que nunca abandona a sua comunidade local.</p>
           </div>
 
           <div class="hero-card blue-border">
-            <span class="badge" style="background: rgba(0, 180, 216, 0.2); color: var(--spider-blue); margin-bottom: 10px;">Attack on Titan</span>
-            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.25rem; margin-bottom: 8px;">Eren Yeager & Armin Arlert</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">A coragem indomável de enxergar além dos muros impostos pelo sofrimento e a sabedoria de que mudar o mundo exige entrega, empatia e luta ativa.</p>
+            <span class="badge" style="background: rgba(6, 182, 212, 0.15); color: var(--spider-blue); margin-bottom: 10px;">Attack on Titan</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Eren Yeager & Armin Arlert</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">A coragem indomável de enxergar além dos muros impostos pelo sofrimento e a sabedoria de que mudar o mundo exige entrega, empatia e luta ativa.</p>
           </div>
 
           <div class="hero-card gold-border">
-            <span class="badge" style="background: rgba(244, 162, 97, 0.2); color: var(--titan-gold); margin-bottom: 10px;">DC Comics</span>
-            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.25rem; margin-bottom: 8px;">Batman (Bruce Wayne)</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">A prova de que a dor pode ser convertida em proteção. Não são promessas ou identidades que definem quem você é, mas sim as ações concretas que você pratica pelos outros.</p>
+            <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--titan-gold); margin-bottom: 10px;">DC Comics</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Batman (Bruce Wayne)</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">A prova de que a dor pode ser convertida em proteção. Não são promessas ou identidades que definem quem você é, mas sim as ações concretas que você pratica pelos outros.</p>
           </div>
 
           <div class="hero-card red-border">
-            <span class="badge" style="background: rgba(230, 57, 70, 0.2); color: var(--spider-red); margin-bottom: 10px;">My Hero Academia</span>
-            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.25rem; margin-bottom: 8px;">All Might (Toshinori Yagi)</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">O símbolo da paz e do acolhimento. A postura inabalável de estender a mão sorrindo para dizer aos que mais sofrem: <em>'Está tudo bem agora, porque nós estamos aqui!'</em>.</p>
+            <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--spider-red); margin-bottom: 10px;">My Hero Academia</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">All Might (Toshinori Yagi)</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">O símbolo da paz e do acolhimento. A postura inabalável de estender a mão sorrindo para dizer aos que mais sofrem: <em>'Está tudo bem agora, porque nós estamos aqui!'</em>.</p>
           </div>
 
           <div class="hero-card blue-border">
-            <span class="badge" style="background: rgba(0, 180, 216, 0.2); color: var(--spider-blue); margin-bottom: 10px;">Marvel Comics</span>
-            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.25rem; margin-bottom: 8px;">Capitão América (Steve Rogers)</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">A perseverança moral que nunca recua diante das injustiças. A determinação de se manter de pé pelos que caíram e a convicção de fazer isso até o fim.</p>
+            <span class="badge" style="background: rgba(6, 182, 212, 0.15); color: var(--spider-blue); margin-bottom: 10px;">Marvel Comics</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Capitão América (Steve Rogers)</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">A perseverança moral que nunca recua diante das injustiças. A determinação de se manter de pé pelos que caíram e a convicção de fazer isso até o fim.</p>
           </div>
 
           <div class="hero-card gold-border">
-            <span class="badge" style="background: rgba(244, 162, 97, 0.2); color: var(--titan-gold); margin-bottom: 10px;">Valores Universais</span>
-            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.25rem; margin-bottom: 8px;">O Guardião da Vizinhança</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">Cada doador, voluntário e cidadão que escolhe não fechar os olhos. O herói anônimo que leva alimento, agasalho e inclusão para pessoas atípicas, idosos e crianças.</p>
+            <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--titan-gold); margin-bottom: 10px;">Valores Universais</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">O Guardião da Vizinhança</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">Cada doador, voluntário e cidadão que escolhe não fechar os olhos. O herói anônimo que leva alimento, agasalho e inclusão para pessoas atípicas, idosos e crianças.</p>
           </div>
 
         </div>
@@ -829,9 +1007,9 @@
         <h2 class="section-title">Minha História</h2>
         <p class="section-desc">O propósito e o compromisso ético do projeto Além das Muralhas.</p>
         
-        <div class="content-box" style="line-height: 1.7; font-size: 0.95rem; color: #cbd5e1;">
-          <p style="margin-bottom: 15px;">O projeto <strong>Além das Muralhas - O Amigo da Vizinhança</strong> nasceu da convicção de que nenhuma barreira social é instransponível quando a tecnologia é colocada a serviço da empatia e do acolhimento.</p>
-          <p style="margin-bottom: 15px;">Inspirada nos valores de altruísmo, proteção aos vulneráveis e determinação, a plataforma conecta pontos de coleta e doadores diretos a quem mais necessita: crianças, idosos, moradores de rua e pessoas com necessidades atípicas (TEA e PCD).</p>
+        <div class="content-box" style="line-height: 1.7; font-size: 0.92rem; color: #cbd5e1;">
+          <p style="margin-bottom: 14px;">O projeto <strong>Além das Muralhas - O Amigo da Vizinhança</strong> nasceu da convicção de que nenhuma barreira social é intransponível quando a tecnologia é colocada a serviço da empatia e do acolhimento.</p>
+          <p style="margin-bottom: 14px;">Inspirada nos valores de altruísmo, proteção aos vulneráveis e determinação, a plataforma conecta pontos de coleta e doadores diretos a quem mais necessita: crianças, idosos, moradores de rua e pessoas com necessidades atípicas (TEA e PCD).</p>
           <p>Estender a mão para quem precisa não é apenas solidariedade; é o maior ato de coragem e rebeldia contra a indiferença do mundo.</p>
         </div>
       </section>
@@ -841,10 +1019,10 @@
         <h2 class="section-title">Privacidade & LGPD</h2>
         <p class="section-desc">Compromisso com a Lei nº 13.709/2018 (Lei Geral de Proteção de Dados Pessoais).</p>
 
-        <div class="content-box" style="line-height: 1.7; font-size: 0.95rem; color: #cbd5e1;">
-          <h3 style="color: var(--spider-blue); margin-bottom: 10px;">Princípios de Transparência e Segurança</h3>
-          <p style="margin-bottom: 12px;"><strong>Finalidade e Consentimento:</strong> Seus dados cadastrais (nome, e-mail e senha protegida por hash criptográfico) destinam-se exclusivamente à autenticação e controle dos seus protocolos de doação.</p>
-          <p style="margin-bottom: 12px;"><strong>Armazenamento Seguro:</strong> Infraestrutura baseada em nuvem com conexões criptografadas SSL.</p>
+        <div class="content-box" style="line-height: 1.7; font-size: 0.92rem; color: #cbd5e1;">
+          <h3 style="color: var(--spider-blue); margin-bottom: 10px; font-size: 1.1rem;">Princípios de Transparência e Segurança</h3>
+          <p style="margin-bottom: 10px;"><strong>Finalidade e Consentimento:</strong> Seus dados cadastrais (nome, e-mail e senha protegida por hash criptográfico) destinam-se exclusivamente à autenticação e controle dos seus protocolos de doação.</p>
+          <p style="margin-bottom: 10px;"><strong>Armazenamento Seguro:</strong> Infraestrutura baseada em nuvem com conexões criptografadas SSL.</p>
           <p><strong>Direito ao Esquecimento (Art. 18):</strong> O usuário tem total autonomia para retificar suas informações no menu <em>Meu Perfil</em> ou excluir permanentemente seus registros da plataforma a qualquer momento.</p>
         </div>
       </section>
@@ -854,7 +1032,7 @@
         <h2 class="section-title" style="color: var(--titan-gold);">Painel Super Admin</h2>
         <p class="section-desc">Gestão administrativa de pontos de acolhimento e auditoria de doações no banco de dados.</p>
 
-        <div class="content-box" style="max-width: 650px; margin-bottom: 30px;">
+        <div class="content-box" style="max-width: 650px; margin-bottom: 25px;">
           <h3 style="margin-bottom: 15px; font-size: 1.1rem; color: #fff;">Cadastrar Novo Ponto de Coleta</h3>
           <form onsubmit="cadastrarPontoAdmin(event)">
             <div class="form-group">
@@ -924,31 +1102,42 @@
     let usuarioLogado = null;
     let fotoPerfilBase64 = null;
 
+    // Atualização visual do botão toggle (➔ vs ✕)
+    function atualizarBotaoToggle(estaAberto) {
+      const icon = document.getElementById('menu-icon');
+      const text = document.getElementById('menu-text');
+      if (estaAberto) {
+        icon.innerText = '✕';
+        text.innerText = 'Fechar';
+      } else {
+        icon.innerText = '➔';
+        text.innerText = 'Menu';
+      }
+    }
+
     // Alternar Barra Lateral
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar-menu');
       const mainArea = document.getElementById('main-content-area');
       const overlay = document.getElementById('sidebar-overlay');
-      const icon = document.getElementById('menu-icon');
 
       sidebar.classList.toggle('collapsed');
       mainArea.classList.toggle('expanded');
       
-      const isCollapsed = sidebar.classList.contains('collapsed');
-      overlay.classList.toggle('active', !isCollapsed && window.innerWidth <= 900);
-      icon.innerText = isCollapsed ? 'Menu' : 'Fechar';
+      const estaFechado = sidebar.classList.contains('collapsed');
+      overlay.classList.toggle('active', !estaFechado && window.innerWidth <= 900);
+      atualizarBotaoToggle(!estaFechado);
     }
 
     function fecharSidebar() {
       const sidebar = document.getElementById('sidebar-menu');
       const mainArea = document.getElementById('main-content-area');
       const overlay = document.getElementById('sidebar-overlay');
-      const icon = document.getElementById('menu-icon');
 
       sidebar.classList.add('collapsed');
       mainArea.classList.add('expanded');
       overlay.classList.remove('active');
-      icon.innerText = 'Menu';
+      atualizarBotaoToggle(false);
     }
 
     // Inicialização
@@ -959,8 +1148,11 @@
         configurarInterfaceUsuario();
       }
 
+      // Em dispositivos móveis ou telas médias, inicia recolhido para leitura limpa
       if (window.innerWidth <= 900) {
         fecharSidebar();
+      } else {
+        atualizarBotaoToggle(true);
       }
 
       carregarImpacto();
@@ -983,6 +1175,8 @@
 
       if (nomeAba === 'minhas-doacoes') carregarMinhasDoacoes();
       if (nomeAba === 'admin') carregarAdminDashboard();
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // Autenticação
@@ -1041,7 +1235,7 @@
       document.getElementById('perfil-heroi').value = usuarioLogado.heroi_favorito || '';
 
       if (usuarioLogado.is_admin) {
-        document.getElementById('admin-tab-btn').style.display = 'block';
+        document.getElementById('admin-tab-btn').style.display = 'flex';
       }
     }
 
@@ -1212,7 +1406,7 @@
         mensagens.forEach(m => {
           container.innerHTML += `
             <div class="content-box">
-              <p style="font-style: italic; margin-bottom: 10px; color: #fff;">"${m.mensagem}"</p>
+              <p style="font-style: italic; margin-bottom: 10px; color: #fff; line-height: 1.5;">"${m.mensagem}"</p>
               <span style="font-size: 0.8rem; color: var(--spider-blue); font-weight: 700;">— ${m.nome} (${m.heroi_favorito || 'Protetor Solidário'})</span>
             </div>
           `;
@@ -1241,7 +1435,7 @@
       }
     }
 
-    // Frases e Citações com Lista Completa e Sem Repetições
+    // Frases e Citações
     async function carregarFrases() {
       try {
         const listaCompleta = [
@@ -1266,8 +1460,8 @@
           container.innerHTML += `
             <div class="content-box">
               <span class="badge" style="margin-bottom: 10px;">${f.categoria}</span>
-              <p style="margin-bottom: 10px; font-weight: 600; color: #fff; font-size: 0.95rem; line-height: 1.4;">"${f.texto}"</p>
-              <span style="font-size: 0.8rem; color: var(--titan-gold); font-weight: 700;">— ${f.autor}</span>
+              <p style="margin-bottom: 10px; font-weight: 600; color: #fff; font-size: 0.92rem; line-height: 1.5;">"${f.texto}"</p>
+              <span style="font-size: 0.78rem; color: var(--titan-gold); font-weight: 700;">— ${f.autor}</span>
             </div>
           `;
         });
