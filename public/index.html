@@ -258,7 +258,7 @@
     th { background: #131d31; color: var(--text-muted); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 1px; }
     .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; background: rgba(6, 182, 212, 0.15); color: var(--spider-blue); }
 
-    /* MODAL DE DOAÇÃO COM CARD DE HERÓI ESTILIZADO */
+    /* MODAL DE DOAÇÃO COM FOTO REAL DO HERÓI */
     .success-modal-overlay {
       position: fixed;
       top: 0;
@@ -291,19 +291,17 @@
       position: relative;
     }
 
-    .hero-banner-frame {
+    .hero-photo-banner {
       width: 100%;
-      height: 180px;
+      height: 190px;
       border-radius: 14px;
       margin-bottom: 16px;
       position: relative;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       border: 1px solid rgba(255, 255, 255, 0.15);
       background-size: cover;
       background-position: center;
+      box-shadow: inset 0 -40px 40px rgba(7, 10, 18, 0.85);
     }
 
     .hero-badge-tag {
@@ -384,43 +382,44 @@
       100% { opacity: 0; transform: rotate(-25deg) scaleX(1.6) translateX(80px); }
     }
 
-    /* CORTE DE LÂMINAS DE ATTACK ON TITAN (ERWIN / EREN) */
-    .anim-titan-slash {
+    /* RELÂMPAGO TEMPESTADE */
+    .anim-storm-lightning {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: inset 0 0 80px var(--spider-blue);
+      animation: stormFlash 0.4s ease-out forwards;
+    }
+
+    @keyframes stormFlash {
+      0% { opacity: 0; }
+      25% { opacity: 0.9; }
+      50% { opacity: 0.2; }
+      75% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* ESCUDO DO CAPITÃO AMÉRICA */
+    .anim-cap-shield {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 120vw;
-      height: 6px;
-      background: linear-gradient(90deg, transparent, var(--titan-gold), #fff, var(--titan-gold), transparent);
-      box-shadow: 0 0 40px var(--titan-gold);
-      transform: translate(-50%, -50%) rotate(45deg);
-      animation: titanBladeSlash 0.5s ease-in-out forwards;
-    }
-
-    @keyframes titanBladeSlash {
-      0% { opacity: 0; transform: translate(-50%, -50%) rotate(45deg) scaleX(0.2); }
-      50% { opacity: 1; transform: translate(-50%, -50%) rotate(45deg) scaleX(1.4); }
-      100% { opacity: 0; transform: translate(-50%, -50%) rotate(45deg) scaleX(1.8); }
-    }
-
-    /* IMPACTO ALL MIGHT (SMASH) */
-    .anim-allmight-smash {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100px;
-      height: 100px;
+      width: 160px;
+      height: 160px;
       border: 8px solid var(--spider-red);
       border-radius: 50%;
       transform: translate(-50%, -50%) scale(0.1);
-      box-shadow: 0 0 50px var(--spider-red), inset 0 0 50px var(--spider-red);
-      animation: allMightSmash 0.55s ease-out forwards;
+      box-shadow: 0 0 50px var(--spider-blue), inset 0 0 30px var(--spider-blue);
+      animation: capShieldSpin 0.55s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
     }
 
-    @keyframes allMightSmash {
-      0% { transform: translate(-50%, -50%) scale(0.2); opacity: 1; }
-      50% { transform: translate(-50%, -50%) scale(3.5); opacity: 0.9; }
-      100% { transform: translate(-50%, -50%) scale(6); opacity: 0; }
+    @keyframes capShieldSpin {
+      0% { transform: translate(-50%, -50%) scale(0.1) rotate(0deg); opacity: 1; }
+      70% { transform: translate(-50%, -50%) scale(1.8) rotate(360deg); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(2.2) rotate(540deg); opacity: 0; }
     }
 
     @media (max-width: 900px) {
@@ -434,7 +433,6 @@
 </head>
 <body>
 
-  <!-- CAMADA PARA OS EFEITOS ESPECIAIS VISUAIS -->
   <div id="fx-overlay" class="fx-canvas-overlay"></div>
 
   <!-- BOTÃO FLUTUANTE DE ABERTURA DO MENU (➔) -->
@@ -473,7 +471,7 @@
 
         <div class="form-group">
           <label>Qual seu herói favorito?</label>
-          <input type="text" id="auth-heroi" class="form-control" placeholder="Ex: Homem-Aranha, Pantera Negra, Erwin Smith, Batman..." required>
+          <input type="text" id="auth-heroi" class="form-control" placeholder="Ex: Homem-Aranha, Pantera Negra, Tempestade, Batman..." required>
         </div>
 
         <div class="checkbox-group">
@@ -486,10 +484,10 @@
     </div>
   </div>
 
-  <!-- MODAL DE DOAÇÃO CONFIRMADA COM CARDS DE HERÓIS E ANIMAÇÕES VISUAIS -->
+  <!-- MODAL DE DOAÇÃO CONFIRMADA COM FOTO REAL DO HERÓI -->
   <div id="success-modal" class="success-modal-overlay">
     <div class="success-card">
-      <div id="modal-hero-frame" class="hero-banner-frame">
+      <div id="modal-hero-photo" class="hero-photo-banner">
         <span id="modal-hero-tag" class="hero-badge-tag">HERÓI ATIVO</span>
       </div>
       <h3 class="success-title">DOAÇÃO CONFIRMADA!</h3>
@@ -734,7 +732,7 @@
 
             <div class="form-group">
               <label>Herói / Inspiração Favorita (Bio de Herói)</label>
-              <input type="text" id="perfil-heroi" class="form-control" placeholder="Ex: Homem-Aranha, Pantera Negra, Erwin Smith, Batman...">
+              <input type="text" id="perfil-heroi" class="form-control" placeholder="Ex: Homem-Aranha, Pantera Negra, Tempestade, Batman...">
             </div>
 
             <div class="form-group">
@@ -785,9 +783,9 @@
           </div>
 
           <div class="hero-card blue-border">
-            <span class="badge" style="background: rgba(6, 182, 212, 0.15); color: var(--spider-blue); margin-bottom: 10px;">Attack on Titan</span>
-            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Comandante Erwin Smith</h3>
-            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">A liderança corajosa que guia a humanidade além das muralhas da ignorância e da dor. O compromisso inabalável de avançar com firmeza diante de qualquer obstáculo.</p>
+            <span class="badge" style="background: rgba(6, 182, 212, 0.15); color: var(--spider-blue); margin-bottom: 10px;">Marvel Comics</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Tempestade (Ororo Munroe)</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">A força da natureza guiada pela compaixão. Uma líder que usa sua autoridade e poderes para proteger os oprimidos e acolher quem perdeu tudo.</p>
           </div>
 
           <div class="hero-card gold-border">
@@ -809,9 +807,9 @@
           </div>
 
           <div class="hero-card gold-border">
-            <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--titan-gold); margin-bottom: 10px;">Valores Universais</span>
-            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">O Guardião Solidário</h3>
-            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">Cada membro da comunidade que dedica seu tempo ou recursos para acolher crianças, idosos, moradores de rua e pessoas com condições atípicas.</p>
+            <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--titan-gold); margin-bottom: 10px;">DC Comics</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Superman (Clark Kent)</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">O símbolo universal de esperança. O herói supremo que escolhe a gentileza e o cuidado humilde com cada vida na Terra.</p>
           </div>
 
         </div>
@@ -953,37 +951,73 @@
     let usuarioLogado = null;
     let fotoPerfilBase64 = null;
 
-    // Banners temáticos garantidos para o modal de sucesso (sem quebra de GIF)
-    const HERO_THEMES = [
+    // Galeria com todas as imagens locais mapeadas
+    const HERO_GALLERY = [
       {
-        tag: 'HOMEM-ARANHA • VIZINHANÇA',
-        bg: 'radial-gradient(circle, #b91c1c, #070a12)',
-        icon: '🕷️',
+        nome: 'HOMEM-ARANHA',
+        tag: 'O AMIGO DA VIZINHANÇA',
+        img: '/img/homem-aranha.jpg',
         type: 'spider'
       },
       {
-        tag: 'PANTERA NEGRA • WAKANDA',
-        bg: 'radial-gradient(circle, #7e22ce, #070a12)',
-        icon: '🐾',
+        nome: 'COMANDANTE ERWIN SMITH',
+        tag: 'LIDERANÇA • ALÉM DAS MURALHAS',
+        img: '/img/erwin-smith.jpg',
+        type: 'storm'
+      },
+      {
+        nome: 'PANTERA NEGRA',
+        tag: 'PROTETOR DE WAKANDA',
+        img: '/img/pantera-negra.png',
         type: 'panther'
       },
       {
-        tag: 'ERWIN SMITH • CORPO DE INVESTIGAÇÃO',
-        bg: 'radial-gradient(circle, #b45309, #070a12)',
-        icon: '⚔️',
-        type: 'titan'
+        nome: 'TEMPESTADE',
+        tag: 'FORÇA DOS ELEMENTOS',
+        img: '/img/tempestade.png',
+        type: 'storm'
       },
       {
-        tag: 'ALL MIGHT • SÍMBOLO DA PAZ',
-        bg: 'radial-gradient(circle, #0284c7, #b91c1c, #070a12)',
-        icon: '💥',
-        type: 'smash'
+        nome: 'CAPITÃO AMÉRICA',
+        tag: 'O PRIMEIRO VINGADOR',
+        img: '/img/capitao-america.jpeg',
+        type: 'cap'
       },
       {
-        tag: 'BATMAN • CAVALEIRO DAS TREVAS',
-        bg: 'radial-gradient(circle, #334155, #070a12)',
-        icon: '🦇',
-        type: 'batman'
+        nome: 'SUPERMAN',
+        tag: 'SÍMBOLO DA ESPERANÇA',
+        img: '/img/superman.webp',
+        type: 'cap'
+      },
+      {
+        nome: 'MULHER-MARAVILHA',
+        tag: 'PRINCESA DAS AMAZONAS',
+        img: '/img/mulher-maravilha.jpg',
+        type: 'storm'
+      },
+      {
+        nome: 'EREN YEAGER',
+        tag: 'BUSCA PELA LIBERDADE',
+        img: '/img/eren-yeager.jpg',
+        type: 'storm'
+      },
+      {
+        nome: 'ALL MIGHT',
+        tag: 'SÍMBOLO DA PAZ',
+        img: '/img/all-might.jpg',
+        type: 'cap'
+      },
+      {
+        nome: 'ARMIN ARLERT',
+        tag: 'DETERMINAÇÃO E ESTRATÉGIA',
+        img: '/img/armin-arlert.jpg',
+        type: 'storm'
+      },
+      {
+        nome: 'BATMAN',
+        tag: 'O CAVALEIRO DAS TREVAS',
+        img: '/img/batman.jpg',
+        type: 'panther'
       }
     ];
 
@@ -1002,16 +1036,16 @@
         claws.innerHTML = '<div class="claw-line"></div><div class="claw-line"></div><div class="claw-line"></div><div class="claw-line"></div>';
         overlay.appendChild(claws);
         setTimeout(() => claws.remove(), 550);
-      } else if (tipo === 'titan') {
-        const slash = document.createElement('div');
-        slash.className = 'anim-titan-slash';
-        overlay.appendChild(slash);
-        setTimeout(() => slash.remove(), 500);
+      } else if (tipo === 'storm') {
+        const lightning = document.createElement('div');
+        lightning.className = 'anim-storm-lightning';
+        overlay.appendChild(lightning);
+        setTimeout(() => lightning.remove(), 400);
       } else {
-        const smash = document.createElement('div');
-        smash.className = 'anim-allmight-smash';
-        overlay.appendChild(smash);
-        setTimeout(() => smash.remove(), 550);
+        const shield = document.createElement('div');
+        shield.className = 'anim-cap-shield';
+        overlay.appendChild(shield);
+        setTimeout(() => shield.remove(), 550);
       }
     }
 
@@ -1250,13 +1284,12 @@
       }
     }
 
-    // Registrar Doação com Sorteio de Efeito e Modal Customizado
     async function registrarDoacao(e) {
       e.preventDefault();
       if (!usuarioLogado) return;
 
-      const sorteioTema = HERO_THEMES[Math.floor(Math.random() * HERO_THEMES.length)];
-      dispararEfeitoVisual(sorteioTema.type);
+      const sorteioHeroi = HERO_GALLERY[Math.floor(Math.random() * HERO_GALLERY.length)];
+      dispararEfeitoVisual(sorteioHeroi.type);
 
       const payload = {
         id_usuario: usuarioLogado.id_usuario,
@@ -1274,9 +1307,9 @@
         });
         const data = await res.json();
 
-        const heroFrame = document.getElementById('modal-hero-frame');
-        heroFrame.style.background = sorteioTema.bg;
-        heroFrame.innerHTML = `<span style="font-size: 4rem; filter: drop-shadow(0 0 15px rgba(255,255,255,0.4));">${sorteioTema.icon}</span><span id="modal-hero-tag" class="hero-badge-tag">${sorteioTema.tag}</span>`;
+        const heroPhoto = document.getElementById('modal-hero-photo');
+        heroPhoto.style.backgroundImage = `url('${sorteioHeroi.img}')`;
+        document.getElementById('modal-hero-tag').innerText = `${sorteioHeroi.nome} • ${sorteioHeroi.tag}`;
 
         document.getElementById('modal-protocolo').innerText = data.protocolo;
         document.getElementById('modal-ponto').innerText = data.ponto ? data.ponto.nome_local : 'Ponto Geral';
