@@ -36,7 +36,6 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Scrollbar personalizada e discreta */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -139,7 +138,7 @@
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 18px;
-      padding: 32px 24px;
+      padding: 30px 22px;
       width: 100%;
       max-width: 480px;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(6, 182, 212, 0.15);
@@ -153,7 +152,7 @@
 
     .auth-header {
       text-align: center;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
     }
 
     .auth-header h1 {
@@ -170,23 +169,23 @@
       letter-spacing: 2px;
       font-weight: 700;
       margin-top: 4px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .auth-header .auth-manifesto {
       color: #cbd5e1;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-style: italic;
-      line-height: 1.5;
+      line-height: 1.45;
       background: rgba(30, 41, 59, 0.6);
-      padding: 12px 14px;
+      padding: 10px 12px;
       border-radius: 10px;
       border-left: 3px solid var(--spider-red);
       text-align: left;
     }
 
     .form-group {
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .form-group label {
@@ -194,7 +193,7 @@
       font-size: 0.82rem;
       font-weight: 600;
       color: var(--text-muted);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
     .form-control {
@@ -202,9 +201,9 @@
       background: #131d31;
       border: 1px solid #27354f;
       border-radius: 10px;
-      padding: 12px 14px;
+      padding: 11px 13px;
       color: #fff;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       outline: none;
       transition: all 0.25s ease;
     }
@@ -221,7 +220,7 @@
       gap: 10px;
       font-size: 0.78rem;
       color: var(--text-muted);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       line-height: 1.4;
     }
 
@@ -237,7 +236,7 @@
       background: linear-gradient(135deg, var(--spider-red), #b91c1c);
       color: white;
       border: none;
-      padding: 14px;
+      padding: 13px;
       border-radius: 10px;
       font-weight: 700;
       font-size: 0.92rem;
@@ -294,7 +293,6 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    /* BOTÃO X ÚNICO E ELEGANTE */
     .sidebar-close-btn {
       background: rgba(239, 68, 68, 0.12);
       border: 1px solid rgba(239, 68, 68, 0.35);
@@ -647,6 +645,133 @@
       color: var(--spider-blue);
     }
 
+    /* ============================================================
+       MODAL DE CONFIRMAÇÃO COM GIF INTEGRADO (SEM ALERT NATIVO)
+       ============================================================ */
+    .success-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(4, 7, 15, 0.85);
+      backdrop-filter: blur(10px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      padding: 16px;
+    }
+
+    .success-modal-overlay.active {
+      display: flex;
+      animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .success-card {
+      background: var(--bg-card);
+      border: 1px solid var(--spider-blue);
+      border-radius: 18px;
+      padding: 24px 20px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px var(--spider-blue-glow);
+      text-align: center;
+      position: relative;
+    }
+
+    .success-gif {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .success-title {
+      font-family: var(--font-title);
+      font-size: 1.35rem;
+      color: #fff;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .success-info {
+      background: #131d31;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 12px;
+      text-align: left;
+      font-size: 0.86rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .success-quote {
+      font-style: italic;
+      color: var(--titan-gold);
+      font-size: 0.86rem;
+      line-height: 1.4;
+      margin-bottom: 18px;
+    }
+
+    /* ============================================================
+       CAMADA DE ANIMAÇÕES VISUAIS DE HERÓIS NA DOAÇÃO
+       ============================================================ */
+    .fx-canvas-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 10005;
+    }
+
+    .fx-claw {
+      position: absolute;
+      top: 40%;
+      left: 10%;
+      width: 80%;
+      height: 8px;
+      background: linear-gradient(90deg, transparent, #a855f7, #ec4899, transparent);
+      box-shadow: 0 0 25px #a855f7;
+      transform: rotate(-30deg);
+      animation: slashClaw 0.45s ease forwards;
+    }
+
+    @keyframes slashClaw {
+      0% { opacity: 0; transform: rotate(-30deg) scaleX(0.2); }
+      50% { opacity: 1; transform: rotate(-30deg) scaleX(1.1); }
+      100% { opacity: 0; transform: rotate(-30deg) scaleX(1); }
+    }
+
+    .fx-web {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 180px;
+      height: 180px;
+      border: 4px dashed var(--spider-blue);
+      border-radius: 50%;
+      box-shadow: 0 0 35px var(--spider-blue);
+      animation: shootWeb 0.45s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+    }
+
+    @keyframes shootWeb {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.1) rotate(0deg); }
+      70% { opacity: 1; transform: translate(-50%, -50%) scale(1.4) rotate(90deg); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.6) rotate(180deg); }
+    }
+
     /* RESPONSIVIDADE MOBILE */
     @media (max-width: 900px) {
       .main-container {
@@ -676,7 +801,10 @@
 </head>
 <body>
 
-  <!-- BOTÃO FLUTUANTE QUE SÓ APARECE QUANDO O MENU ESTÁ FECHADO (➔) -->
+  <!-- CAMADA PARA OS EFEITOS ESPECIAIS VISUAIS -->
+  <div id="fx-overlay" class="fx-canvas-overlay"></div>
+
+  <!-- BOTÃO FLUTUANTE DE ABERTURA DO MENU (➔) -->
   <button id="main-toggle-btn" class="menu-toggle-btn" onclick="abrirSidebar()" aria-label="Abrir Menu">
     <span class="icon-indicator">➔</span>
   </button>
@@ -684,7 +812,7 @@
   <!-- OVERLAY ESCURO PARA FECHAR O MENU -->
   <div id="sidebar-overlay" class="sidebar-overlay" onclick="fecharSidebar()"></div>
 
-  <!-- MODAL DE ENTRADA / CADASTRO -->
+  <!-- MODAL DE ENTRADA / CADASTRO COM HERÓI FAVORITO -->
   <div id="auth-modal" class="auth-overlay">
     <div class="auth-card">
       <div class="auth-header">
@@ -711,6 +839,11 @@
           <input type="password" id="auth-senha" class="form-control" placeholder="••••••••" required>
         </div>
 
+        <div class="form-group">
+          <label>Qual seu herói favorito?</label>
+          <input type="text" id="auth-heroi" class="form-control" placeholder="Ex: Homem-Aranha, Pantera Negra, Erwin Smith, Batman..." required>
+        </div>
+
         <div class="checkbox-group">
           <input type="checkbox" id="auth-lgpd" checked required>
           <label for="auth-lgpd">Concordo com os Termos de Privacidade e Proteção de Dados (LGPD - Lei nº 13.709/2018).</label>
@@ -718,6 +851,20 @@
 
         <button type="submit" class="btn-primary">Entrar / Cadastrar Herói</button>
       </form>
+    </div>
+  </div>
+
+  <!-- MODAL DE DOAÇÃO CONFIRMADA COM GIF E DESIGN NATIVO DO SITE -->
+  <div id="success-modal" class="success-modal-overlay">
+    <div class="success-card">
+      <img id="modal-gif-img" class="success-gif" src="" alt="Hero GIF">
+      <h3 class="success-title">DOAÇÃO CONFIRMADA!</h3>
+      <div class="success-info">
+        <div><strong>Protocolo:</strong> <span id="modal-protocolo" style="color: var(--spider-blue); font-weight: 700;">#HEROI-0000</span></div>
+        <div><strong>Local de Entrega:</strong> <span id="modal-ponto">Ponto de Coleta</span></div>
+      </div>
+      <p id="modal-frase" class="success-quote">"Frase inspiradora do herói"</p>
+      <button class="btn-primary" onclick="fecharModalSucesso()">Fechar</button>
     </div>
   </div>
 
@@ -732,7 +879,6 @@
             <h2 class="brand-title">ALÉM DAS MURALHAS</h2>
             <div class="brand-subtitle">O Amigo da Vizinhança</div>
           </div>
-          <!-- ÚNICO BOTÃO X DE FECHAR -->
           <button class="sidebar-close-btn" onclick="fecharSidebar()" title="Fechar Menu">✕</button>
         </div>
 
@@ -842,7 +988,7 @@
         </div>
       </section>
 
-      <!-- 2. CADASTRAR DOAÇÃO (COM INCLUSÃO DE PESSOAS ATÍPICAS) -->
+      <!-- 2. CADASTRAR DOAÇÃO (COM ANIMAÇÕES VISUAIS) -->
       <section id="aba-doar" class="tab-section">
         <h2 class="section-title">Cadastrar Doação</h2>
         <p class="section-desc">Registre seu apoio voluntário selecionando o público de destino e a categoria.</p>
@@ -882,7 +1028,7 @@
               <textarea id="doacao-desc" class="form-control" rows="3" placeholder="Ex: 2 kits sensoriais, 3 pacotes de fraldas, alimentos não perecíveis..." required></textarea>
             </div>
 
-            <button type="submit" class="btn-primary">Confirmar Doação & Emitir Protocolo</button>
+            <button type="submit" class="btn-primary" id="btn-submit-doacao">Confirmar Doação & Emitir Protocolo</button>
           </form>
         </div>
       </section>
@@ -928,7 +1074,7 @@
         </div>
       </section>
 
-      <!-- 4. PERFIL COM FOTO E BIO DE HERÓI -->
+      <!-- 4. PERFIL COM LIMITE DE CAPACIDADE DE IMAGEM -->
       <section id="aba-perfil" class="tab-section">
         <h2 class="section-title">Meu Perfil & Conta</h2>
         <p class="section-desc">Atualize sua identidade, foto de perfil, herói favorito e dados pessoais.</p>
@@ -939,8 +1085,9 @@
             <div style="display: flex; align-items: center; gap: 18px; margin-bottom: 20px; flex-wrap: wrap;">
               <img id="perfil-preview-img" src="https://api.dicebear.com/7.x/bottts/svg?seed=hero" alt="Foto Perfil" style="width: 76px; height: 76px; border-radius: 50%; border: 3px solid var(--spider-blue); object-fit: cover;">
               <div style="flex: 1; min-width: 200px;">
-                <label style="display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); margin-bottom: 6px;">Foto de Perfil</label>
+                <label style="display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); margin-bottom: 4px;">Foto de Perfil (Máx. 2MB)</label>
                 <input type="file" id="perfil-foto-input" class="form-control" accept="image/*" onchange="previewFotoPerfil(event)">
+                <small style="color: var(--text-muted); font-size: 0.72rem;">Imagens são otimizadas automaticamente.</small>
               </div>
             </div>
 
@@ -956,7 +1103,7 @@
 
             <div class="form-group">
               <label>Herói / Inspiração Favorita (Bio de Herói)</label>
-              <input type="text" id="perfil-heroi" class="form-control" placeholder="Ex: Homem-Aranha, Erwin Smith, Batman, All Might...">
+              <input type="text" id="perfil-heroi" class="form-control" placeholder="Ex: Homem-Aranha, Pantera Negra, Erwin Smith, Batman...">
             </div>
 
             <div class="form-group">
@@ -1013,9 +1160,9 @@
           </div>
 
           <div class="hero-card gold-border">
-            <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--titan-gold); margin-bottom: 10px;">DC Comics</span>
-            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Batman (Bruce Wayne)</h3>
-            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">A transformação do trauma em propósito. A certeza de que não são palavras, mas atitudes reais na escuridão que trazem luz para os vulneráveis.</p>
+            <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--titan-gold); margin-bottom: 10px;">Marvel Comics</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Pantera Negra (T'Challa)</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">A sabedoria de que em tempos de crise os sábios constroem pontes, enquanto os tolos constroem muros. O dever real de acolher e elevar os necessitados.</p>
           </div>
 
           <div class="hero-card red-border">
@@ -1025,9 +1172,9 @@
           </div>
 
           <div class="hero-card blue-border">
-            <span class="badge" style="background: rgba(6, 182, 212, 0.15); color: var(--spider-blue); margin-bottom: 10px;">Attack on Titan</span>
-            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Eren Yeager & Armin Arlert</h3>
-            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">A busca incansável pela liberdade e a inteligência estratégica voltada para construir um futuro onde ninguém seja esquecido ou excluído.</p>
+            <span class="badge" style="background: rgba(6, 182, 212, 0.15); color: var(--spider-blue); margin-bottom: 10px;">DC Comics</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Batman (Bruce Wayne)</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">A transformação da dor em justiça e amparo. Não são as promessas, mas o trabalho silencioso nos bastidores que protege a vizinhança.</p>
           </div>
 
           <div class="hero-card gold-border">
@@ -1046,7 +1193,7 @@
         <div id="lista-frases-container" class="stats-grid"></div>
       </section>
 
-      <!-- 8. MINHA HISTÓRIA ATUALIZADA -->
+      <!-- 8. MINHA HISTÓRIA -->
       <section id="aba-historia" class="tab-section">
         <h2 class="section-title">Minha História</h2>
         <p class="section-desc">O propósito e o compromisso ético do projeto Além das Muralhas.</p>
@@ -1150,10 +1297,37 @@
     </main>
   </div>
 
-  <!-- SCRIPTS -->
+  <!-- SCRIPTS DA APLICAÇÃO -->
   <script>
     let usuarioLogado = null;
     let fotoPerfilBase64 = null;
+
+    // Lista de GIFs animados de heróis para o modal de doação
+    const HERO_GIFS = [
+      'https://media.giphy.com/media/10bKPDUM5H7m7u/giphy.gif', // Spider-Man
+      'https://media.giphy.com/media/l3q2tzon8OCC7BqmY/giphy.gif', // Black Panther
+      'https://media.giphy.com/media/kgo9KtvX2dCVudr645/giphy.gif', // Eren Yeager Attack on Titan
+      'https://media.giphy.com/media/26gN0D4vzKMme53We/giphy.gif', // Batman
+      'https://media.giphy.com/media/MARFsiQQNQVWw/giphy.gif',     // All Might
+      'https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif'  // Erwin Smith / Attack on Titan
+    ];
+
+    function dispararEfeitoVisual() {
+      const overlay = document.getElementById('fx-overlay');
+      const sort = Math.random();
+
+      if (sort < 0.5) {
+        const web = document.createElement('div');
+        web.className = 'fx-web';
+        overlay.appendChild(web);
+        setTimeout(() => web.remove(), 450);
+      } else {
+        const claw = document.createElement('div');
+        claw.className = 'fx-claw';
+        overlay.appendChild(claw);
+        setTimeout(() => claw.remove(), 450);
+      }
+    }
 
     function abrirSidebar() {
       const sidebar = document.getElementById('sidebar-menu');
@@ -1220,19 +1394,20 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Autenticação
+    // Autenticação com campo Herói Favorito
     async function realizarAutenticacao(e) {
       e.preventDefault();
       const nome = document.getElementById('auth-nome').value;
       const email = document.getElementById('auth-email').value;
       const senha = document.getElementById('auth-senha').value;
+      const heroi_favorito = document.getElementById('auth-heroi').value;
       const lgpd = document.getElementById('auth-lgpd').checked;
 
       try {
         const res = await fetch('/api/auth', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ nome, email, senha, consentimento_lgpd: lgpd ? 1 : 0 })
+          body: JSON.stringify({ nome, email, senha, heroi_favorito, consentimento_lgpd: lgpd ? 1 : 0 })
         });
 
         const data = await res.json();
@@ -1251,16 +1426,49 @@
       }
     }
 
+    // Validação de limite e compressão de imagem (Max 2MB)
     function previewFotoPerfil(event) {
       const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          fotoPerfilBase64 = e.target.result;
+      if (!file) return;
+
+      if (file.size > 2 * 1024 * 1024) {
+        alert('A foto selecionada é maior que o limite de 2MB. Por favor, selecione uma imagem mais leve.');
+        event.target.value = '';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.src = e.target.result;
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxDim = 320;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > maxDim) {
+              height *= maxDim / width;
+              width = maxDim;
+            }
+          } else {
+            if (height > maxDim) {
+              width *= maxDim / height;
+              height = maxDim;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          fotoPerfilBase64 = canvas.toDataURL('image/jpeg', 0.85);
           document.getElementById('perfil-preview-img').src = fotoPerfilBase64;
         };
-        reader.readAsDataURL(file);
-      }
+      };
+      reader.readAsDataURL(file);
     }
 
     function configurarInterfaceUsuario() {
@@ -1361,10 +1569,12 @@
       }
     }
 
-    // Registrar Doação
+    // Registrar Doação com Efeito Visual e Modal com GIF
     async function registrarDoacao(e) {
       e.preventDefault();
       if (!usuarioLogado) return;
+
+      dispararEfeitoVisual();
 
       const payload = {
         id_usuario: usuarioLogado.id_usuario,
@@ -1382,14 +1592,27 @@
         });
         const data = await res.json();
 
-        alert(`DOAÇÃO CONFIRMADA!\n\nProtocolo: ${data.protocolo}\nLocal de Entrega: ${data.ponto ? data.ponto.nome_local : 'Ponto Selecionado'}\n\n"${data.frase.texto}" - ${data.frase.autor}`);
+        // Escolhe um GIF aleatório da lista
+        const gifSorteado = HERO_GIFS[Math.floor(Math.random() * HERO_GIFS.length)];
+        
+        document.getElementById('modal-gif-img').src = gifSorteado;
+        document.getElementById('modal-protocolo').innerText = data.protocolo;
+        document.getElementById('modal-ponto').innerText = data.ponto ? data.ponto.nome_local : 'Ponto Geral';
+        document.getElementById('modal-frase').innerText = `"${data.frase.texto}" — ${data.frase.autor}`;
+        
+        document.getElementById('success-modal').classList.add('active');
+
         e.target.reset();
         carregarImpacto();
         carregarMuralDoadores();
-        trocarAba('minhas-doacoes', document.querySelectorAll('.nav-btn')[2]);
       } catch (err) {
         alert('Erro ao registrar doação: ' + err.message);
       }
+    }
+
+    function fecharModalSucesso() {
+      document.getElementById('success-modal').classList.remove('active');
+      trocarAba('minhas-doacoes', document.querySelectorAll('.nav-btn')[2]);
     }
 
     // Minhas Doações
@@ -1522,13 +1745,13 @@
           { texto: "Se você não lutar, você não pode vencer!", autor: "Eren Yeager (Attack on Titan)", categoria: "Anime" },
           { texto: "Aqueles que não são capazes de sacrificar nada, não podem mudar nada.", autor: "Armin Arlert (Attack on Titan)", categoria: "Anime" },
           { texto: "Meus soldados, enfureçam-se! Meus soldados, gritem! Meus soldados, avancem!", autor: "Comandante Erwin Smith (Attack on Titan)", categoria: "Liderança" },
+          { texto: "Em tempos de crise, os sábios constroem pontes, enquanto os tolos constroem muros.", autor: "Rei T'Challa (Pantera Negra)", categoria: "Heróis" },
           { texto: "Não é quem eu sou por dentro, mas o que eu faço é o que me define.", autor: "Bruce Wayne (Batman)", categoria: "Heróis" },
           { texto: "Está tudo bem agora... Sabe por quê? Porque nós estamos aqui!", autor: "All Might (My Hero Academia)", categoria: "Anime" },
           { texto: "Eu posso fazer isso o dia todo. Nós nunca abandonamos quem precisa.", autor: "Steve Rogers (Capitão América)", categoria: "Heróis" },
           { texto: "Ame o seu próximo como a si mesmo.", autor: "Mateus 22:39", categoria: "Bíblica" },
           { texto: "Quem é generoso será abençoado, pois reparte o seu pão com o necessitado.", autor: "Provérbios 22:9", categoria: "Bíblica" },
           { texto: "O verdadeiro poder não reside em dominar os outros, mas em estender a mão aos que caíram.", autor: "Sabedoria Solidária", categoria: "Inspiração" },
-          { texto: "O heroísmo não está na ausência de medo, mas na escolha de agir mesmo com o coração acelerado.", autor: "Determinação", categoria: "Inspiração" },
           { texto: "Ninguém nunca se tornou pobre por doar.", autor: "Anne Frank", categoria: "Inspiração" }
         ];
 
