@@ -36,6 +36,22 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    /* Scrollbar personalizada e discreta */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-deep);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--spider-blue);
+    }
+
     html, body {
       background-color: var(--bg-deep);
       color: var(--text-main);
@@ -44,13 +60,13 @@
       scroll-behavior: smooth;
     }
 
-    /* BOTÃO TOGGLE APENAS COM ÍCONE (➔ ou ✕) */
+    /* BOTÃO FLUTUANTE PARA ABRIR O MENU (➔) */
     .menu-toggle-btn {
       position: fixed;
       top: 14px;
       left: 14px;
-      z-index: 1005;
-      background: rgba(15, 23, 42, 0.85);
+      z-index: 995;
+      background: rgba(15, 23, 42, 0.9);
       backdrop-filter: blur(10px);
       border: 1px solid var(--spider-blue);
       color: #fff;
@@ -62,18 +78,20 @@
       align-items: center;
       justify-content: center;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 12px var(--spider-blue-glow);
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .menu-toggle-btn:hover {
       background: var(--spider-blue);
       color: #070a12;
       box-shadow: 0 0 20px var(--spider-blue);
-      transform: translateY(-2px);
+      transform: scale(1.05);
     }
 
-    .menu-toggle-btn:active {
-      transform: scale(0.92);
+    .menu-toggle-btn.hide-btn {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.8);
     }
 
     .menu-toggle-btn .icon-indicator {
@@ -88,7 +106,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(3, 7, 18, 0.75);
+      background: rgba(3, 7, 18, 0.8);
       backdrop-filter: blur(6px);
       z-index: 998;
       display: none;
@@ -101,7 +119,7 @@
       opacity: 1;
     }
 
-    /* MODAL DE AUTENTICAÇÃO */
+    /* MODAL DE ENTRADA / CADASTRO */
     .auth-overlay {
       position: fixed;
       top: 0;
@@ -227,11 +245,7 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       box-shadow: 0 4px 18px var(--spider-red-glow);
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
+      transition: all 0.25s ease;
     }
 
     .btn-primary:hover {
@@ -240,25 +254,21 @@
       filter: brightness(1.1);
     }
 
-    .btn-primary:active {
-      transform: scale(0.97);
-    }
-
-    /* LAYOUT PRINCIPAL */
+    /* ESTRUTURA PRINCIPAL */
     .app-layout {
       display: flex;
       min-height: 100vh;
       width: 100%;
     }
 
-    /* SIDEBAR */
+    /* SIDEBAR DINÂMICA */
     .sidebar {
       background: var(--bg-sidebar);
       border-right: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 68px 18px 25px 18px;
+      padding: 24px 18px;
       height: 100vh;
       position: fixed;
       top: 0;
@@ -268,7 +278,7 @@
       transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 999;
       overflow-y: auto;
-      box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6);
     }
 
     .sidebar.collapsed {
@@ -280,40 +290,44 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
 
+    /* BOTÃO X ÚNICO E ELEGANTE */
     .sidebar-close-btn {
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.3);
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
       color: var(--spider-red);
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 800;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
     }
 
     .sidebar-close-btn:hover {
       background: var(--spider-red);
       color: #fff;
-      transform: rotate(90deg);
+      transform: rotate(90deg) scale(1.1);
+      box-shadow: 0 0 15px var(--spider-red-glow);
     }
 
     .brand-title {
       font-family: var(--font-title);
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       color: var(--text-main);
       letter-spacing: 1px;
     }
 
     .brand-subtitle {
       color: var(--spider-blue);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       font-weight: 700;
@@ -324,7 +338,6 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
-      margin-top: 15px;
     }
 
     .nav-btn {
@@ -337,7 +350,7 @@
       font-weight: 600;
       font-size: 0.88rem;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -347,18 +360,19 @@
     .nav-btn:hover {
       background: rgba(239, 68, 68, 0.1);
       color: #fff;
-      transform: translateX(4px);
+      transform: translateX(5px);
+      border-color: rgba(239, 68, 68, 0.2);
     }
 
     .nav-btn.active {
-      background: linear-gradient(90deg, rgba(239, 68, 68, 0.2), transparent);
+      background: linear-gradient(90deg, rgba(239, 68, 68, 0.22), transparent);
       border-left: 3px solid var(--spider-red);
       color: #fff;
       font-weight: 700;
     }
 
     .admin-nav-btn {
-      margin-top: 12px;
+      margin-top: 10px;
       border: 1px solid rgba(245, 158, 11, 0.3);
       color: var(--titan-gold);
     }
@@ -421,7 +435,7 @@
       color: var(--spider-red);
     }
 
-    /* MAIN CONTAINER */
+    /* ÁREA DE CONTEÚDO */
     .main-container {
       flex: 1;
       padding: 35px 35px 35px calc(var(--sidebar-width) + 35px);
@@ -478,12 +492,11 @@
       padding: 22px;
       position: relative;
       overflow: hidden;
-      transition: transform 0.25s ease, border-color 0.25s ease;
+      transition: transform 0.25s ease;
     }
 
     .stat-card:hover {
       transform: translateY(-3px);
-      border-color: #334155;
     }
 
     .stat-card::before {
@@ -547,8 +560,8 @@
     }
 
     .doador-card img {
-      width: 44px;
-      height: 44px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       border: 2px solid var(--spider-blue);
       object-fit: cover;
@@ -590,7 +603,6 @@
     .hero-card:hover {
       transform: translateY(-3px);
       background: var(--bg-card-hover);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     }
 
     .hero-card.red-border { border-top: 4px solid var(--spider-red); }
@@ -635,7 +647,7 @@
       color: var(--spider-blue);
     }
 
-    /* RESPONSIVIDADE MULTI-TELAS */
+    /* RESPONSIVIDADE MOBILE */
     @media (max-width: 900px) {
       .main-container {
         padding: 68px 14px 25px 14px !important;
@@ -644,7 +656,7 @@
       .sidebar {
         width: 86% !important;
         max-width: 320px !important;
-        padding-top: 25px !important;
+        padding-top: 20px !important;
       }
 
       .section-title {
@@ -659,18 +671,14 @@
       .content-box, .hero-card {
         padding: 16px !important;
       }
-
-      .auth-card {
-        padding: 24px 18px !important;
-      }
     }
   </style>
 </head>
 <body>
 
-  <!-- BOTÃO FLUTUANTE EXCLUSIVAMENTE COM ÍCONES (➔ / ✕) -->
-  <button id="main-toggle-btn" class="menu-toggle-btn" onclick="toggleSidebar()" aria-label="Menu de Navegação">
-    <span id="menu-icon" class="icon-indicator">➔</span>
+  <!-- BOTÃO FLUTUANTE QUE SÓ APARECE QUANDO O MENU ESTÁ FECHADO (➔) -->
+  <button id="main-toggle-btn" class="menu-toggle-btn" onclick="abrirSidebar()" aria-label="Abrir Menu">
+    <span class="icon-indicator">➔</span>
   </button>
 
   <!-- OVERLAY ESCURO PARA FECHAR O MENU -->
@@ -716,7 +724,7 @@
   <!-- LAYOUT PRINCIPAL -->
   <div class="app-layout">
     
-    <!-- SIDEBAR RETRÁTIL -->
+    <!-- SIDEBAR RETRÁTIL DINÂMICA -->
     <aside id="sidebar-menu" class="sidebar">
       <div>
         <div class="sidebar-close-header">
@@ -724,6 +732,7 @@
             <h2 class="brand-title">ALÉM DAS MURALHAS</h2>
             <div class="brand-subtitle">O Amigo da Vizinhança</div>
           </div>
+          <!-- ÚNICO BOTÃO X DE FECHAR -->
           <button class="sidebar-close-btn" onclick="fecharSidebar()" title="Fechar Menu">✕</button>
         </div>
 
@@ -784,7 +793,7 @@
     <!-- CONTEÚDO PRINCIPAL -->
     <main id="main-content-area" class="main-container">
       
-      <!-- 1. PAINEL COMUNITÁRIO COM MURAL DE HERÓIS CADASTRADOS -->
+      <!-- 1. PAINEL COMUNITÁRIO -->
       <section id="aba-comunitario" class="tab-section active">
         <h2 class="section-title">Painel Comunitário</h2>
         <p class="section-desc">Acompanhe as ações solidárias e pontos de acolhimento em Mesquita, Baixada Fluminense e RJ.</p>
@@ -804,7 +813,7 @@
           </div>
         </div>
 
-        <!-- MURAL DOS HERÓIS CADASTRADOS & DOAÇÕES -->
+        <!-- MURAL DOS HERÓIS CADASTRADOS -->
         <div class="content-box">
           <h3 style="margin-bottom: 4px; font-family: var(--font-title); font-size: 1.15rem;">Mural de Heróis da Vizinhança</h3>
           <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 15px;">Comunidade de apoiadores cadastrados e impacto coletivo gerado:</p>
@@ -947,7 +956,7 @@
 
             <div class="form-group">
               <label>Herói / Inspiração Favorita (Bio de Herói)</label>
-              <input type="text" id="perfil-heroi" class="form-control" placeholder="Ex: Homem-Aranha, Batman, Eren Yeager, All Might...">
+              <input type="text" id="perfil-heroi" class="form-control" placeholder="Ex: Homem-Aranha, Erwin Smith, Batman, All Might...">
             </div>
 
             <div class="form-group">
@@ -987,44 +996,44 @@
       <!-- 6. PERSONAGENS E INSPIRAÇÕES ESPECÍFICAS -->
       <section id="aba-personagens" class="tab-section">
         <h2 class="section-title">Personagens e Inspirações</h2>
-        <p class="section-desc">As figuras do heroísmo e da cultura pop que guiam o compromisso moral de não abandonar ninguém.</p>
+        <p class="section-desc">As figuras do heroísmo e da liderança que inspiram a determinação de não deixar ninguém para trás.</p>
         
         <div class="stats-grid">
           
           <div class="hero-card red-border">
             <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--spider-red); margin-bottom: 10px;">Marvel Comics</span>
             <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Homem-Aranha (Peter Parker)</h3>
-            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">O legítimo 'Amigo da Vizinhança'. Ensina que grandes poderes trazem grandes responsabilidades, e que o verdadeiro herói é aquele que nunca abandona a sua comunidade local.</p>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">O verdadeiro 'Amigo da Vizinhança'. A prova viva de que grandes poderes trazem grandes responsabilidades e que a nobreza reside em proteger o cidadão comum todos os dias.</p>
           </div>
 
           <div class="hero-card blue-border">
             <span class="badge" style="background: rgba(6, 182, 212, 0.15); color: var(--spider-blue); margin-bottom: 10px;">Attack on Titan</span>
-            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Eren Yeager & Armin Arlert</h3>
-            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">A coragem indomável de enxergar além dos muros impostos pelo sofrimento e a sabedoria de que mudar o mundo exige entrega, empatia e luta ativa.</p>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Comandante Erwin Smith</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">A liderança corajosa que guia a humanidade além das muralhas da ignorância e da dor. O compromisso inabalável de avançar com firmeza diante de qualquer obstáculo.</p>
           </div>
 
           <div class="hero-card gold-border">
             <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--titan-gold); margin-bottom: 10px;">DC Comics</span>
             <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Batman (Bruce Wayne)</h3>
-            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">A prova de que a dor pode ser convertida em proteção. Não são promessas ou identidades que definem quem você é, mas sim as ações concretas que você pratica pelos outros.</p>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">A transformação do trauma em propósito. A certeza de que não são palavras, mas atitudes reais na escuridão que trazem luz para os vulneráveis.</p>
           </div>
 
           <div class="hero-card red-border">
             <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--spider-red); margin-bottom: 10px;">My Hero Academia</span>
             <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">All Might (Toshinori Yagi)</h3>
-            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">O símbolo da paz e do acolhimento. A postura inabalável de estender a mão sorrindo para dizer aos que mais sofrem: <em>'Está tudo bem agora, porque nós estamos aqui!'</em>.</p>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">O símbolo da paz. A capacidade de sorrir para transmitir segurança aos desamparados, declarando que o acolhimento sempre prevalecerá.</p>
           </div>
 
           <div class="hero-card blue-border">
-            <span class="badge" style="background: rgba(6, 182, 212, 0.15); color: var(--spider-blue); margin-bottom: 10px;">Marvel Comics</span>
-            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Capitão América (Steve Rogers)</h3>
-            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">A perseverança moral que nunca recua diante das injustiças. A determinação de se manter de pé pelos que caíram e a convicção de fazer isso até o fim.</p>
+            <span class="badge" style="background: rgba(6, 182, 212, 0.15); color: var(--spider-blue); margin-bottom: 10px;">Attack on Titan</span>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">Eren Yeager & Armin Arlert</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">A busca incansável pela liberdade e a inteligência estratégica voltada para construir um futuro onde ninguém seja esquecido ou excluído.</p>
           </div>
 
           <div class="hero-card gold-border">
             <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--titan-gold); margin-bottom: 10px;">Valores Universais</span>
-            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">O Guardião da Vizinhança</h3>
-            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">Cada doador, voluntário e cidadão que escolhe não fechar os olhos. O herói anônimo que leva alimento, agasalho e inclusão para pessoas atípicas, idosos e crianças.</p>
+            <h3 style="color: var(--text-main); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 8px;">O Guardião Solidário</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">Cada membro da comunidade que dedica seu tempo ou recursos para acolher crianças, idosos, moradores de rua e pessoas com condições atípicas.</p>
           </div>
 
         </div>
@@ -1037,15 +1046,24 @@
         <div id="lista-frases-container" class="stats-grid"></div>
       </section>
 
-      <!-- 8. MINHA HISTÓRIA -->
+      <!-- 8. MINHA HISTÓRIA ATUALIZADA -->
       <section id="aba-historia" class="tab-section">
         <h2 class="section-title">Minha História</h2>
         <p class="section-desc">O propósito e o compromisso ético do projeto Além das Muralhas.</p>
         
-        <div class="content-box" style="line-height: 1.7; font-size: 0.92rem; color: #cbd5e1;">
-          <p style="margin-bottom: 14px;">O projeto <strong>Além das Muralhas - O Amigo da Vizinhança</strong> nasceu da convicção de que nenhuma barreira social é intransponível quando a tecnologia é colocada a serviço da empatia e do acolhimento.</p>
-          <p style="margin-bottom: 14px;">Inspirada nos valores de altruísmo, proteção aos vulneráveis e determinação, a plataforma conecta pontos de coleta e doadores diretos a quem mais necessita: crianças, idosos, moradores de rua e pessoas com necessidades atípicas (TEA e PCD).</p>
-          <p>Estender a mão para quem precisa não é apenas solidariedade; é o maior ato de coragem e rebeldia contra a indiferença do mundo.</p>
+        <div class="content-box" style="line-height: 1.8; font-size: 0.95rem; color: #cbd5e1; border-left: 4px solid var(--spider-blue);">
+          <p style="margin-bottom: 16px; font-size: 1.05rem; color: #fff; font-weight: 500;">
+            O projeto <strong>Além das Muralhas - O Amigo da Vizinhança</strong> nasceu da convicção de que nenhuma barreira social é intransponível quando a tecnologia é colocada a serviço da empatia e do acolhimento.
+          </p>
+          <p style="margin-bottom: 16px;">
+            Inspirada nos valores fundamentais do <strong>Homem-Aranha</strong>, na liderança e coragem inabalável do <strong>Comandante Erwin Smith</strong>, entre outros grandes arquétipos do heroísmo, nossa iniciativa se apoia no princípio de que responsabilidade, liderança e sacrifício ganham sentido quando dedicados a proteger e apoiar aqueles que mais necessitam.
+          </p>
+          <p style="margin-bottom: 16px;">
+            A plataforma tem como missão integrar voluntários, doadores e instituições em Mesquita, na Baixada Fluminense e em todo o Rio de Janeiro, garantindo apoio direto a crianças, idosos em situação de vulnerabilidade, pessoas em situação de rua e pessoas atípicas (TEA e PCD).
+          </p>
+          <p style="color: var(--titan-gold); font-weight: 600;">
+            Avançar além das muralhas da indiferença e estender a mão ao próximo é a nossa forma diária de lutar por um mundo mais justo, humano e acolhedor.
+          </p>
         </div>
       </section>
 
@@ -1089,11 +1107,11 @@
             <div class="form-group">
               <label>Público Atendido</label>
               <select id="adm-ponto-publico" class="form-control" required>
-                <option value="Todos">Todos os Públicos</option>
-                <option value="Pessoas Atípicas (TEA / PCD)">Pessoas Atípicas (TEA / PCD)</option>
-                <option value="Criancas">Crianças</option>
-                <option value="Idosos">Idosos</option>
-                <option value="Moradores de Rua">Moradores de Rua</option>
+                <option value="Todos os Públicos">Todos os Públicos</option>
+                <option value="Pessoas Atípicas (TEA / PCD / Inclusão)">Pessoas Atípicas (TEA / PCD / Inclusão)</option>
+                <option value="Crianças e Jovens">Crianças e Jovens</option>
+                <option value="Idosos em Abrigos">Idosos em Abrigos</option>
+                <option value="Pessoas em Situação de Rua">Pessoas em Situação de Rua</option>
               </select>
             </div>
             <div class="form-group">
@@ -1137,38 +1155,30 @@
     let usuarioLogado = null;
     let fotoPerfilBase64 = null;
 
-    // Atualização visual do botão toggle (Apenas ➔ ou ✕)
-    function atualizarBotaoToggle(estaAberto) {
-      const icon = document.getElementById('menu-icon');
-      icon.innerText = estaAberto ? '✕' : '➔';
-    }
-
-    // Alternar Barra Lateral
-    function toggleSidebar() {
+    function abrirSidebar() {
       const sidebar = document.getElementById('sidebar-menu');
       const mainArea = document.getElementById('main-content-area');
       const overlay = document.getElementById('sidebar-overlay');
+      const toggleBtn = document.getElementById('main-toggle-btn');
 
-      sidebar.classList.toggle('collapsed');
-      mainArea.classList.toggle('expanded');
-      
-      const estaFechado = sidebar.classList.contains('collapsed');
-      overlay.classList.toggle('active', !estaFechado && window.innerWidth <= 900);
-      atualizarBotaoToggle(!estaFechado);
+      sidebar.classList.remove('collapsed');
+      mainArea.classList.remove('expanded');
+      overlay.classList.add('active');
+      toggleBtn.classList.add('hide-btn');
     }
 
     function fecharSidebar() {
       const sidebar = document.getElementById('sidebar-menu');
       const mainArea = document.getElementById('main-content-area');
       const overlay = document.getElementById('sidebar-overlay');
+      const toggleBtn = document.getElementById('main-toggle-btn');
 
       sidebar.classList.add('collapsed');
       mainArea.classList.add('expanded');
       overlay.classList.remove('active');
-      atualizarBotaoToggle(false);
+      toggleBtn.classList.remove('hide-btn');
     }
 
-    // Inicialização
     document.addEventListener('DOMContentLoaded', () => {
       const sessaoSalva = localStorage.getItem('usuario_sessao');
       if (sessaoSalva) {
@@ -1178,8 +1188,6 @@
 
       if (window.innerWidth <= 900) {
         fecharSidebar();
-      } else {
-        atualizarBotaoToggle(true);
       }
 
       carregarImpacto();
@@ -1201,7 +1209,11 @@
         fecharSidebar();
       }
 
-      if (nomeAba === 'comunitario') carregarMuralDoadores();
+      if (nomeAba === 'comunitario') {
+        carregarImpacto();
+        carregarMuralDoadores();
+        carregarPontosColeta();
+      }
       if (nomeAba === 'minhas-doacoes') carregarMinhasDoacoes();
       if (nomeAba === 'admin') carregarAdminDashboard();
 
@@ -1232,6 +1244,8 @@
         usuarioLogado = data;
         localStorage.setItem('usuario_sessao', JSON.stringify(data));
         configurarInterfaceUsuario();
+        carregarMuralDoadores();
+        carregarImpacto();
       } catch (err) {
         alert('Erro ao conectar ao servidor: ' + err.message);
       }
@@ -1286,7 +1300,7 @@
       }
     }
 
-    // Carregar Mural de @Usuários Cadastrados & Doações
+    // Mural de Heróis Cadastrados
     async function carregarMuralDoadores() {
       try {
         const res = await fetch('/api/doadores/publico');
@@ -1310,7 +1324,7 @@
               <div style="overflow: hidden;">
                 <span class="doador-tag">${userTag}</span>
                 <span class="doador-sub">${d.nome} • ${d.heroi_favorito || 'Herói Local'}</span>
-                <span class="doador-count">🎁 ${totalDoacoes} ${totalDoacoes === 1 ? 'doação realizada' : 'doações realizadas'}</span>
+                <span class="doador-count">🎁 ${totalDoacoes} ${totalDoacoes === 1 ? 'doação' : 'doações'}</span>
               </div>
             </div>
           `;
@@ -1505,14 +1519,14 @@
       try {
         const listaCompleta = [
           { texto: "Com grandes poderes vêm grandes responsabilidades.", autor: "Peter Parker (Homem-Aranha)", categoria: "Heróis" },
-          { texto: "Não é quem eu sou por dentro, mas o que eu faço é o que me define.", autor: "Bruce Wayne (Batman)", categoria: "Heróis" },
           { texto: "Se você não lutar, você não pode vencer!", autor: "Eren Yeager (Attack on Titan)", categoria: "Anime" },
           { texto: "Aqueles que não são capazes de sacrificar nada, não podem mudar nada.", autor: "Armin Arlert (Attack on Titan)", categoria: "Anime" },
+          { texto: "Meus soldados, enfureçam-se! Meus soldados, gritem! Meus soldados, avancem!", autor: "Comandante Erwin Smith (Attack on Titan)", categoria: "Liderança" },
+          { texto: "Não é quem eu sou por dentro, mas o que eu faço é o que me define.", autor: "Bruce Wayne (Batman)", categoria: "Heróis" },
           { texto: "Está tudo bem agora... Sabe por quê? Porque nós estamos aqui!", autor: "All Might (My Hero Academia)", categoria: "Anime" },
           { texto: "Eu posso fazer isso o dia todo. Nós nunca abandonamos quem precisa.", autor: "Steve Rogers (Capitão América)", categoria: "Heróis" },
           { texto: "Ame o seu próximo como a si mesmo.", autor: "Mateus 22:39", categoria: "Bíblica" },
           { texto: "Quem é generoso será abençoado, pois reparte o seu pão com o necessitado.", autor: "Provérbios 22:9", categoria: "Bíblica" },
-          { texto: "A generosidade para com o próximo é o verdadeiro reflexo de um coração nobre.", autor: "Provérbios 11:25", categoria: "Bíblica" },
           { texto: "O verdadeiro poder não reside em dominar os outros, mas em estender a mão aos que caíram.", autor: "Sabedoria Solidária", categoria: "Inspiração" },
           { texto: "O heroísmo não está na ausência de medo, mas na escolha de agir mesmo com o coração acelerado.", autor: "Determinação", categoria: "Inspiração" },
           { texto: "Ninguém nunca se tornou pobre por doar.", autor: "Anne Frank", categoria: "Inspiração" }
