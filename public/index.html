@@ -20,6 +20,7 @@
       --spider-blue-glow: rgba(6, 182, 212, 0.35);
       --titan-gold: #f59e0b;
       --titan-gold-glow: rgba(245, 158, 11, 0.35);
+      --purple-panther: #a855f7;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --border-color: #1e293b;
@@ -36,20 +37,10 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: var(--bg-deep);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #1e293b;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--spider-blue);
-    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-deep); }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--spider-blue); }
 
     html, body {
       background-color: var(--bg-deep);
@@ -59,7 +50,7 @@
       scroll-behavior: smooth;
     }
 
-    /* BOTÃO FLUTUANTE PARA ABRIR O MENU (➔) */
+    /* BOTÃO FLUTUANTE DE MENU */
     .menu-toggle-btn {
       position: fixed;
       top: 14px;
@@ -83,7 +74,6 @@
     .menu-toggle-btn:hover {
       background: var(--spider-blue);
       color: #070a12;
-      box-shadow: 0 0 20px var(--spider-blue);
       transform: scale(1.05);
     }
 
@@ -118,7 +108,7 @@
       opacity: 1;
     }
 
-    /* MODAL DE ENTRADA / CADASTRO */
+    /* MODAIS */
     .auth-overlay {
       position: fixed;
       top: 0;
@@ -150,86 +140,18 @@
       to { opacity: 1; transform: scale(1) translateY(0); }
     }
 
-    .auth-header {
-      text-align: center;
-      margin-bottom: 18px;
-    }
+    .auth-header { text-align: center; margin-bottom: 18px; }
+    .auth-header h1 { font-family: var(--font-title); font-size: 1.65rem; color: var(--text-main); letter-spacing: 1.5px; }
+    .auth-header .auth-sub { color: var(--spider-blue); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-top: 4px; margin-bottom: 10px; }
+    .auth-header .auth-manifesto { color: #cbd5e1; font-size: 0.86rem; font-style: italic; line-height: 1.45; background: rgba(30, 41, 59, 0.6); padding: 10px 12px; border-radius: 10px; border-left: 3px solid var(--spider-red); text-align: left; }
 
-    .auth-header h1 {
-      font-family: var(--font-title);
-      font-size: 1.65rem;
-      color: var(--text-main);
-      letter-spacing: 1.5px;
-    }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); margin-bottom: 5px; }
+    .form-control { width: 100%; background: #131d31; border: 1px solid #27354f; border-radius: 10px; padding: 11px 13px; color: #fff; font-size: 0.9rem; outline: none; transition: all 0.25s ease; }
+    .form-control:focus { border-color: var(--spider-blue); box-shadow: 0 0 14px var(--spider-blue-glow); background: #18233c; }
 
-    .auth-header .auth-sub {
-      color: var(--spider-blue);
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-weight: 700;
-      margin-top: 4px;
-      margin-bottom: 10px;
-    }
-
-    .auth-header .auth-manifesto {
-      color: #cbd5e1;
-      font-size: 0.86rem;
-      font-style: italic;
-      line-height: 1.45;
-      background: rgba(30, 41, 59, 0.6);
-      padding: 10px 12px;
-      border-radius: 10px;
-      border-left: 3px solid var(--spider-red);
-      text-align: left;
-    }
-
-    .form-group {
-      margin-bottom: 14px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 5px;
-    }
-
-    .form-control {
-      width: 100%;
-      background: #131d31;
-      border: 1px solid #27354f;
-      border-radius: 10px;
-      padding: 11px 13px;
-      color: #fff;
-      font-size: 0.9rem;
-      outline: none;
-      transition: all 0.25s ease;
-    }
-
-    .form-control:focus {
-      border-color: var(--spider-blue);
-      box-shadow: 0 0 14px var(--spider-blue-glow);
-      background: #18233c;
-    }
-
-    .checkbox-group {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-bottom: 18px;
-      line-height: 1.4;
-    }
-
-    .checkbox-group input {
-      margin-top: 3px;
-      accent-color: var(--spider-blue);
-      width: 16px;
-      height: 16px;
-    }
+    .checkbox-group { display: flex; align-items: flex-start; gap: 10px; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 18px; line-height: 1.4; }
+    .checkbox-group input { margin-top: 3px; accent-color: var(--spider-blue); width: 16px; height: 16px; }
 
     .btn-primary {
       width: 100%;
@@ -247,38 +169,13 @@
       transition: all 0.25s ease;
     }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 24px rgba(239, 68, 68, 0.6);
-      filter: brightness(1.1);
-    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(239, 68, 68, 0.6); filter: brightness(1.1); }
+    .btn-danger-sm { background: rgba(239, 68, 68, 0.15); border: 1px solid var(--spider-red); color: var(--spider-red); padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
+    .btn-danger-sm:hover { background: var(--spider-red); color: #fff; box-shadow: 0 0 10px var(--spider-red-glow); }
 
-    .btn-danger-sm {
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid var(--spider-red);
-      color: var(--spider-red);
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
+    /* LAYOUT & SIDEBAR */
+    .app-layout { display: flex; min-height: 100vh; width: 100%; }
 
-    .btn-danger-sm:hover {
-      background: var(--spider-red);
-      color: #fff;
-      box-shadow: 0 0 10px var(--spider-red-glow);
-    }
-
-    /* ESTRUTURA PRINCIPAL */
-    .app-layout {
-      display: flex;
-      min-height: 100vh;
-      width: 100%;
-    }
-
-    /* SIDEBAR DINÂMICA */
     .sidebar {
       background: var(--bg-sidebar);
       border-right: 1px solid var(--border-color);
@@ -298,380 +195,78 @@
       box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6);
     }
 
-    .sidebar.collapsed {
-      transform: translateX(-100%);
-    }
+    .sidebar.collapsed { transform: translateX(-100%); }
 
-    .sidebar-close-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
+    .sidebar-close-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+    .sidebar-close-btn { background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); color: var(--spider-red); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; cursor: pointer; transition: all 0.25s ease; }
+    .sidebar-close-btn:hover { background: var(--spider-red); color: #fff; transform: rotate(90deg) scale(1.1); box-shadow: 0 0 15px var(--spider-red-glow); }
 
-    .sidebar-close-btn {
-      background: rgba(239, 68, 68, 0.12);
-      border: 1px solid rgba(239, 68, 68, 0.35);
-      color: var(--spider-red);
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      font-weight: 800;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
+    .brand-title { font-family: var(--font-title); font-size: 1.2rem; color: var(--text-main); letter-spacing: 1px; }
+    .brand-subtitle { color: var(--spider-blue); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-top: 2px; }
 
-    .sidebar-close-btn:hover {
-      background: var(--spider-red);
-      color: #fff;
-      transform: rotate(90deg) scale(1.1);
-      box-shadow: 0 0 15px var(--spider-red-glow);
-    }
+    .nav-menu { display: flex; flex-direction: column; gap: 6px; }
+    .nav-btn { background: transparent; border: 1px solid transparent; color: var(--text-muted); padding: 12px 14px; border-radius: 10px; text-align: left; font-weight: 600; font-size: 0.88rem; cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .nav-btn:hover { background: rgba(239, 68, 68, 0.1); color: #fff; transform: translateX(5px); }
+    .nav-btn.active { background: linear-gradient(90deg, rgba(239, 68, 68, 0.22), transparent); border-left: 3px solid var(--spider-red); color: #fff; font-weight: 700; }
+    .admin-nav-btn { margin-top: 10px; border: 1px solid rgba(245, 158, 11, 0.3); color: var(--titan-gold); }
+    .admin-nav-btn:hover { background: rgba(245, 158, 11, 0.15); border-color: var(--titan-gold); color: #fff; }
 
-    .brand-title {
-      font-family: var(--font-title);
-      font-size: 1.2rem;
-      color: var(--text-main);
-      letter-spacing: 1px;
-    }
+    .user-card { margin-top: 20px; padding: 12px; background: #131d31; border-radius: 12px; border: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; }
+    .user-avatar { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--spider-blue); object-fit: cover; background: #0b1120; }
+    .user-info h4 { font-size: 0.85rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+    .user-info span { font-size: 0.7rem; color: var(--titan-gold); font-weight: 700; display: block; }
+    .logout-btn { background: none; border: none; color: var(--text-muted); font-size: 0.75rem; cursor: pointer; text-decoration: underline; padding: 0; margin-top: 3px; }
+    .logout-btn:hover { color: var(--spider-red); }
 
-    .brand-subtitle {
-      color: var(--spider-blue);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      font-weight: 700;
-      margin-top: 2px;
-    }
+    /* CONTEÚDO PRINCIPAL */
+    .main-container { flex: 1; padding: 35px 35px 35px calc(var(--sidebar-width) + 35px); transition: padding-left 0.35s ease; max-width: 100%; width: 100%; }
+    .main-container.expanded { padding-left: 35px; }
 
-    .nav-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .tab-section { display: none; animation: fadeIn 0.3s ease; padding-top: 35px; }
+    .tab-section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    .nav-btn {
-      background: transparent;
-      border: 1px solid transparent;
-      color: var(--text-muted);
-      padding: 12px 14px;
-      border-radius: 10px;
-      text-align: left;
-      font-weight: 600;
-      font-size: 0.88rem;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-    }
+    .section-title { font-family: var(--font-title); font-size: 1.7rem; margin-bottom: 6px; color: #fff; }
+    .section-desc { color: var(--text-muted); margin-bottom: 22px; font-size: 0.92rem; line-height: 1.5; }
 
-    .nav-btn:hover {
-      background: rgba(239, 68, 68, 0.1);
-      color: #fff;
-      transform: translateX(5px);
-      border-color: rgba(239, 68, 68, 0.2);
-    }
-
-    .nav-btn.active {
-      background: linear-gradient(90deg, rgba(239, 68, 68, 0.22), transparent);
-      border-left: 3px solid var(--spider-red);
-      color: #fff;
-      font-weight: 700;
-    }
-
-    .admin-nav-btn {
-      margin-top: 10px;
-      border: 1px solid rgba(245, 158, 11, 0.3);
-      color: var(--titan-gold);
-    }
-
-    .admin-nav-btn:hover {
-      background: rgba(245, 158, 11, 0.15);
-      border-color: var(--titan-gold);
-      color: #fff;
-    }
-
-    .user-card {
-      margin-top: 20px;
-      padding: 12px;
-      background: #131d31;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .user-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: 2px solid var(--spider-blue);
-      object-fit: cover;
-      background: #0b1120;
-    }
-
-    .user-info h4 {
-      font-size: 0.85rem;
-      color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 160px;
-    }
-
-    .user-info span {
-      font-size: 0.7rem;
-      color: var(--titan-gold);
-      font-weight: 700;
-      display: block;
-    }
-
-    .logout-btn {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      cursor: pointer;
-      text-decoration: underline;
-      padding: 0;
-      margin-top: 3px;
-      transition: color 0.2s;
-    }
-
-    .logout-btn:hover {
-      color: var(--spider-red);
-    }
-
-    /* ÁREA DE CONTEÚDO */
-    .main-container {
-      flex: 1;
-      padding: 35px 35px 35px calc(var(--sidebar-width) + 35px);
-      transition: padding-left 0.35s ease;
-      max-width: 100%;
-      width: 100%;
-    }
-
-    .main-container.expanded {
-      padding-left: 35px;
-    }
-
-    .tab-section {
-      display: none;
-      animation: fadeIn 0.3s ease;
-      padding-top: 35px;
-    }
-
-    .tab-section.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .section-title {
-      font-family: var(--font-title);
-      font-size: 1.7rem;
-      margin-bottom: 6px;
-      color: #fff;
-    }
-
-    .section-desc {
-      color: var(--text-muted);
-      margin-bottom: 22px;
-      font-size: 0.92rem;
-      line-height: 1.5;
-    }
-
-    /* STATS & CARDS */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin-bottom: 25px;
-    }
-
-    .stat-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 22px;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.25s ease;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-3px);
-    }
-
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--spider-red);
-    }
-
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 25px; }
+    .stat-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 22px; position: relative; overflow: hidden; }
+    .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--spider-red); }
     .stat-card.blue::before { background: var(--spider-blue); }
     .stat-card.gold::before { background: var(--titan-gold); }
+    .stat-card h3 { font-size: 2.1rem; font-weight: 800; margin-bottom: 4px; color: #fff; }
+    .stat-card p { color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
 
-    .stat-card h3 {
-      font-size: 2.1rem;
-      font-weight: 800;
-      margin-bottom: 4px;
-      color: #fff;
-    }
+    .content-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 22px; margin-bottom: 22px; }
 
-    .stat-card p {
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
+    .doadores-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-top: 15px; }
+    .doador-card { background: #131d31; border: 1px solid #1e293b; border-radius: 12px; padding: 14px; display: flex; align-items: center; gap: 12px; }
+    .doador-card img { width: 46px; height: 46px; border-radius: 50%; border: 2px solid var(--spider-blue); object-fit: cover; background: #0b1120; }
+    .doador-tag { font-size: 0.88rem; font-weight: 700; color: #fff; display: block; }
+    .doador-sub { font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 2px; }
+    .doador-count { font-size: 0.75rem; color: var(--titan-gold); font-weight: 700; margin-top: 3px; display: block; }
 
-    .content-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 22px;
-      margin-bottom: 22px;
-    }
-
-    /* MURAL DE DOADORES */
-    .doadores-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 14px;
-      margin-top: 15px;
-    }
-
-    .doador-card {
-      background: #131d31;
-      border: 1px solid #1e293b;
-      border-radius: 12px;
-      padding: 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: all 0.25s ease;
-    }
-
-    .doador-card:hover {
-      border-color: var(--spider-blue);
-      transform: translateY(-2px);
-    }
-
-    .doador-card img {
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      border: 2px solid var(--spider-blue);
-      object-fit: cover;
-      background: #0b1120;
-    }
-
-    .doador-tag {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: #fff;
-      display: block;
-    }
-
-    .doador-sub {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      display: block;
-      margin-top: 2px;
-    }
-
-    .doador-count {
-      font-size: 0.75rem;
-      color: var(--titan-gold);
-      font-weight: 700;
-      margin-top: 3px;
-      display: block;
-    }
-
-    .hero-card {
-      border: 1px solid var(--border-color);
-      background: var(--bg-card);
-      border-radius: 14px;
-      padding: 20px;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.25s ease;
-    }
-
-    .hero-card:hover {
-      transform: translateY(-3px);
-      background: var(--bg-card-hover);
-    }
-
+    .hero-card { border: 1px solid var(--border-color); background: var(--bg-card); border-radius: 14px; padding: 20px; position: relative; overflow: hidden; transition: all 0.25s ease; }
+    .hero-card:hover { transform: translateY(-3px); background: var(--bg-card-hover); }
     .hero-card.red-border { border-top: 4px solid var(--spider-red); }
     .hero-card.blue-border { border-top: 4px solid var(--spider-blue); }
     .hero-card.gold-border { border-top: 4px solid var(--titan-gold); }
 
-    .data-table-wrapper {
-      width: 100%;
-      overflow-x: auto;
-      border-radius: 10px;
-      -webkit-overflow-scrolling: touch;
-    }
+    .data-table-wrapper { width: 100%; overflow-x: auto; border-radius: 10px; -webkit-overflow-scrolling: touch; }
+    table { width: 100%; min-width: 580px; border-collapse: collapse; text-align: left; }
+    th, td { padding: 12px 14px; border-bottom: 1px solid var(--border-color); font-size: 0.88rem; }
+    th { background: #131d31; color: var(--text-muted); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 1px; }
+    .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; background: rgba(6, 182, 212, 0.15); color: var(--spider-blue); }
 
-    table {
-      width: 100%;
-      min-width: 580px;
-      border-collapse: collapse;
-      text-align: left;
-    }
-
-    th, td {
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border-color);
-      font-size: 0.88rem;
-    }
-
-    th {
-      background: #131d31;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      font-size: 0.72rem;
-      letter-spacing: 1px;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      background: rgba(6, 182, 212, 0.15);
-      color: var(--spider-blue);
-    }
-
-    /* MODAL DE CONFIRMAÇÃO COM GIF INTEGRADO */
+    /* MODAL DE DOAÇÃO COM CARD DE HERÓI ESTILIZADO */
     .success-modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(4, 7, 15, 0.85);
-      backdrop-filter: blur(10px);
+      background: rgba(4, 7, 15, 0.88);
+      backdrop-filter: blur(12px);
       display: none;
       justify-content: center;
       align-items: center;
@@ -681,64 +276,55 @@
 
     .success-modal-overlay.active {
       display: flex;
-      animation: modalFadeIn 0.3s ease;
-    }
-
-    @keyframes modalFadeIn {
-      from { opacity: 0; transform: scale(0.92); }
-      to { opacity: 1; transform: scale(1); }
+      animation: modalFadeIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .success-card {
       background: var(--bg-card);
-      border: 1px solid var(--spider-blue);
-      border-radius: 18px;
+      border: 2px solid var(--spider-blue);
+      border-radius: 20px;
       padding: 24px 20px;
       width: 100%;
       max-width: 440px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px var(--spider-blue-glow);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 35px var(--spider-blue-glow);
       text-align: center;
       position: relative;
     }
 
-    .success-gif {
+    .hero-banner-frame {
       width: 100%;
       height: 180px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 15px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background-size: cover;
+      background-position: center;
     }
 
-    .success-title {
-      font-family: var(--font-title);
-      font-size: 1.35rem;
+    .hero-badge-tag {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(7, 10, 18, 0.85);
+      border: 1px solid var(--spider-blue);
       color: #fff;
-      margin-bottom: 8px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
       letter-spacing: 1px;
     }
 
-    .success-info {
-      background: #131d31;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 12px;
-      text-align: left;
-      font-size: 0.86rem;
-      color: #cbd5e1;
-      line-height: 1.5;
-    }
+    .success-title { font-family: var(--font-title); font-size: 1.4rem; color: #fff; margin-bottom: 10px; letter-spacing: 1px; }
+    .success-info { background: #131d31; border: 1px solid var(--border-color); border-radius: 12px; padding: 14px; margin-bottom: 14px; text-align: left; font-size: 0.88rem; color: #cbd5e1; line-height: 1.6; }
+    .success-quote { font-style: italic; color: var(--titan-gold); font-size: 0.88rem; line-height: 1.5; margin-bottom: 20px; padding: 0 5px; }
 
-    .success-quote {
-      font-style: italic;
-      color: var(--titan-gold);
-      font-size: 0.86rem;
-      line-height: 1.4;
-      margin-bottom: 18px;
-    }
-
-    /* CAMADA DE ANIMAÇÕES VISUAIS */
+    /* ANIMAÇÕES CINEMATOGRÁFICAS DE TELA CHEIA */
     .fx-canvas-overlay {
       position: fixed;
       top: 0;
@@ -747,69 +333,102 @@
       height: 100vh;
       pointer-events: none;
       z-index: 10005;
+      overflow: hidden;
     }
 
-    .fx-claw {
-      position: absolute;
-      top: 40%;
-      left: 10%;
-      width: 80%;
-      height: 8px;
-      background: linear-gradient(90deg, transparent, #a855f7, #ec4899, transparent);
-      box-shadow: 0 0 25px #a855f7;
-      transform: rotate(-30deg);
-      animation: slashClaw 0.45s ease forwards;
-    }
-
-    @keyframes slashClaw {
-      0% { opacity: 0; transform: rotate(-30deg) scaleX(0.2); }
-      50% { opacity: 1; transform: rotate(-30deg) scaleX(1.1); }
-      100% { opacity: 0; transform: rotate(-30deg) scaleX(1); }
-    }
-
-    .fx-web {
+    /* TEIA DO HOMEM-ARANHA */
+    .anim-spider-web {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      width: 180px;
-      height: 180px;
-      border: 4px dashed var(--spider-blue);
+      width: 260px;
+      height: 260px;
+      transform: translate(-50%, -50%) scale(0);
+      background: radial-gradient(circle, transparent 40%, rgba(6, 182, 212, 0.4) 70%, transparent 80%),
+                  repeating-radial-gradient(circle, transparent, transparent 15px, rgba(6, 182, 212, 0.6) 18px);
       border-radius: 50%;
-      box-shadow: 0 0 35px var(--spider-blue);
-      animation: shootWeb 0.45s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+      box-shadow: 0 0 60px var(--spider-blue);
+      animation: spiderWebBurst 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
     }
 
-    @keyframes shootWeb {
-      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.1) rotate(0deg); }
-      70% { opacity: 1; transform: translate(-50%, -50%) scale(1.4) rotate(90deg); }
-      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.6) rotate(180deg); }
+    @keyframes spiderWebBurst {
+      0% { transform: translate(-50%, -50%) scale(0.1) rotate(0deg); opacity: 1; }
+      50% { transform: translate(-50%, -50%) scale(1.6) rotate(90deg); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(2.2) rotate(180deg); opacity: 0; }
     }
 
-    /* RESPONSIVIDADE MOBILE */
+    /* GARRAS DO PANTERA NEGRA */
+    .anim-panther-claws {
+      position: absolute;
+      top: 35%;
+      left: 10%;
+      width: 80%;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transform: rotate(-25deg);
+      animation: clawsSlash 0.55s ease-out forwards;
+    }
+
+    .claw-line {
+      height: 6px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, transparent, var(--purple-panther), #ec4899, #fff, transparent);
+      box-shadow: 0 0 30px var(--purple-panther);
+    }
+
+    @keyframes clawsSlash {
+      0% { opacity: 0; transform: rotate(-25deg) scaleX(0.1) translateX(-50px); }
+      40% { opacity: 1; transform: rotate(-25deg) scaleX(1.3) translateX(0); }
+      100% { opacity: 0; transform: rotate(-25deg) scaleX(1.6) translateX(80px); }
+    }
+
+    /* CORTE DE LÂMINAS DE ATTACK ON TITAN (ERWIN / EREN) */
+    .anim-titan-slash {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120vw;
+      height: 6px;
+      background: linear-gradient(90deg, transparent, var(--titan-gold), #fff, var(--titan-gold), transparent);
+      box-shadow: 0 0 40px var(--titan-gold);
+      transform: translate(-50%, -50%) rotate(45deg);
+      animation: titanBladeSlash 0.5s ease-in-out forwards;
+    }
+
+    @keyframes titanBladeSlash {
+      0% { opacity: 0; transform: translate(-50%, -50%) rotate(45deg) scaleX(0.2); }
+      50% { opacity: 1; transform: translate(-50%, -50%) rotate(45deg) scaleX(1.4); }
+      100% { opacity: 0; transform: translate(-50%, -50%) rotate(45deg) scaleX(1.8); }
+    }
+
+    /* IMPACTO ALL MIGHT (SMASH) */
+    .anim-allmight-smash {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      height: 100px;
+      border: 8px solid var(--spider-red);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0.1);
+      box-shadow: 0 0 50px var(--spider-red), inset 0 0 50px var(--spider-red);
+      animation: allMightSmash 0.55s ease-out forwards;
+    }
+
+    @keyframes allMightSmash {
+      0% { transform: translate(-50%, -50%) scale(0.2); opacity: 1; }
+      50% { transform: translate(-50%, -50%) scale(3.5); opacity: 0.9; }
+      100% { transform: translate(-50%, -50%) scale(6); opacity: 0; }
+    }
+
     @media (max-width: 900px) {
-      .main-container {
-        padding: 68px 14px 25px 14px !important;
-      }
-
-      .sidebar {
-        width: 86% !important;
-        max-width: 320px !important;
-        padding-top: 20px !important;
-      }
-
-      .section-title {
-        font-size: 1.35rem !important;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr !important;
-        gap: 12px !important;
-      }
-
-      .content-box, .hero-card {
-        padding: 16px !important;
-      }
+      .main-container { padding: 68px 14px 25px 14px !important; }
+      .sidebar { width: 86% !important; max-width: 320px !important; padding-top: 20px !important; }
+      .section-title { font-size: 1.35rem !important; }
+      .stats-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+      .content-box, .hero-card { padding: 16px !important; }
     }
   </style>
 </head>
@@ -823,10 +442,9 @@
     <span class="icon-indicator">➔</span>
   </button>
 
-  <!-- OVERLAY ESCURO PARA FECHAR O MENU -->
   <div id="sidebar-overlay" class="sidebar-overlay" onclick="fecharSidebar()"></div>
 
-  <!-- MODAL DE ENTRADA / CADASTRO COM HERÓI FAVORITO -->
+  <!-- MODAL DE ENTRADA / CADASTRO -->
   <div id="auth-modal" class="auth-overlay">
     <div class="auth-card">
       <div class="auth-header">
@@ -868,24 +486,25 @@
     </div>
   </div>
 
-  <!-- MODAL DE DOAÇÃO CONFIRMADA COM GIF E DESIGN NATIVO -->
+  <!-- MODAL DE DOAÇÃO CONFIRMADA COM CARDS DE HERÓIS E ANIMAÇÕES VISUAIS -->
   <div id="success-modal" class="success-modal-overlay">
     <div class="success-card">
-      <img id="modal-gif-img" class="success-gif" src="" alt="Hero GIF">
+      <div id="modal-hero-frame" class="hero-banner-frame">
+        <span id="modal-hero-tag" class="hero-badge-tag">HERÓI ATIVO</span>
+      </div>
       <h3 class="success-title">DOAÇÃO CONFIRMADA!</h3>
       <div class="success-info">
         <div><strong>Protocolo:</strong> <span id="modal-protocolo" style="color: var(--spider-blue); font-weight: 700;">#HEROI-0000</span></div>
         <div><strong>Local de Entrega:</strong> <span id="modal-ponto">Ponto de Coleta</span></div>
       </div>
       <p id="modal-frase" class="success-quote">"Frase inspiradora do herói"</p>
-      <button class="btn-primary" onclick="fecharModalSucesso()">Fechar</button>
+      <button class="btn-primary" onclick="fecharModalSucesso()">FECHAR</button>
     </div>
   </div>
 
   <!-- LAYOUT PRINCIPAL -->
   <div class="app-layout">
     
-    <!-- SIDEBAR RETRÁTIL DINÂMICA -->
     <aside id="sidebar-menu" class="sidebar">
       <div>
         <div class="sidebar-close-header">
@@ -973,7 +592,6 @@
           </div>
         </div>
 
-        <!-- MURAL DOS HERÓIS CADASTRADOS -->
         <div class="content-box">
           <h3 style="margin-bottom: 4px; font-family: var(--font-title); font-size: 1.15rem;">Mural de Heróis da Vizinhança</h3>
           <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 15px;">Comunidade de apoiadores cadastrados e impacto coletivo gerado:</p>
@@ -1088,14 +706,13 @@
         </div>
       </section>
 
-      <!-- 4. PERFIL COM LIMITE DE CAPACIDADE DE IMAGEM -->
+      <!-- 4. PERFIL COM FOTO E BIO DE HERÓI -->
       <section id="aba-perfil" class="tab-section">
         <h2 class="section-title">Meu Perfil & Conta</h2>
         <p class="section-desc">Atualize sua identidade, foto de perfil, herói favorito e dados pessoais.</p>
 
         <div class="content-box" style="max-width: 650px;">
           <form onsubmit="atualizarPerfil(event)">
-            
             <div style="display: flex; align-items: center; gap: 18px; margin-bottom: 20px; flex-wrap: wrap;">
               <img id="perfil-preview-img" src="https://api.dicebear.com/7.x/bottts/svg?seed=hero" alt="Foto Perfil" style="width: 76px; height: 76px; border-radius: 50%; border: 3px solid var(--spider-blue); object-fit: cover;">
               <div style="flex: 1; min-width: 200px;">
@@ -1200,7 +817,7 @@
         </div>
       </section>
 
-      <!-- 7. FRASES E CITAÇÕES AMPLIADAS -->
+      <!-- 7. FRASES E CITAÇÕES -->
       <section id="aba-frases" class="tab-section">
         <h2 class="section-title">Frases e Citações</h2>
         <p class="section-desc">Citações e valores que alimentam a determinação solidária e a coragem diária.</p>
@@ -1241,12 +858,11 @@
         </div>
       </section>
 
-      <!-- 10. PAINEL SUPER ADMIN (COM GESTÃO DE PONTOS DE COLETA - ADICIONAR E RETIRAR) -->
+      <!-- 10. PAINEL SUPER ADMIN -->
       <section id="aba-admin" class="tab-section">
         <h2 class="section-title" style="color: var(--titan-gold);">Painel Super Admin</h2>
         <p class="section-desc">Gestão administrativa de pontos de acolhimento e auditoria de doações no banco de dados.</p>
 
-        <!-- FORMULÁRIO DE CADASTRO DE NOVO PONTO -->
         <div class="content-box" style="max-width: 650px; margin-bottom: 25px;">
           <h3 style="margin-bottom: 15px; font-size: 1.1rem; color: #fff;">Cadastrar Novo Ponto de Coleta</h3>
           <form onsubmit="cadastrarPontoAdmin(event)">
@@ -1288,7 +904,6 @@
           </form>
         </div>
 
-        <!-- TABELA DE GERENCIAMENTO E REMOÇÃO DE PONTOS -->
         <div class="content-box" style="margin-bottom: 25px;">
           <h3 style="margin-bottom: 15px; font-size: 1.1rem; color: #fff;">Gerenciar Pontos de Coleta Ativos (Remover / Excluir)</h3>
           <div class="data-table-wrapper">
@@ -1309,7 +924,6 @@
           </div>
         </div>
 
-        <!-- RELATÓRIO GERAL DE DOAÇÕES -->
         <div class="content-box">
           <h3 style="margin-bottom: 15px; font-size: 1.1rem; color: #fff;">Relatório Geral de Doações no Banco</h3>
           <div class="data-table-wrapper">
@@ -1334,34 +948,70 @@
     </main>
   </div>
 
-  <!-- SCRIPTS DA APLICAÇÃO -->
+  <!-- SCRIPTS -->
   <script>
     let usuarioLogado = null;
     let fotoPerfilBase64 = null;
 
-    const HERO_GIFS = [
-      'https://media.giphy.com/media/10bKPDUM5H7m7u/giphy.gif',
-      'https://media.giphy.com/media/l3q2tzon8OCC7BqmY/giphy.gif',
-      'https://media.giphy.com/media/kgo9KtvX2dCVudr645/giphy.gif',
-      'https://media.giphy.com/media/26gN0D4vzKMme53We/giphy.gif',
-      'https://media.giphy.com/media/MARFsiQQNQVWw/giphy.gif',
-      'https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif'
+    // Banners temáticos garantidos para o modal de sucesso (sem quebra de GIF)
+    const HERO_THEMES = [
+      {
+        tag: 'HOMEM-ARANHA • VIZINHANÇA',
+        bg: 'radial-gradient(circle, #b91c1c, #070a12)',
+        icon: '🕷️',
+        type: 'spider'
+      },
+      {
+        tag: 'PANTERA NEGRA • WAKANDA',
+        bg: 'radial-gradient(circle, #7e22ce, #070a12)',
+        icon: '🐾',
+        type: 'panther'
+      },
+      {
+        tag: 'ERWIN SMITH • CORPO DE INVESTIGAÇÃO',
+        bg: 'radial-gradient(circle, #b45309, #070a12)',
+        icon: '⚔️',
+        type: 'titan'
+      },
+      {
+        tag: 'ALL MIGHT • SÍMBOLO DA PAZ',
+        bg: 'radial-gradient(circle, #0284c7, #b91c1c, #070a12)',
+        icon: '💥',
+        type: 'smash'
+      },
+      {
+        tag: 'BATMAN • CAVALEIRO DAS TREVAS',
+        bg: 'radial-gradient(circle, #334155, #070a12)',
+        icon: '🦇',
+        type: 'batman'
+      }
     ];
 
-    function dispararEfeitoVisual() {
+    function dispararEfeitoVisual(tipo) {
       const overlay = document.getElementById('fx-overlay');
-      const sort = Math.random();
+      overlay.innerHTML = '';
 
-      if (sort < 0.5) {
+      if (tipo === 'spider') {
         const web = document.createElement('div');
-        web.className = 'fx-web';
+        web.className = 'anim-spider-web';
         overlay.appendChild(web);
-        setTimeout(() => web.remove(), 450);
+        setTimeout(() => web.remove(), 600);
+      } else if (tipo === 'panther') {
+        const claws = document.createElement('div');
+        claws.className = 'anim-panther-claws';
+        claws.innerHTML = '<div class="claw-line"></div><div class="claw-line"></div><div class="claw-line"></div><div class="claw-line"></div>';
+        overlay.appendChild(claws);
+        setTimeout(() => claws.remove(), 550);
+      } else if (tipo === 'titan') {
+        const slash = document.createElement('div');
+        slash.className = 'anim-titan-slash';
+        overlay.appendChild(slash);
+        setTimeout(() => slash.remove(), 500);
       } else {
-        const claw = document.createElement('div');
-        claw.className = 'fx-claw';
-        overlay.appendChild(claw);
-        setTimeout(() => claw.remove(), 450);
+        const smash = document.createElement('div');
+        smash.className = 'anim-allmight-smash';
+        overlay.appendChild(smash);
+        setTimeout(() => smash.remove(), 550);
       }
     }
 
@@ -1430,7 +1080,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Autenticação com campo Herói Favorito
     async function realizarAutenticacao(e) {
       e.preventDefault();
       const nome = document.getElementById('auth-nome').value;
@@ -1462,13 +1111,12 @@
       }
     }
 
-    // Validação de limite e compressão de imagem (Max 2MB)
     function previewFotoPerfil(event) {
       const file = event.target.files[0];
       if (!file) return;
 
       if (file.size > 2 * 1024 * 1024) {
-        alert('A foto selecionada é maior que o limite de 2MB. Por favor, selecione uma imagem mais leve.');
+        alert('A foto selecionada é maior que o limite de 2MB. Por favor, escolha uma imagem mais leve.');
         event.target.value = '';
         return;
       }
@@ -1531,7 +1179,6 @@
       window.location.reload();
     }
 
-    // Métricas de Impacto
     async function carregarImpacto() {
       try {
         const res = await fetch('/api/impacto');
@@ -1544,7 +1191,6 @@
       }
     }
 
-    // Mural de Heróis Cadastrados
     async function carregarMuralDoadores() {
       try {
         const res = await fetch('/api/doadores/publico');
@@ -1578,7 +1224,6 @@
       }
     }
 
-    // Pontos de Coleta
     async function carregarPontosColeta() {
       try {
         const res = await fetch('/api/pontos');
@@ -1605,12 +1250,13 @@
       }
     }
 
-    // Registrar Doação com Efeito Visual e Modal com GIF
+    // Registrar Doação com Sorteio de Efeito e Modal Customizado
     async function registrarDoacao(e) {
       e.preventDefault();
       if (!usuarioLogado) return;
 
-      dispararEfeitoVisual();
+      const sorteioTema = HERO_THEMES[Math.floor(Math.random() * HERO_THEMES.length)];
+      dispararEfeitoVisual(sorteioTema.type);
 
       const payload = {
         id_usuario: usuarioLogado.id_usuario,
@@ -1628,9 +1274,10 @@
         });
         const data = await res.json();
 
-        const gifSorteado = HERO_GIFS[Math.floor(Math.random() * HERO_GIFS.length)];
-        
-        document.getElementById('modal-gif-img').src = gifSorteado;
+        const heroFrame = document.getElementById('modal-hero-frame');
+        heroFrame.style.background = sorteioTema.bg;
+        heroFrame.innerHTML = `<span style="font-size: 4rem; filter: drop-shadow(0 0 15px rgba(255,255,255,0.4));">${sorteioTema.icon}</span><span id="modal-hero-tag" class="hero-badge-tag">${sorteioTema.tag}</span>`;
+
         document.getElementById('modal-protocolo').innerText = data.protocolo;
         document.getElementById('modal-ponto').innerText = data.ponto ? data.ponto.nome_local : 'Ponto Geral';
         document.getElementById('modal-frase').innerText = `"${data.frase.texto}" — ${data.frase.autor}`;
@@ -1650,7 +1297,6 @@
       trocarAba('minhas-doacoes', document.querySelectorAll('.nav-btn')[2]);
     }
 
-    // Minhas Doações
     async function carregarMinhasDoacoes() {
       if (!usuarioLogado) return;
       try {
@@ -1681,7 +1327,6 @@
       }
     }
 
-    // Perfil
     async function atualizarPerfil(e) {
       e.preventDefault();
       const nome = document.getElementById('perfil-nome').value;
@@ -1712,16 +1357,15 @@
           localStorage.setItem('usuario_sessao', JSON.stringify(usuarioLogado));
           configurarInterfaceUsuario();
           carregarMuralDoadores();
-          alert('Perfil e bio de herói atualizados com sucesso!');
+          alert('Perfil atualizado com sucesso!');
         }
       } catch (err) {
         alert('Erro ao atualizar perfil: ' + err.message);
       }
     }
 
-    // Exclusão de Conta
     async function excluirMinhaConta() {
-      if (!confirm('Deseja realmente exercer seu direito ao esquecimento e excluir definitivamente sua conta? Todos os seus dados serão apagados.')) return;
+      if (!confirm('Deseja realmente excluir definitivamente sua conta?')) return;
 
       try {
         await fetch(`/api/usuario/excluir/${usuarioLogado.id_usuario}`, { method: 'DELETE' });
@@ -1732,7 +1376,6 @@
       }
     }
 
-    // Mensagens Solidárias
     async function carregarMensagens() {
       try {
         const res = await fetch('/api/mensagens');
@@ -1772,7 +1415,6 @@
       }
     }
 
-    // Frases e Citações
     async function carregarFrases() {
       try {
         const listaCompleta = [
@@ -1807,10 +1449,8 @@
       }
     }
 
-    // Painel Admin: Carregar Doações e Tabela de Remoção de Pontos
     async function carregarAdminDashboard() {
       try {
-        // Carrega Doações
         const resDoacoes = await fetch('/api/admin/doacoes');
         const doacoes = await resDoacoes.json();
         const tbodyDoacoes = document.getElementById('tabela-admin-doacoes');
@@ -1828,7 +1468,6 @@
           `;
         });
 
-        // Carrega Pontos com Botão de Remoção
         const resPontos = await fetch('/api/pontos');
         const pontos = await resPontos.json();
         const tbodyPontos = document.getElementById('tabela-admin-gerenciar-pontos');
@@ -1857,9 +1496,8 @@
       }
     }
 
-    // Ação do Super Admin para Remover Ponto
     async function removerPontoAdmin(idPonto) {
-      if (!confirm('Deseja realmente remover este ponto de coleta? Ele não aparecerá mais para os usuários.')) return;
+      if (!confirm('Deseja realmente remover este ponto de coleta?')) return;
 
       try {
         const res = await fetch(`/api/admin/pontos/${idPonto}`, { method: 'DELETE' });
@@ -1875,7 +1513,6 @@
       }
     }
 
-    // Ação do Super Admin para Cadastrar Ponto
     async function cadastrarPontoAdmin(e) {
       e.preventDefault();
       const payload = {

@@ -11,7 +11,6 @@ app.use(express.urlencoded({ limit: '15mb', extended: true }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Pool de conexão MySQL para Nuvem Aiven
 const db = mysql.createPool({
   host: process.env.DB_HOST || 'mysql-22dda56a-arthurcoutooliveira2006-e952.c.aivencloud.com',
   user: process.env.DB_USER || 'avnadmin',
@@ -28,7 +27,6 @@ const db = mysql.createPool({
 
 const SUPER_ADMIN_EMAIL = 'arthurcoutooliveira2006@gmail.com';
 
-// Inicialização e Carga Automática de Dados no Banco Aiven
 async function inicializarBanco() {
   try {
     await db.query(`
@@ -94,7 +92,25 @@ async function inicializarBanco() {
       ) ENGINE=InnoDB;
     `);
 
-    // Carrega pontos caso a tabela esteja vazia
+    const [frasesCount] = await db.query('SELECT COUNT(*) AS total FROM frases_motivacao');
+    if (frasesCount[0].total === 0) {
+      await db.query(`
+        INSERT INTO frases_motivacao (texto, autor, categoria) VALUES
+        ('Com grandes poderes vêm grandes responsabilidades.', 'Peter Parker (Homem-Aranha)', 'Heróis'),
+        ('Em tempos de crise, os sábios constroem pontes, enquanto os tolos constroem muros.', 'Rei T\\'Challa (Pantera Negra)', 'Heróis'),
+        ('Meus soldados, enfureçam-se! Meus soldados, gritem! Meus soldados, avancem!', 'Comandante Erwin Smith (Attack on Titan)', 'Liderança'),
+        ('Se você não lutar, você não pode vencer!', 'Eren Yeager (Attack on Titan)', 'Anime'),
+        ('Aqueles que não são capazes de sacrificar nada, não podem mudar nada.', 'Armin Arlert (Attack on Titan)', 'Anime'),
+        ('Não é quem eu sou por dentro, mas o que eu faço é o que me define.', 'Bruce Wayne (Batman)', 'Heróis'),
+        ('Está tudo bem agora... Sabe por quê? Porque nós estamos aqui!', 'All Might (My Hero Academia)', 'Anime'),
+        ('Eu posso fazer isso o dia todo. Nós nunca abandonamos quem precisa.', 'Steve Rogers (Capitão América)', 'Heróis'),
+        ('Ame o seu próximo como a si mesmo.', 'Mateus 22:39', 'Bíblica'),
+        ('Quem é generoso será abençoado, pois reparte o seu pão com o necessitado.', 'Provérbios 22:9', 'Bíblica'),
+        ('O verdadeiro poder não reside em dominar os outros, mas em estender a mão aos que caíram.', 'Sabedoria Solidária', 'Inspiração'),
+        ('Ninguém nunca se tornou pobre por doar.', 'Anne Frank', 'Inspiração');
+      `);
+    }
+
     const [pontos] = await db.query('SELECT COUNT(*) AS total FROM pontos_coleta');
     if (pontos[0].total === 0) {
       await db.query(`
@@ -107,16 +123,15 @@ async function inicializarBanco() {
       `);
     }
 
-    console.log('Banco de dados Aiven conectado e sincronizado com sucesso!');
+    console.log('Banco Aiven sincronizado!');
   } catch (err) {
     console.error('Erro no banco Aiven:', err.message);
   }
 }
 inicializarBanco();
 
-// 1. Autenticação
 app.post('/api/auth', async (req, res) => {
-  const { nome, email, senha, consentimento_lgpd } = req.body;
+  const { nome, email, senha, heroi_favorito, consentimento_lgpd } = req.body;
   const emailTratado = (email || '').trim().toLowerCase();
 
   try {
@@ -152,14 +167,14 @@ app.post('/api/auth', async (req, res) => {
       
       const [result] = await db.query(
         'INSERT INTO usuarios (nome, email, senha, heroi_favorito, is_admin, consentimento_lgpd) VALUES (?, ?, ?, ?, ?, ?)',
-        [nome, emailTratado, senhaHash, 'Homem-Aranha', isSuperAdmin, 1]
+        [nome, emailTratado, senhaHash, heroi_favorito || 'Homem-Aranha', isSuperAdmin, 1]
       );
       return res.json({ 
         id_usuario: result.insertId, 
         nome, 
         email: emailTratado, 
         foto_perfil: null, 
-        heroi_favorito: 'Homem-Aranha', 
+        heroi_favorito: heroi_favorito || 'Homem-Aranha', 
         is_admin: isSuperAdmin 
       });
     }
@@ -168,7 +183,6 @@ app.post('/api/auth', async (req, res) => {
   }
 });
 
-// 2. Mural Público de TODOS os Usuários Cadastrados
 app.get('/api/doadores/publico', async (req, res) => {
   try {
     const [doadores] = await db.query(`
@@ -189,7 +203,6 @@ app.get('/api/doadores/publico', async (req, res) => {
   }
 });
 
-// 3. Impacto Geral
 app.get('/api/impacto', async (req, res) => {
   try {
     const [[{ total_doadores }]] = await db.query('SELECT COUNT(*) AS total_doadores FROM usuarios');
@@ -201,7 +214,6 @@ app.get('/api/impacto', async (req, res) => {
   }
 });
 
-// 4. Pontos de Coleta
 app.get('/api/pontos', async (req, res) => {
   try {
     const [pontos] = await db.query('SELECT * FROM pontos_coleta ORDER BY id_ponto ASC');
@@ -224,7 +236,17 @@ app.post('/api/admin/pontos', async (req, res) => {
   }
 });
 
-// 5. Doações
+app.delete('/api/admin/pontos/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await db.query('DELETE FROM pontos_coleta WHERE id_ponto = ?', [id]);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Doação sorteando frase motivacional aleatória no banco
 app.post('/api/doacoes', async (req, res) => {
   const { id_usuario, id_ponto, categoria, publico_alvo, descricao } = req.body;
   const protocolo = '#HEROI-' + Math.floor(1000 + Math.random() * 9000);
@@ -235,12 +257,13 @@ app.post('/api/doacoes', async (req, res) => {
       [id_usuario, id_ponto, categoria, publico_alvo, descricao, protocolo]
     );
 
+    const [frases] = await db.query('SELECT texto, autor FROM frases_motivacao ORDER BY RAND() LIMIT 1');
     const [ponto] = await db.query('SELECT * FROM pontos_coleta WHERE id_ponto = ?', [id_ponto]);
 
     res.json({
       protocolo,
-      frase: { texto: "Com grandes poderes vêm grandes responsabilidades.", autor: "Peter Parker (Homem-Aranha)" },
-      ponto: ponto[0]
+      frase: frases[0] || { texto: "Com grandes poderes vêm grandes responsabilidades.", autor: "Peter Parker (Homem-Aranha)" },
+      ponto: ponto[0] || { nome_local: "Ponto Geral" }
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -278,7 +301,6 @@ app.get('/api/admin/doacoes', async (req, res) => {
   }
 });
 
-// 6. Perfil & LGPD
 app.put('/api/usuario/perfil', async (req, res) => {
   const { id_usuario, nome, email, senha, foto_perfil, heroi_favorito } = req.body;
   const emailTratado = (email || '').trim().toLowerCase();
@@ -318,7 +340,6 @@ app.delete('/api/usuario/excluir/:id_usuario', async (req, res) => {
   }
 });
 
-// 7. Mensagens
 app.get('/api/mensagens', async (req, res) => {
   try {
     const [mensagens] = await db.query(`
@@ -343,7 +364,6 @@ app.post('/api/mensagens', async (req, res) => {
   }
 });
 
-// 8. Frases
 app.get('/api/frases', async (req, res) => {
   try {
     const [frases] = await db.query('SELECT * FROM frases_motivacao ORDER BY id_frase DESC');
