@@ -26,7 +26,6 @@
       --font-title: 'Cinzel', serif;
       --font-body: 'Montserrat', sans-serif;
       --sidebar-width: 290px;
-      --radius: 12px;
     }
 
     * {
@@ -45,9 +44,7 @@
       scroll-behavior: smooth;
     }
 
-    /* ============================================================
-       BOTÃO TOGGLE DINÂMICO (SETA ➔ / FECHAR ✕)
-       ============================================================ */
+    /* BOTÃO TOGGLE APENAS COM ÍCONE (➔ ou ✕) */
     .menu-toggle-btn {
       position: fixed;
       top: 14px;
@@ -57,18 +54,15 @@
       backdrop-filter: blur(10px);
       border: 1px solid var(--spider-blue);
       color: #fff;
-      padding: 10px 16px;
-      border-radius: 30px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      justify-content: center;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 12px var(--spider-blue-glow);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .menu-toggle-btn:hover {
@@ -79,14 +73,13 @@
     }
 
     .menu-toggle-btn:active {
-      transform: scale(0.95);
+      transform: scale(0.92);
     }
 
     .menu-toggle-btn .icon-indicator {
-      font-size: 1.1rem;
+      font-size: 1.25rem;
+      font-weight: 800;
       line-height: 1;
-      transition: transform 0.3s ease;
-      display: inline-block;
     }
 
     .sidebar-overlay {
@@ -108,9 +101,7 @@
       opacity: 1;
     }
 
-    /* ============================================================
-       MODAL DE AUTENTICAÇÃO / LOGIN
-       ============================================================ */
+    /* MODAL DE AUTENTICAÇÃO */
     .auth-overlay {
       position: fixed;
       top: 0;
@@ -223,7 +214,6 @@
       height: 16px;
     }
 
-    /* BOTÕES COM MICROINTERAÇÕES */
     .btn-primary {
       width: 100%;
       background: linear-gradient(135deg, var(--spider-red), #b91c1c);
@@ -254,9 +244,7 @@
       transform: scale(0.97);
     }
 
-    /* ============================================================
-       ESTRUTURA PRINCIPAL (LAYOUT RESPONSIVO)
-       ============================================================ */
+    /* LAYOUT PRINCIPAL */
     .app-layout {
       display: flex;
       min-height: 100vh;
@@ -270,7 +258,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 70px 18px 25px 18px;
+      padding: 68px 18px 25px 18px;
       height: 100vh;
       position: fixed;
       top: 0;
@@ -298,13 +286,14 @@
       background: rgba(239, 68, 68, 0.15);
       border: 1px solid rgba(239, 68, 68, 0.3);
       color: var(--spider-red);
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1rem;
+      font-size: 1.1rem;
+      font-weight: 800;
       cursor: pointer;
       transition: all 0.2s ease;
     }
@@ -533,6 +522,61 @@
       margin-bottom: 22px;
     }
 
+    /* MURAL DE DOADORES */
+    .doadores-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 15px;
+    }
+
+    .doador-card {
+      background: #131d31;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.25s ease;
+    }
+
+    .doador-card:hover {
+      border-color: var(--spider-blue);
+      transform: translateY(-2px);
+    }
+
+    .doador-card img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--spider-blue);
+      object-fit: cover;
+      background: #0b1120;
+    }
+
+    .doador-tag {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #fff;
+      display: block;
+    }
+
+    .doador-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: block;
+      margin-top: 2px;
+    }
+
+    .doador-count {
+      font-size: 0.75rem;
+      color: var(--titan-gold);
+      font-weight: 700;
+      margin-top: 3px;
+      display: block;
+    }
+
     .hero-card {
       border: 1px solid var(--border-color);
       background: var(--bg-card);
@@ -591,9 +635,7 @@
       color: var(--spider-blue);
     }
 
-    /* ============================================================
-       OTIMIZAÇÕES RESPONSIVAS MULTI-DISPOSITIVOS
-       ============================================================ */
+    /* RESPONSIVIDADE MULTI-TELAS */
     @media (max-width: 900px) {
       .main-container {
         padding: 68px 14px 25px 14px !important;
@@ -622,35 +664,19 @@
         padding: 24px 18px !important;
       }
     }
-
-    @media (max-width: 480px) {
-      .section-title {
-        font-size: 1.25rem !important;
-      }
-      
-      .brand-title {
-        font-size: 1.15rem !important;
-      }
-      
-      .menu-toggle-btn {
-        padding: 8px 14px;
-        font-size: 0.8rem;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <!-- BOTÃO FLUTUANTE DINÂMICO (SETA ➔ / X) -->
-  <button id="main-toggle-btn" class="menu-toggle-btn" onclick="toggleSidebar()">
+  <!-- BOTÃO FLUTUANTE EXCLUSIVAMENTE COM ÍCONES (➔ / ✕) -->
+  <button id="main-toggle-btn" class="menu-toggle-btn" onclick="toggleSidebar()" aria-label="Menu de Navegação">
     <span id="menu-icon" class="icon-indicator">➔</span>
-    <span id="menu-text">Menu</span>
   </button>
 
   <!-- OVERLAY ESCURO PARA FECHAR O MENU -->
   <div id="sidebar-overlay" class="sidebar-overlay" onclick="fecharSidebar()"></div>
 
-  <!-- MODAL DE ENTRADA / CADASTRO COM MANIFESTO -->
+  <!-- MODAL DE ENTRADA / CADASTRO -->
   <div id="auth-modal" class="auth-overlay">
     <div class="auth-card">
       <div class="auth-header">
@@ -758,7 +784,7 @@
     <!-- CONTEÚDO PRINCIPAL -->
     <main id="main-content-area" class="main-container">
       
-      <!-- 1. PAINEL COMUNITÁRIO -->
+      <!-- 1. PAINEL COMUNITÁRIO COM MURAL DE HERÓIS CADASTRADOS -->
       <section id="aba-comunitario" class="tab-section active">
         <h2 class="section-title">Painel Comunitário</h2>
         <p class="section-desc">Acompanhe as ações solidárias e pontos de acolhimento em Mesquita, Baixada Fluminense e RJ.</p>
@@ -775,6 +801,15 @@
           <div class="stat-card gold">
             <h3 id="stat-pontos">0</h3>
             <p>Pontos de Acolhimento</p>
+          </div>
+        </div>
+
+        <!-- MURAL DOS HERÓIS CADASTRADOS & DOAÇÕES -->
+        <div class="content-box">
+          <h3 style="margin-bottom: 4px; font-family: var(--font-title); font-size: 1.15rem;">Mural de Heróis da Vizinhança</h3>
+          <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 15px;">Comunidade de apoiadores cadastrados e impacto coletivo gerado:</p>
+          <div id="mural-doadores-container" class="doadores-grid">
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Carregando heróis da comunidade...</p>
           </div>
         </div>
 
@@ -1102,17 +1137,10 @@
     let usuarioLogado = null;
     let fotoPerfilBase64 = null;
 
-    // Atualização visual do botão toggle (➔ vs ✕)
+    // Atualização visual do botão toggle (Apenas ➔ ou ✕)
     function atualizarBotaoToggle(estaAberto) {
       const icon = document.getElementById('menu-icon');
-      const text = document.getElementById('menu-text');
-      if (estaAberto) {
-        icon.innerText = '✕';
-        text.innerText = 'Fechar';
-      } else {
-        icon.innerText = '➔';
-        text.innerText = 'Menu';
-      }
+      icon.innerText = estaAberto ? '✕' : '➔';
     }
 
     // Alternar Barra Lateral
@@ -1148,7 +1176,6 @@
         configurarInterfaceUsuario();
       }
 
-      // Em dispositivos móveis ou telas médias, inicia recolhido para leitura limpa
       if (window.innerWidth <= 900) {
         fecharSidebar();
       } else {
@@ -1157,6 +1184,7 @@
 
       carregarImpacto();
       carregarPontosColeta();
+      carregarMuralDoadores();
       carregarMensagens();
       carregarFrases();
     });
@@ -1173,6 +1201,7 @@
         fecharSidebar();
       }
 
+      if (nomeAba === 'comunitario') carregarMuralDoadores();
       if (nomeAba === 'minhas-doacoes') carregarMinhasDoacoes();
       if (nomeAba === 'admin') carregarAdminDashboard();
 
@@ -1244,7 +1273,7 @@
       window.location.reload();
     }
 
-    // Métricas
+    // Métricas de Impacto
     async function carregarImpacto() {
       try {
         const res = await fetch('/api/impacto');
@@ -1252,6 +1281,40 @@
         document.getElementById('stat-doadores').innerText = data.total_doadores || 0;
         document.getElementById('stat-doacoes').innerText = data.total_doacoes || 0;
         document.getElementById('stat-pontos').innerText = data.total_pontos || 0;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Carregar Mural de @Usuários Cadastrados & Doações
+    async function carregarMuralDoadores() {
+      try {
+        const res = await fetch('/api/doadores/publico');
+        const doadores = await res.json();
+        const container = document.getElementById('mural-doadores-container');
+        container.innerHTML = '';
+
+        if (!doadores || doadores.length === 0) {
+          container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">Seja o primeiro a se cadastrar e registrar uma doação!</p>';
+          return;
+        }
+
+        doadores.forEach(d => {
+          const userTag = '@' + d.nome.trim().toLowerCase().replace(/\s+/g, '_');
+          const avatar = d.foto_perfil || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(d.nome)}`;
+          const totalDoacoes = d.total_doacoes || 0;
+
+          container.innerHTML += `
+            <div class="doador-card">
+              <img src="${avatar}" alt="${d.nome}">
+              <div style="overflow: hidden;">
+                <span class="doador-tag">${userTag}</span>
+                <span class="doador-sub">${d.nome} • ${d.heroi_favorito || 'Herói Local'}</span>
+                <span class="doador-count">🎁 ${totalDoacoes} ${totalDoacoes === 1 ? 'doação realizada' : 'doações realizadas'}</span>
+              </div>
+            </div>
+          `;
+        });
       } catch (err) {
         console.error(err);
       }
@@ -1308,6 +1371,7 @@
         alert(`DOAÇÃO CONFIRMADA!\n\nProtocolo: ${data.protocolo}\nLocal de Entrega: ${data.ponto ? data.ponto.nome_local : 'Ponto Selecionado'}\n\n"${data.frase.texto}" - ${data.frase.autor}`);
         e.target.reset();
         carregarImpacto();
+        carregarMuralDoadores();
         trocarAba('minhas-doacoes', document.querySelectorAll('.nav-btn')[2]);
       } catch (err) {
         alert('Erro ao registrar doação: ' + err.message);
@@ -1375,6 +1439,7 @@
           usuarioLogado.heroi_favorito = data.heroi_favorito;
           localStorage.setItem('usuario_sessao', JSON.stringify(usuarioLogado));
           configurarInterfaceUsuario();
+          carregarMuralDoadores();
           alert('Perfil e bio de herói atualizados com sucesso!');
         }
       } catch (err) {
