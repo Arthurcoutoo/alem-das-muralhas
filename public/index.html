@@ -253,6 +253,24 @@
       filter: brightness(1.1);
     }
 
+    .btn-danger-sm {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid var(--spider-red);
+      color: var(--spider-red);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-danger-sm:hover {
+      background: var(--spider-red);
+      color: #fff;
+      box-shadow: 0 0 10px var(--spider-red-glow);
+    }
+
     /* ESTRUTURA PRINCIPAL */
     .app-layout {
       display: flex;
@@ -645,9 +663,7 @@
       color: var(--spider-blue);
     }
 
-    /* ============================================================
-       MODAL DE CONFIRMAÇÃO COM GIF INTEGRADO (SEM ALERT NATIVO)
-       ============================================================ */
+    /* MODAL DE CONFIRMAÇÃO COM GIF INTEGRADO */
     .success-modal-overlay {
       position: fixed;
       top: 0;
@@ -722,9 +738,7 @@
       margin-bottom: 18px;
     }
 
-    /* ============================================================
-       CAMADA DE ANIMAÇÕES VISUAIS DE HERÓIS NA DOAÇÃO
-       ============================================================ */
+    /* CAMADA DE ANIMAÇÕES VISUAIS */
     .fx-canvas-overlay {
       position: fixed;
       top: 0;
@@ -854,7 +868,7 @@
     </div>
   </div>
 
-  <!-- MODAL DE DOAÇÃO CONFIRMADA COM GIF E DESIGN NATIVO DO SITE -->
+  <!-- MODAL DE DOAÇÃO CONFIRMADA COM GIF E DESIGN NATIVO -->
   <div id="success-modal" class="success-modal-overlay">
     <div class="success-card">
       <img id="modal-gif-img" class="success-gif" src="" alt="Hero GIF">
@@ -988,7 +1002,7 @@
         </div>
       </section>
 
-      <!-- 2. CADASTRAR DOAÇÃO (COM ANIMAÇÕES VISUAIS) -->
+      <!-- 2. CADASTRAR DOAÇÃO -->
       <section id="aba-doar" class="tab-section">
         <h2 class="section-title">Cadastrar Doação</h2>
         <p class="section-desc">Registre seu apoio voluntário selecionando o público de destino e a categoria.</p>
@@ -1227,11 +1241,12 @@
         </div>
       </section>
 
-      <!-- 10. PAINEL SUPER ADMIN -->
+      <!-- 10. PAINEL SUPER ADMIN (COM GESTÃO DE PONTOS DE COLETA - ADICIONAR E RETIRAR) -->
       <section id="aba-admin" class="tab-section">
         <h2 class="section-title" style="color: var(--titan-gold);">Painel Super Admin</h2>
         <p class="section-desc">Gestão administrativa de pontos de acolhimento e auditoria de doações no banco de dados.</p>
 
+        <!-- FORMULÁRIO DE CADASTRO DE NOVO PONTO -->
         <div class="content-box" style="max-width: 650px; margin-bottom: 25px;">
           <h3 style="margin-bottom: 15px; font-size: 1.1rem; color: #fff;">Cadastrar Novo Ponto de Coleta</h3>
           <form onsubmit="cadastrarPontoAdmin(event)">
@@ -1273,6 +1288,28 @@
           </form>
         </div>
 
+        <!-- TABELA DE GERENCIAMENTO E REMOÇÃO DE PONTOS -->
+        <div class="content-box" style="margin-bottom: 25px;">
+          <h3 style="margin-bottom: 15px; font-size: 1.1rem; color: #fff;">Gerenciar Pontos de Coleta Ativos (Remover / Excluir)</h3>
+          <div class="data-table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Local</th>
+                  <th>Endereço</th>
+                  <th>Público</th>
+                  <th>Contato</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody id="tabela-admin-gerenciar-pontos">
+                <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Carregando pontos cadastrados...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- RELATÓRIO GERAL DE DOAÇÕES -->
         <div class="content-box">
           <h3 style="margin-bottom: 15px; font-size: 1.1rem; color: #fff;">Relatório Geral de Doações no Banco</h3>
           <div class="data-table-wrapper">
@@ -1302,14 +1339,13 @@
     let usuarioLogado = null;
     let fotoPerfilBase64 = null;
 
-    // Lista de GIFs animados de heróis para o modal de doação
     const HERO_GIFS = [
-      'https://media.giphy.com/media/10bKPDUM5H7m7u/giphy.gif', // Spider-Man
-      'https://media.giphy.com/media/l3q2tzon8OCC7BqmY/giphy.gif', // Black Panther
-      'https://media.giphy.com/media/kgo9KtvX2dCVudr645/giphy.gif', // Eren Yeager Attack on Titan
-      'https://media.giphy.com/media/26gN0D4vzKMme53We/giphy.gif', // Batman
-      'https://media.giphy.com/media/MARFsiQQNQVWw/giphy.gif',     // All Might
-      'https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif'  // Erwin Smith / Attack on Titan
+      'https://media.giphy.com/media/10bKPDUM5H7m7u/giphy.gif',
+      'https://media.giphy.com/media/l3q2tzon8OCC7BqmY/giphy.gif',
+      'https://media.giphy.com/media/kgo9KtvX2dCVudr645/giphy.gif',
+      'https://media.giphy.com/media/26gN0D4vzKMme53We/giphy.gif',
+      'https://media.giphy.com/media/MARFsiQQNQVWw/giphy.gif',
+      'https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif'
     ];
 
     function dispararEfeitoVisual() {
@@ -1592,7 +1628,6 @@
         });
         const data = await res.json();
 
-        // Escolhe um GIF aleatório da lista
         const gifSorteado = HERO_GIFS[Math.floor(Math.random() * HERO_GIFS.length)];
         
         document.getElementById('modal-gif-img').src = gifSorteado;
@@ -1772,16 +1807,17 @@
       }
     }
 
-    // Painel Admin
+    // Painel Admin: Carregar Doações e Tabela de Remoção de Pontos
     async function carregarAdminDashboard() {
       try {
-        const res = await fetch('/api/admin/doacoes');
-        const doacoes = await res.json();
-        const tbody = document.getElementById('tabela-admin-doacoes');
-        tbody.innerHTML = '';
+        // Carrega Doações
+        const resDoacoes = await fetch('/api/admin/doacoes');
+        const doacoes = await resDoacoes.json();
+        const tbodyDoacoes = document.getElementById('tabela-admin-doacoes');
+        tbodyDoacoes.innerHTML = '';
 
         doacoes.forEach(d => {
-          tbody.innerHTML += `
+          tbodyDoacoes.innerHTML += `
             <tr>
               <td><strong>${d.codigo_protocolo}</strong></td>
               <td>${d.doador_nome} (${d.doador_email})</td>
@@ -1791,11 +1827,55 @@
             </tr>
           `;
         });
+
+        // Carrega Pontos com Botão de Remoção
+        const resPontos = await fetch('/api/pontos');
+        const pontos = await resPontos.json();
+        const tbodyPontos = document.getElementById('tabela-admin-gerenciar-pontos');
+        tbodyPontos.innerHTML = '';
+
+        if (pontos.length === 0) {
+          tbodyPontos.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Nenhum ponto cadastrado.</td></tr>';
+          return;
+        }
+
+        pontos.forEach(p => {
+          tbodyPontos.innerHTML += `
+            <tr>
+              <td><strong>${p.nome_local}</strong></td>
+              <td>${p.endereco} - ${p.bairro}, ${p.cidade}</td>
+              <td><span class="badge">${p.publico_atendido || 'Todos'}</span></td>
+              <td>${p.contato}</td>
+              <td>
+                <button class="btn-danger-sm" onclick="removerPontoAdmin(${p.id_ponto})">Remover</button>
+              </td>
+            </tr>
+          `;
+        });
       } catch (err) {
         console.error(err);
       }
     }
 
+    // Ação do Super Admin para Remover Ponto
+    async function removerPontoAdmin(idPonto) {
+      if (!confirm('Deseja realmente remover este ponto de coleta? Ele não aparecerá mais para os usuários.')) return;
+
+      try {
+        const res = await fetch(`/api/admin/pontos/${idPonto}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (data.success) {
+          alert('Ponto de coleta removido com sucesso!');
+          carregarAdminDashboard();
+          carregarPontosColeta();
+          carregarImpacto();
+        }
+      } catch (err) {
+        alert('Erro ao remover ponto: ' + err.message);
+      }
+    }
+
+    // Ação do Super Admin para Cadastrar Ponto
     async function cadastrarPontoAdmin(e) {
       e.preventDefault();
       const payload = {
@@ -1817,6 +1897,7 @@
         alert('Ponto de acolhimento cadastrado com sucesso!');
         e.target.reset();
         carregarPontosColeta();
+        carregarAdminDashboard();
         carregarImpacto();
       } catch (err) {
         alert('Erro ao cadastrar ponto: ' + err.message);
